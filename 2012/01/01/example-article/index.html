@@ -1,51 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <meta charset='utf-8'>
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Example Article</title>
+    <meta content='' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/normalize.css' rel='stylesheet'>
+    <link href='/css/main.css' rel='stylesheet'>
+    <link href='/css/bootstrap.min.css' rel='stylesheet'>
+    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
     <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/background.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/raw.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
   <body>
-
-    <div id="main" role="main">
-      <p>This is an example article. You probably want to delete it and write your own articles!</p>
-<pre class="highlight ruby"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div><div class="lineno">4</div></td><td class="code"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="n">message</span>
-  <span class="k">return</span> <span class="kp">nil</span>
-<span class="k">end</span>
-</td></tr></tbody></table></pre>
+    <header>
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='navbar-header'>
+          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand'>Brand</a>
+        </div>
+        <div class='collapse navbar-collapse navbar-ex1-collapse'>
+          <ul class='nav navbar-nav'>
+            <li class='active'>
+              <a>Home</a>
+            </li>
+            <li>
+              <a>Archieve</a>
+            </li>
+            <li>
+              <a>Tags</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <section class='main'></section>
+    <div id='main' role='main'>
+      <article>
+        <h1>This is a Heading Title</h1>
+        
+        <h2>This is smaller title</h2>
+        
+        <ol>
+        <li>go home</li>
+        <li>cook dinner</li>
+        </ol>
+        
+        <ul>
+        <li>this is a option</li>
+        <li>option 2
+        This is an example article. You probably want to delete it and write your own articles!</li>
+        </ul>
+        <pre class="highlight ruby"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div><div class="lineno">4</div></td><td class="code"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+          <span class="nb">puts</span> <span class="n">message</span>
+          <span class="k">return</span> <span class="kp">nil</span>
+        <span class="k">end</span>
+        </td></tr></tbody></table></pre><pre class="highlight javascript"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div></td><td class="code"><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;aa&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+        </td></tr></tbody></table></pre>
+      </article>
+      <div id="disqus_thread"></div>
+                  <script type="text/javascript">
+                  //<![CDATA[
+                      (function() {
+                          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                          dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                      })();
+                  //]]>
+                  </script>
+                  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+              </script>
     </div>
-
-    <aside>
-      <h2>Recent Articles</h2>
-      <ol>
-        
-          <li><a href="/2012/01/01/example-article/">Example Article</a> <span>Jan  1</span></li>
-        
-      </ol>
-
-      <h2>Tags</h2>
-      <ol>
-        
-          <li><a href="/tags/example/">example</a> (1)</a></li>
-        
-      </ol>
-
-      <h2>By Year</h2>
-      <ol>
-        
-          <li><a href="/2012/">2012</a> (1)</a></li>
-        
-      </ol>
-    </aside>
-    <script type="text/javascript">
-//<![CDATA[
-  var _gaq=[['_setAccount','UA-44086232-1'],['_trackPageview']];
-  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-  s.parentNode.insertBefore(g,s)}(document,'script'));
-//]]>
-</script>
+    <footer>
+      <script type="text/javascript">
+      //<![CDATA[
+        var _gaq=[['_setAccount','UA-44086232-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+      //]]>
+      </script>
+    </footer>
   </body>
 </html>
+
