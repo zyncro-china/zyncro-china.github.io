@@ -12,7 +12,7 @@ tags: example
 
 * this is a option
 * option 2
-This is an example article. You probably want to delete it and write your own articles!
+Thisssss is an example article. You probably want to delete it and write your own articles!
 
 ```ruby
 def my_cool_method(message)

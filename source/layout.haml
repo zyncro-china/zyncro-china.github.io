@@ -10,6 +10,7 @@
     %link{:href => "/css/normalize.css", :rel => "stylesheet"}/
     %link{:href => "/css/main.css", :rel => "stylesheet"}/
     %link{:href => "/css/bootstrap.min.css", :rel => "stylesheet"}/
+    %link{:href => "/stylesheets/background.css", :rel => "stylesheet"}/
     %script{:src => "/js/vendor/modernizr-2.6.1.min.js"}
     = stylesheet_link_tag 'rouge'
     = stylesheet_link_tag 'raw'
@@ -27,12 +28,12 @@
             %li.active 
               %a Home
             %li 
-              %a Archieve
+              %a{href: '#'} Archieve
             %li
               %a Tags
       
     %section.main
-    #main{:role => "main"}
-      = yield
+      #main{:role => "main"}
+        = yield
     %footer
       = google_analytics_tag
