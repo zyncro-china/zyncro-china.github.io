@@ -1,4 +1,3 @@
-!!!
 %html
   %head
     %meta{:charset => "utf-8"}/
@@ -34,6 +33,7 @@
       
     %section.main
       #main{:role => "main"}
-        = yield
+        .container
+          = yield
     %footer
       = google_analytics_tag

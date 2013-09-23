@@ -2,7 +2,9 @@
 
 body{
   @include background-image(linear-gradient(#ccc, #5b5b5b));
+  background-attachment: fixed;
 }
-.container .jumbotron{
+.content_box{
   background:#fff;
+  @include box-shadow(#494949 2px 2px 2px);
 }

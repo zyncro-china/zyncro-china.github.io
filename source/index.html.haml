@@ -3,87 +3,86 @@ pageable: true
 per_page: 10
 ---
 
-.container
-  .jumbotron
-    .container
-      .row
-        .col-lg-2.col-xs-4
-          %img.img-responsive{src:"/img/logo.jpg", alt:"logo"}
-        %h1.col-lg-10.col-xs-8
-          Zyncro China Dev Blog
-  .row
-    .col-lg-8.col-xs-12
-      %ul.well-lg
-        - if paginate && num_pages > 1
-          %p
-            Page #{page_number} of #{num_pages}
-          - if prev_page
-            %p= link_to 'Previous page', prev_page
-        
-        - page_articles.each_with_index do |article, i|
-          %li.articl
-            %h2
+.jumbotron.content_box
+  .container
+    .row
+      .col-lg-2.col-xs-4
+        %img.img-responsive{src:"/img/logo.jpg", alt:"logo"}
+      %h1.col-lg-10.col-xs-8
+        Zyncro China Dev Blog
+.row
+  .col-lg-8.col-xs-12
+    %ul.well-lg.content_box
+      - if paginate && num_pages > 1
+        %p
+          Page #{page_number} of #{num_pages}
+        - if prev_page
+          %p= link_to 'Previous page', prev_page
+      
+      - page_articles.each_with_index do |article, i|
+        %li.articl
+          %h2
+            = link_to article.title, article
+            %span= article.date.strftime('%b %e')
+          /
+            use article.summary(250) if you have Nokogiri available to show just
+            the first 250 characters
+          = article.body
+      - if paginate
+        - if next_page
+          %p= link_to 'Next page', next_page
+  
+  .col-lg-4.hidden-xs.asider.hidden-md.hidden-sm
+    %dl.well-lg.content_box
+      %dt 
+        %h2 Recent Articles
+      %dd
+        %ol
+          - blog.articles[0...10].each do |article|
+            %li
               = link_to article.title, article
               %span= article.date.strftime('%b %e')
-            /
-              use article.summary(250) if you have Nokogiri available to show just
-              the first 250 characters
-            = article.body
-        - if paginate
-          - if next_page
-            %p= link_to 'Next page', next_page
-    
-    .col-lg-4.hidden-xs.asider
-      %dl.well-lg
-        %dt 
-          %h2 Recent Articles
-        %dd
-          %ol
-            - blog.articles[0...10].each do |article|
-              %li
-                = link_to article.title, article
-                %span= article.date.strftime('%b %e')
-        %dt 
-          %h2 Tags
-        %dd
-          %ol
-            - blog.tags.each do |tag, articles|
-              %li
-                = link_to tag, tag_path(tag)
-                (#{articles.size})
-        %dt 
-          %h2 By Year
-        %dd
-          %ol
-            - blog.articles.group_by {|a| a.date.year }.each do |year, articles|
-              %li
-                = link_to year, blog_year_path(year)
-                (#{articles.size})
+      %dt 
+        %h2 Tags
+      %dd
+        %ol
+          - blog.tags.each do |tag, articles|
+            %li
+              = link_to tag, tag_path(tag)
+              (#{articles.size})
+      %dt 
+        %h2 By Year
+      %dd
+        %ol
+          - blog.articles.group_by {|a| a.date.year }.each do |year, articles|
+            %li
+              = link_to year, blog_year_path(year)
+              (#{articles.size})
 
-  .row
-    .col-xs-12.hidden-lg.asider
-      %dl.well-lg
-        %dt 
-          %h2 Recent Articles
-        %dd
-          %ol
-            - blog.articles[0...10].each do |article|
-              %li
-                = link_to article.title, article
-                %span= article.date.strftime('%b %e')
-        %dt 
-          %h2 Tags
-        %dd
-          %ol
-            - blog.tags.each do |tag, articles|
-              %li
-                = link_to tag, tag_path(tag)
-                (#{articles.size})
-        %dt 
-          %h2 By Year
-        %dd
-          %ol
-            - blog.articles.group_by {|a| a.date.year }.each do |year, articles|
-              %li
-                = link_to year, blog_year_path(year)
-                (#{articles.size})
+.row
+  .col-xs-12.hidden-lg.asider
+    %dl.well-lg.content_box
+      %dt 
+        %h2 Recent Articles
+      %dd
+        %ol
+          - blog.articles[0...10].each do |article|
+            %li
+              = link_to article.title, article
+              %span= article.date.strftime('%b %e')
+      %dt 
+        %h2 Tags
+      %dd
+        %ol
+          - blog.tags.each do |tag, articles|
+            %li
+              = link_to tag, tag_path(tag)
+              (#{articles.size})
+      %dt 
+        %h2 By Year
+      %dd
+        %ol
+          - blog.articles.group_by {|a| a.date.year }.each do |year, articles|
+            %li
+              = link_to year, blog_year_path(year)
+              (#{articles.size})
