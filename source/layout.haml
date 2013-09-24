@@ -23,15 +23,16 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand Brand
+          %a.navbar-brand 
+
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav
-            %li.active 
-              %a Home
             %li 
-              %a{href: '#'} Archieve
+              %a{href: '/'} Home
+            %li 
+              %a{href: '/feed.xml'} Feed
             %li
-              %a Tags
+              %a{href: '/about'} About
       
     %section.main
       #main{:role => "main"}
