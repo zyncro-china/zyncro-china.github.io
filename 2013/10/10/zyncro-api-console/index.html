@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>HTML5 Boilerplate</title>
+    <title>Zyncro API Console</title>
     <meta content='' name='description'>
     <meta content='width=device-width' name='viewport'>
     <link href='/css/normalize.css' rel='stylesheet'>
@@ -44,18 +44,30 @@
     <section class='main'>
       <div id='main' role='main'>
         <div class='container'>
-          <div class='content_box well-lg'>
-            <h1>
-              Archive for
-              2012
-            </h1>
-            <ul>
-              <li>
-                <a href="/2012/01/01/example-article/">Example Article</a>
-                <span>Jan  1</span>
-              </li>
-            </ul>
-          </div>
+          <article>
+            <h1>为什么要做这个Zyncro Console</h1>
+            
+            <p>Zyncro已经有一个API
+            Console，但是再做一个可以更好地体验其API的功能，而且也不难，最重要是自己做比较有趣。</p>
+            
+            <h1>Zyncro API Console</h1>
+            
+            <iframe src="https://apigee.com/ruanwz/embed/console/zyncro" width="100%"
+            height="600" scrolling="no"></iframe>
+          </article>
+          <div id="disqus_thread"></div>
+                      <script type="text/javascript">
+                      //<![CDATA[
+                          (function() {
+                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                      //]]>
+                      </script>
+                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                  </script>
         </div>
       </div>
     </section>
@@ -71,3 +83,4 @@
     </footer>
   </body>
 </html>
+

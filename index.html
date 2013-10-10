@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset='utf-8'>
@@ -9,7 +8,10 @@
     <link href='/css/normalize.css' rel='stylesheet'>
     <link href='/css/main.css' rel='stylesheet'>
     <link href='/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='/stylesheets/background.css' rel='stylesheet'>
     <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
+    <script src='/js/bootstrap.min.js'></script>
     <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="/stylesheets/raw.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
@@ -22,90 +24,214 @@
             <span class='icon-bar'></span>
             <span class='icon-bar'></span>
           </button>
-          <a class='navbar-brand'>Brand</a>
+          <a class='navbar-brand'></a>
         </div>
         <div class='collapse navbar-collapse navbar-ex1-collapse'>
           <ul class='nav navbar-nav'>
-            <li class='active'>
-              <a>Home</a>
+            <li>
+              <a href='/'>Home</a>
             </li>
             <li>
-              <a>Archieve</a>
+              <a href='/feed.xml'>Feed</a>
             </li>
             <li>
-              <a>Tags</a>
+              <a href='/about'>About</a>
             </li>
           </ul>
         </div>
       </nav>
     </header>
-    <section class='main'></section>
-    <div id='main' role='main'>
-      <div class='container'>
-        <div class='jumbotron'>
-          <div class='container'>
-            <h1>Zyncro China Dev Blog</h1>
-            <p>...</p>
-            <p>
-              <a class='btn btn-primary btn-lg'>Learn more</a>
-            </p>
+    <section class='main'>
+      <div id='main' role='main'>
+        <div class='container'>
+          <div class='jumbotron content_box'>
+            <div class='container'>
+              <div class='row'>
+                <div class='col-lg-2 col-xs-4'>
+                  <img alt='logo' class='img-responsive' src='/img/logo.jpg'>
+                </div>
+                <h1 class='col-lg-10 col-xs-8'>
+                  Zyncro China Dev Blog
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-lg-8 col-xs-12'>
+              <ul class='well-lg content_box'>
+                <li class='articl'>
+                  <h2>
+                    <a href="/2013/10/10/zyncro-api-console/">Zyncro API Console</a>
+                    <span>Oct 10</span>
+                  </h2>
+                  <!--
+                    use article.summary(250) if you have Nokogiri available to show just
+                    the first 250 characters
+                  -->
+                  <h1>为什么要做这个Zyncro Console</h1>
+                  
+                  <p>Zyncro已经有一个API
+                  Console，但是再做一个可以更好地体验其API的功能，而且也不难，最重要是自己做比较有趣。</p>
+                  
+                  <h1>Zyncro API Console</h1>
+                  
+                  <iframe src="https://apigee.com/ruanwz/embed/console/zyncro" width="100%"
+                  height="600" scrolling="no"></iframe>
+                </li>
+                <li class='articl'>
+                  <h2>
+                    <a href="/2012/01/01/example-article/">Example Article</a>
+                    <span>Jan  1</span>
+                  </h2>
+                  <!--
+                    use article.summary(250) if you have Nokogiri available to show just
+                    the first 250 characters
+                  -->
+                  <h1>This is a Heading Title</h1>
+                  
+                  <h2>This is smaller title</h2>
+                  
+                  <ol>
+                  <li>go home</li>
+                  <li>cook dinner</li>
+                  </ol>
+                  
+                  <ul>
+                  <li>this is a option</li>
+                  <li>option 2
+                  Thisssss is an example article. You probably want to delete it and write your own articles!</li>
+                  </ul>
+                  <pre class="highlight ruby"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div><div class="lineno">4</div></td><td class="code"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                    <span class="nb">puts</span> <span class="n">message</span>
+                    <span class="k">return</span> <span class="kp">nil</span>
+                  <span class="k">end</span>
+                  </td></tr></tbody></table></pre><pre class="highlight javascript"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div></td><td class="code"><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+                    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'aa'</span><span class="p">)</span>
+                  <span class="p">}</span>
+                  </td></tr></tbody></table></pre>
+                </li>
+              </ul>
+            </div>
+            <div class='col-lg-4 hidden-xs asider hidden-md hidden-sm'>
+              <dl class='well-lg content_box'>
+                <dt>
+                  <h2>Recent Articles</h2>
+                </dt>
+                <dd>
+                  <ol>
+                    <li>
+                      <a href="/2013/10/10/zyncro-api-console/">Zyncro API Console</a>
+                      <span>Oct 10</span>
+                    </li>
+                    <li>
+                      <a href="/2012/01/01/example-article/">Example Article</a>
+                      <span>Jan  1</span>
+                    </li>
+                  </ol>
+                </dd>
+                <dt>
+                  <h2>Tags</h2>
+                </dt>
+                <dd>
+                  <ol>
+                    <li>
+                      <a href="/tags/example/">example</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/tags/api/">api</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/tags/oauth/">oauth</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/tags/rest/">rest</a>
+                      (1)
+                    </li>
+                  </ol>
+                </dd>
+                <dt>
+                  <h2>By Year</h2>
+                </dt>
+                <dd>
+                  <ol>
+                    <li>
+                      <a href="/2013/">2013</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/2012/">2012</a>
+                      (1)
+                    </li>
+                  </ol>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='col-xs-12 hidden-lg asider'>
+              <dl class='well-lg content_box'>
+                <dt>
+                  <h2>Recent Articles</h2>
+                </dt>
+                <dd>
+                  <ol>
+                    <li>
+                      <a href="/2013/10/10/zyncro-api-console/">Zyncro API Console</a>
+                      <span>Oct 10</span>
+                    </li>
+                    <li>
+                      <a href="/2012/01/01/example-article/">Example Article</a>
+                      <span>Jan  1</span>
+                    </li>
+                  </ol>
+                </dd>
+                <dt>
+                  <h2>Tags</h2>
+                </dt>
+                <dd>
+                  <ol>
+                    <li>
+                      <a href="/tags/example/">example</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/tags/api/">api</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/tags/oauth/">oauth</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/tags/rest/">rest</a>
+                      (1)
+                    </li>
+                  </ol>
+                </dd>
+                <dt>
+                  <h2>By Year</h2>
+                </dt>
+                <dd>
+                  <ol>
+                    <li>
+                      <a href="/2013/">2013</a>
+                      (1)
+                    </li>
+                    <li>
+                      <a href="/2012/">2012</a>
+                      (1)
+                    </li>
+                  </ol>
+                </dd>
+              </dl>
+            </div>
           </div>
         </div>
-        <h2>
-          <a href="/2012/01/01/example-article/">Example Article</a>
-          <span>Jan  1</span>
-        </h2>
-        <!--
-          use article.summary(250) if you have Nokogiri available to show just
-          the first 250 characters
-        -->
-        <h1>This is a Heading Title</h1>
-        
-        <h2>This is smaller title</h2>
-        
-        <ol>
-        <li>go home</li>
-        <li>cook dinner</li>
-        </ol>
-        
-        <ul>
-        <li>this is a option</li>
-        <li>option 2
-        This is an example article. You probably want to delete it and write your own articles!</li>
-        </ul>
-        <pre class="highlight ruby"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div><div class="lineno">4</div></td><td class="code"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-          <span class="nb">puts</span> <span class="n">message</span>
-          <span class="k">return</span> <span class="kp">nil</span>
-        <span class="k">end</span>
-        </td></tr></tbody></table></pre><pre class="highlight javascript"><table><tbody><tr><td class="gutter gl"><div class="lineno">1</div><div class="lineno">2</div><div class="lineno">3</div></td><td class="code"><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;aa&#39;</span><span class="p">)</span>
-        <span class="p">}</span>
-        </td></tr></tbody></table></pre>
-        <aside>
-          <h2>Recent Articles</h2>
-          <ol>
-            <li>
-              <a href="/2012/01/01/example-article/">Example Article</a>
-              <span>Jan  1</span>
-            </li>
-          </ol>
-          <h2>Tags</h2>
-          <ol>
-            <li>
-              <a href="/tags/example/">example</a>
-              (1)
-            </li>
-          </ol>
-          <h2>By Year</h2>
-          <ol>
-            <li>
-              <a href="/2012/">2012</a>
-              (1)
-            </li>
-          </ol>
-        </aside>
       </div>
-    </div>
+    </section>
     <footer>
       <script type="text/javascript">
       //<![CDATA[

@@ -1,3 +1,15 @@
-/* line 1, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/background.css.scss */
+/* line 3, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/background.css.scss */
 body {
-  background: green; }
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(100%, #5b5b5b));
+  background-image: -webkit-linear-gradient(#cccccc, #5b5b5b);
+  background-image: -moz-linear-gradient(#cccccc, #5b5b5b);
+  background-image: -o-linear-gradient(#cccccc, #5b5b5b);
+  background-image: linear-gradient(#cccccc, #5b5b5b);
+  background-attachment: fixed; }
+
+/* line 7, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/background.css.scss */
+.content_box {
+  background: #fff;
+  -webkit-box-shadow: #494949 2px 2px 2px;
+  -moz-box-shadow: #494949 2px 2px 2px;
+  box-shadow: #494949 2px 2px 2px; }
