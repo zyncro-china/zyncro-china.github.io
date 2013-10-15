@@ -40,7 +40,7 @@ activate :deploy do |deploy|
 end
 
 activate :livereload
-activate :syntax, :line_numbers => true
+activate :syntax #, :line_numbers => true
 activate :google_analytics do |ga|
   ga.tracking_id = 'UA-44086232-1'
 end
