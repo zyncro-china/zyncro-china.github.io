@@ -8,3 +8,11 @@ body{
   background:#fff;
   @include box-shadow(#494949 2px 2px 2px);
 }
+article{
+  background:#fff;
+  @include box-shadow(#494949 2px 1px 2px);
+  padding:50px;
+  border-top-left-radius:15px;
+  border-top-right-radius:15px;
+  margin-bottom:10px;
+}
