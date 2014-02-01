@@ -5,16 +5,45 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2013-10-15T00:00:00Z</updated>
+  <updated>2014-02-01T15:35:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>在android上创建chrome app</title>
+    <link rel="alternate" href="http://blog.url.com/2014/02/01/android-chrome-app/"/>
+    <id>http://blog.url.com/2014/02/01/android-chrome-app/</id>
+    <published>2014-02-01T15:35:00Z</published>
+    <updated>2014-02-01T23:44:19+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h1&gt;Why not just using phonegap to build the mobile app&lt;/h1&gt;
+
+&lt;p&gt;Because setup phonegap toolchain takes more time, while &lt;a href="https://github.com/MobileChromeApps/mobile-chrome-apps"&gt;cca&lt;/a&gt; is much faster. Further more, it can make use of chrome api.&lt;/p&gt;
+
+&lt;h1&gt;installation&lt;/h1&gt;
+
+&lt;p&gt;sudo npm install -g cca&lt;/p&gt;
+
+&lt;h1&gt;create project&lt;/h1&gt;
+
+&lt;p&gt;cca create test &amp;ndash;android&lt;/p&gt;
+
+&lt;h1&gt;deploy on the phone&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;cca build android&lt;/li&gt;
+&lt;li&gt;cca run android &amp;ndash;device&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
   <entry>
     <title>CSS RESET</title>
     <link rel="alternate" href="http://blog.url.com/2013/10/15/css-reset/"/>
     <id>http://blog.url.com/2013/10/15/css-reset/</id>
     <published>2013-10-15T00:00:00Z</published>
-    <updated>2013-10-15T18:06:33+08:00</updated>
+    <updated>2014-01-10T14:18:32+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -44,7 +73,7 @@
 
 &lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h4&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h5&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h6&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;font-weight&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;normal&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
 
-&lt;span class="nt"&gt;q&lt;/span&gt;&lt;span class="nd"&gt;:before&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;q&lt;/span&gt;&lt;span class="nd"&gt;:after&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;content&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;''&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
+&lt;span class="nt"&gt;q&lt;/span&gt;&lt;span class="nd"&gt;:before&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;q&lt;/span&gt;&lt;span class="nd"&gt;:after&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;content&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
 
 &lt;span class="nt"&gt;abbr&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;acronym&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;border;0;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;
@@ -207,7 +236,7 @@
     <link rel="alternate" href="http://blog.url.com/2013/10/10/zyncro-api-console/"/>
     <id>http://blog.url.com/2013/10/10/zyncro-api-console/</id>
     <published>2013-10-10T07:06:00Z</published>
-    <updated>2013-10-15T16:27:47+08:00</updated>
+    <updated>2014-01-10T14:18:32+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -227,7 +256,7 @@ height="600" scrolling="no"&gt;&lt;/iframe&gt;
     <link rel="alternate" href="http://blog.url.com/2012/01/01/example-article/"/>
     <id>http://blog.url.com/2012/01/01/example-article/</id>
     <published>2012-01-01T00:00:00Z</published>
-    <updated>2013-10-15T18:02:35+08:00</updated>
+    <updated>2014-01-10T14:18:32+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -250,7 +279,7 @@ Thisssss is an example article. You probably want to delete it and write your ow
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kp"&gt;nil&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;&lt;pre class="highlight javascript"&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
-  &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'aa'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;aa&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;</content>
   </entry>
