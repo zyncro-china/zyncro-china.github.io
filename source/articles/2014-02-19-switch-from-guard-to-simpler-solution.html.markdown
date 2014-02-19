@@ -6,8 +6,7 @@ tags:
 # The weird problem when using guard
 I have recently encounter a problem: when using guard to watch file changes,
 and run tasks automatically, they run multiple times, or remove the result.
-Some similiar issues on github:
-https://github.com/netzpirat/guard-coffeescript/issues/28
+[Some similiar issues on github](https://github.com/netzpirat/guard-coffeescript/issues/28)
 
 # Fix the problem or avoid it
 
