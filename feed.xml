@@ -5,10 +5,84 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-02-01T15:35:00Z</updated>
+  <updated>2014-02-19T01:43:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>switch from guard to simpler solution</title>
+    <link rel="alternate" href="http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/"/>
+    <id>http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/</id>
+    <published>2014-02-19T01:43:00Z</published>
+    <updated>2014-02-19T10:41:01+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h1&gt;The weird problem when using guard&lt;/h1&gt;
+
+&lt;p&gt;I have recently encounter a problem: when using guard to watch file changes,
+and run tasks automatically, they run multiple times, or remove the result.
+Some similiar issues on github:
+https://github.com/netzpirat/guard-coffeescript/issues/28&lt;/p&gt;
+
+&lt;h1&gt;Fix the problem or avoid it&lt;/h1&gt;
+
+&lt;p&gt;It seems the problem may be caused by editor, OS, or some gems, I have tried
+some time, but can&amp;rsquo;t find a solution. All I need is just run some task
+automatically when file changes. So I try this rubygem:
+&lt;a href="https://github.com/adamsanderson/when-files-change"&gt;when-files-change&lt;/a&gt; It
+should be simpler than Guard, and I don&amp;rsquo;t need to write config file, just type:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+when-files-change -- rake &lt;span class="nb"&gt;test
+&lt;/span&gt;when-files-change --ignore &lt;span class="s1"&gt;&amp;#39;build&amp;#39;&lt;/span&gt; -- make
+&lt;/pre&gt;
+&lt;p&gt;That is all. I can leave the task run by itself without manually invoke them.&lt;/p&gt;
+
+&lt;h1&gt;Guard come back to work&lt;/h1&gt;
+
+&lt;p&gt;When I create a new project later, some guard tasks run normally. Maybe my
+previous problem is caused by some rubygem dependencies.&lt;/p&gt;
+
+&lt;h1&gt;Other solutions that run tasks from vim by key mappings&lt;/h1&gt;
+
+&lt;h2&gt;use tmux to run tasks asynchronously&lt;/h2&gt;
+&lt;pre class="highlight shell"&gt;
+tmux new-session -n development
+&lt;/pre&gt;
+&lt;p&gt;tmux can send keys to another pane like&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+tmux send-keys -t development.1 &lt;span class="s2"&gt;&amp;quot;echo test&amp;quot;&lt;/span&gt; C-m
+tmux send-keys -t development.1 &lt;span class="s2"&gt;&amp;quot;rake&amp;quot;&lt;/span&gt; C-m
+&lt;/pre&gt;
+&lt;h2&gt;use fifo or pipe to run tasks:&lt;/h2&gt;
+&lt;pre class="highlight shell"&gt;
+mkfifo &lt;span class="nb"&gt;test&lt;/span&gt;-commands
+
+&lt;span class="k"&gt;in &lt;/span&gt;one screen: cat &lt;span class="nb"&gt;test&lt;/span&gt;-commands
+&lt;span class="k"&gt;in &lt;/span&gt;another screen: &lt;span class="nb"&gt;echo test&lt;/span&gt;-commands
+&lt;/pre&gt;
+&lt;p&gt;So now we can use the fifo/pipe to send the command over.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat &lt;span class="nb"&gt;test&lt;/span&gt;-commands&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;to make it run forever:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;span class="k"&gt;while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;; &lt;span class="k"&gt;do &lt;/span&gt;sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat &lt;span class="nb"&gt;test&lt;/span&gt;-commands&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;use vim mapping to run the command on current file, silently through the shortcut, and redraw:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;remap &amp;lt;leader&amp;gt;E :w&lt;span class="se"&gt;\|&lt;/span&gt;:silent !echo &lt;span class="s2"&gt;&amp;quot;bundle exec ruby %&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="nb"&gt;test&lt;/span&gt;-commands&amp;lt;cr&amp;gt;&lt;span class="se"&gt;\|&lt;/span&gt;:redraw!&amp;lt;cr&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;write a run-test.sh to avoid create the fifo manually, because fifo can&amp;rsquo;t check into git repository:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -p &lt;span class="nb"&gt;test&lt;/span&gt;-commands &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then
+  &lt;/span&gt;mkfifo &lt;span class="nb"&gt;test&lt;/span&gt;-commands
+&lt;span class="k"&gt;fi
+
+while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;; &lt;span class="k"&gt;do
+  &lt;/span&gt;sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat &lt;span class="nb"&gt;test&lt;/span&gt;-commands&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>在android上创建chrome app</title>
     <link rel="alternate" href="http://blog.url.com/2014/02/01/android-chrome-app/"/>

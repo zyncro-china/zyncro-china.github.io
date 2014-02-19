@@ -61,6 +61,80 @@
               <ul class='well-lg content_box'>
                 <li class='articl'>
                   <h2>
+                    <a href="/2014/02/19/switch-from-guard-to-simpler-solution/">switch from guard to simpler solution</a>
+                    <span>Feb 19</span>
+                  </h2>
+                  <!--
+                    use article.summary(250) if you have Nokogiri available to show just
+                    the first 250 characters
+                  -->
+                  <h1>The weird problem when using guard</h1>
+                  
+                  <p>I have recently encounter a problem: when using guard to watch file changes,
+                  and run tasks automatically, they run multiple times, or remove the result.
+                  Some similiar issues on github:
+                  https://github.com/netzpirat/guard-coffeescript/issues/28</p>
+                  
+                  <h1>Fix the problem or avoid it</h1>
+                  
+                  <p>It seems the problem may be caused by editor, OS, or some gems, I have tried
+                  some time, but can&rsquo;t find a solution. All I need is just run some task
+                  automatically when file changes. So I try this rubygem:
+                  <a href="https://github.com/adamsanderson/when-files-change">when-files-change</a> It
+                  should be simpler than Guard, and I don&rsquo;t need to write config file, just type:</p>
+                  <pre class="highlight shell">
+                  when-files-change -- rake <span class="nb">test
+                  </span>when-files-change --ignore <span class="s1">&#39;build&#39;</span> -- make
+                  </pre>
+                  <p>That is all. I can leave the task run by itself without manually invoke them.</p>
+                  
+                  <h1>Guard come back to work</h1>
+                  
+                  <p>When I create a new project later, some guard tasks run normally. Maybe my
+                  previous problem is caused by some rubygem dependencies.</p>
+                  
+                  <h1>Other solutions that run tasks from vim by key mappings</h1>
+                  
+                  <h2>use tmux to run tasks asynchronously</h2>
+                  <pre class="highlight shell">
+                  tmux new-session -n development
+                  </pre>
+                  <p>tmux can send keys to another pane like</p>
+                  <pre class="highlight shell">
+                  tmux send-keys -t development.1 <span class="s2">&quot;echo test&quot;</span> C-m
+                  tmux send-keys -t development.1 <span class="s2">&quot;rake&quot;</span> C-m
+                  </pre>
+                  <h2>use fifo or pipe to run tasks:</h2>
+                  <pre class="highlight shell">
+                  mkfifo <span class="nb">test</span>-commands
+                  
+                  <span class="k">in </span>one screen: cat <span class="nb">test</span>-commands
+                  <span class="k">in </span>another screen: <span class="nb">echo test</span>-commands
+                  </pre>
+                  <p>So now we can use the fifo/pipe to send the command over.</p>
+                  <pre class="highlight shell">sh -c <span class="s2">&quot;</span><span class="k">$(</span>cat <span class="nb">test</span>-commands<span class="k">)</span><span class="s2">&quot;</span>
+                  </pre>
+                  <p>to make it run forever:</p>
+                  <pre class="highlight shell"><span class="k">while </span><span class="nb">true</span>; <span class="k">do </span>sh -c <span class="s2">&quot;</span><span class="k">$(</span>cat <span class="nb">test</span>-commands<span class="k">)</span><span class="s2">&quot;</span>; <span class="k">done</span>
+                  </pre>
+                  <p>use vim mapping to run the command on current file, silently through the shortcut, and redraw:</p>
+                  <pre class="highlight shell">remap &lt;leader&gt;E :w<span class="se">\|</span>:silent !echo <span class="s2">&quot;bundle exec ruby %&quot;</span> &gt; <span class="nb">test</span>-commands&lt;cr&gt;<span class="se">\|</span>:redraw!&lt;cr&gt;
+                  </pre>
+                  <p>write a run-test.sh to avoid create the fifo manually, because fifo can&rsquo;t check into git repository:</p>
+                  <pre class="highlight shell">
+                  <span class="k">if</span> <span class="o">[</span> ! -p <span class="nb">test</span>-commands <span class="o">]</span>
+                  <span class="k">then
+                    </span>mkfifo <span class="nb">test</span>-commands
+                  <span class="k">fi
+                  
+                  while </span><span class="nb">true</span>; <span class="k">do
+                    </span>sh -c <span class="s2">&quot;</span><span class="k">$(</span>cat <span class="nb">test</span>-commands<span class="k">)</span><span class="s2">&quot;</span>
+                  <span class="k">done</span>
+                  
+                  </pre>
+                </li>
+                <li class='articl'>
+                  <h2>
                     <a href="/2014/02/01/android-chrome-app/">在android上创建chrome app</a>
                     <span>Feb  1</span>
                   </h2>
@@ -341,6 +415,10 @@
                 <dd>
                   <ol>
                     <li>
+                      <a href="/2014/02/19/switch-from-guard-to-simpler-solution/">switch from guard to simpler solution</a>
+                      <span>Feb 19</span>
+                    </li>
+                    <li>
                       <a href="/2014/02/01/android-chrome-app/">在android上创建chrome app</a>
                       <span>Feb  1</span>
                     </li>
@@ -404,7 +482,7 @@
                   <ol>
                     <li>
                       <a href="/2014/">2014</a>
-                      (1)
+                      (2)
                     </li>
                     <li>
                       <a href="/2013/">2013</a>
@@ -428,6 +506,10 @@
                 <dd>
                   <ol>
                     <li>
+                      <a href="/2014/02/19/switch-from-guard-to-simpler-solution/">switch from guard to simpler solution</a>
+                      <span>Feb 19</span>
+                    </li>
+                    <li>
                       <a href="/2014/02/01/android-chrome-app/">在android上创建chrome app</a>
                       <span>Feb  1</span>
                     </li>
@@ -491,7 +573,7 @@
                   <ol>
                     <li>
                       <a href="/2014/">2014</a>
-                      (1)
+                      (2)
                     </li>
                     <li>
                       <a href="/2013/">2013</a>
