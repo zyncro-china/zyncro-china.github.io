@@ -2,6 +2,7 @@
 title: 在android上创建chrome app
 date: 2014-02-01 15:35 UTC
 tags: mobile, android, chrome, phonegap
+
 ---
 # Why not just using phonegap to build the mobile app
 

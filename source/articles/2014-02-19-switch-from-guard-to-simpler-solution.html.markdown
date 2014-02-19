@@ -1,7 +1,8 @@
 ---
 title: switch from guard to simpler solution
 date: 2014-02-19 01:43 UTC
-tags:
+tags: vim,guard,unix,pipe,tmux
+
 ---
 # The weird problem when using guard
 I have recently encounter a problem: when using guard to watch file changes,
