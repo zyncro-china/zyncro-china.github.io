@@ -68,13 +68,13 @@
                     use article.summary(250) if you have Nokogiri available to show just
                     the first 250 characters
                   -->
-                  <h1>The weird problem when using guard</h1>
+                  <h2>The weird problem when using guard</h2>
                   
                   <p>I have recently encounter a problem: when using guard to watch file changes,
                   and run tasks automatically, they run multiple times, or remove the result.
                   <a href="https://github.com/netzpirat/guard-coffeescript/issues/28">Some similiar issues on github</a></p>
                   
-                  <h1>Fix the problem or avoid it</h1>
+                  <h2>Fix the problem or avoid it</h2>
                   
                   <p>It seems the problem may be caused by editor, OS, or some gems, I have tried
                   some time, but can&rsquo;t find a solution. All I need is just run some task
@@ -87,14 +87,14 @@
                   </pre>
                   <p>That is all. I can leave the task run by itself without manually invoke them.</p>
                   
-                  <h1>Guard come back to work</h1>
+                  <h2>Guard come back to work</h2>
                   
                   <p>When I create a new project later, some guard tasks run normally. Maybe my
                   previous problem is caused by some rubygem dependencies.</p>
                   
-                  <h1>Other solutions that run tasks from vim by key mappings</h1>
+                  <h2>Other solutions that run tasks from vim by key mappings</h2>
                   
-                  <h2>use tmux to run tasks asynchronously</h2>
+                  <h3>use tmux to run tasks asynchronously</h3>
                   
                   <p>create a new tmux session:</p>
                   <pre class="highlight shell">
@@ -105,7 +105,7 @@
                   tmux send-keys -t development.1 <span class="s2">&quot;echo test&quot;</span> C-m
                   tmux send-keys -t development.1 <span class="s2">&quot;rake&quot;</span> C-m
                   </pre>
-                  <h2>use fifo or pipe to run tasks:</h2>
+                  <h3>use fifo or pipe to run tasks:</h3>
                   <pre class="highlight shell">
                   mkfifo <span class="nb">test</span>-commands
                   
@@ -143,19 +143,19 @@
                     use article.summary(250) if you have Nokogiri available to show just
                     the first 250 characters
                   -->
-                  <h1>Why not just using phonegap to build the mobile app</h1>
+                  <h2>Why not just using phonegap to build the mobile app</h2>
                   
                   <p>Because setup phonegap toolchain takes more time, while <a href="https://github.com/MobileChromeApps/mobile-chrome-apps">cca</a> is much faster. Further more, it can make use of chrome api.</p>
                   
-                  <h1>installation</h1>
+                  <h2>installation</h2>
                   
                   <p>sudo npm install -g cca</p>
                   
-                  <h1>create project</h1>
+                  <h2>create project</h2>
                   
                   <p>cca create test &ndash;android</p>
                   
-                  <h1>deploy on the phone</h1>
+                  <h2>deploy on the phone</h2>
                   
                   <ul>
                   <li>cca build android</li>

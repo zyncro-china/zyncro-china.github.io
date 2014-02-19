@@ -14,17 +14,17 @@
     <link rel="alternate" href="http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/"/>
     <id>http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/</id>
     <published>2014-02-19T01:43:00Z</published>
-    <updated>2014-02-19T10:56:25+08:00</updated>
+    <updated>2014-02-19T11:07:45+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
-    <content type="html">&lt;h1&gt;The weird problem when using guard&lt;/h1&gt;
+    <content type="html">&lt;h2&gt;The weird problem when using guard&lt;/h2&gt;
 
 &lt;p&gt;I have recently encounter a problem: when using guard to watch file changes,
 and run tasks automatically, they run multiple times, or remove the result.
 &lt;a href="https://github.com/netzpirat/guard-coffeescript/issues/28"&gt;Some similiar issues on github&lt;/a&gt;&lt;/p&gt;
 
-&lt;h1&gt;Fix the problem or avoid it&lt;/h1&gt;
+&lt;h2&gt;Fix the problem or avoid it&lt;/h2&gt;
 
 &lt;p&gt;It seems the problem may be caused by editor, OS, or some gems, I have tried
 some time, but can&amp;rsquo;t find a solution. All I need is just run some task
@@ -37,14 +37,14 @@ when-files-change -- rake &lt;span class="nb"&gt;test
 &lt;/pre&gt;
 &lt;p&gt;That is all. I can leave the task run by itself without manually invoke them.&lt;/p&gt;
 
-&lt;h1&gt;Guard come back to work&lt;/h1&gt;
+&lt;h2&gt;Guard come back to work&lt;/h2&gt;
 
 &lt;p&gt;When I create a new project later, some guard tasks run normally. Maybe my
 previous problem is caused by some rubygem dependencies.&lt;/p&gt;
 
-&lt;h1&gt;Other solutions that run tasks from vim by key mappings&lt;/h1&gt;
+&lt;h2&gt;Other solutions that run tasks from vim by key mappings&lt;/h2&gt;
 
-&lt;h2&gt;use tmux to run tasks asynchronously&lt;/h2&gt;
+&lt;h3&gt;use tmux to run tasks asynchronously&lt;/h3&gt;
 
 &lt;p&gt;create a new tmux session:&lt;/p&gt;
 &lt;pre class="highlight shell"&gt;
@@ -55,7 +55,7 @@ tmux new-session -n development
 tmux send-keys -t development.1 &lt;span class="s2"&gt;&amp;quot;echo test&amp;quot;&lt;/span&gt; C-m
 tmux send-keys -t development.1 &lt;span class="s2"&gt;&amp;quot;rake&amp;quot;&lt;/span&gt; C-m
 &lt;/pre&gt;
-&lt;h2&gt;use fifo or pipe to run tasks:&lt;/h2&gt;
+&lt;h3&gt;use fifo or pipe to run tasks:&lt;/h3&gt;
 &lt;pre class="highlight shell"&gt;
 mkfifo &lt;span class="nb"&gt;test&lt;/span&gt;-commands
 
@@ -89,23 +89,23 @@ while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;; &lt;span class="k"&
     <link rel="alternate" href="http://blog.url.com/2014/02/01/android-chrome-app/"/>
     <id>http://blog.url.com/2014/02/01/android-chrome-app/</id>
     <published>2014-02-01T15:35:00Z</published>
-    <updated>2014-02-19T10:52:50+08:00</updated>
+    <updated>2014-02-19T11:08:02+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
-    <content type="html">&lt;h1&gt;Why not just using phonegap to build the mobile app&lt;/h1&gt;
+    <content type="html">&lt;h2&gt;Why not just using phonegap to build the mobile app&lt;/h2&gt;
 
 &lt;p&gt;Because setup phonegap toolchain takes more time, while &lt;a href="https://github.com/MobileChromeApps/mobile-chrome-apps"&gt;cca&lt;/a&gt; is much faster. Further more, it can make use of chrome api.&lt;/p&gt;
 
-&lt;h1&gt;installation&lt;/h1&gt;
+&lt;h2&gt;installation&lt;/h2&gt;
 
 &lt;p&gt;sudo npm install -g cca&lt;/p&gt;
 
-&lt;h1&gt;create project&lt;/h1&gt;
+&lt;h2&gt;create project&lt;/h2&gt;
 
 &lt;p&gt;cca create test &amp;ndash;android&lt;/p&gt;
 
-&lt;h1&gt;deploy on the phone&lt;/h1&gt;
+&lt;h2&gt;deploy on the phone&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;cca build android&lt;/li&gt;
