@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/"/>
     <id>http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/</id>
     <published>2014-02-19T01:43:00Z</published>
-    <updated>2014-02-19T10:41:01+08:00</updated>
+    <updated>2014-02-19T10:45:20+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -22,8 +22,7 @@
 
 &lt;p&gt;I have recently encounter a problem: when using guard to watch file changes,
 and run tasks automatically, they run multiple times, or remove the result.
-Some similiar issues on github:
-https://github.com/netzpirat/guard-coffeescript/issues/28&lt;/p&gt;
+&lt;a href="https://github.com/netzpirat/guard-coffeescript/issues/28"&gt;Some similiar issues on github&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1&gt;Fix the problem or avoid it&lt;/h1&gt;
 
