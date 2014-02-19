@@ -32,6 +32,7 @@ previous problem is caused by some rubygem dependencies.
 # Other solutions that run tasks from vim by key mappings
 
 ## use tmux to run tasks asynchronously
+create a new tmux session:
 
 ```shell
 
