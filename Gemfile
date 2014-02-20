@@ -11,6 +11,6 @@ gem "middleman-syntax"
 gem "redcarpet"
 gem "middleman-google-analytics"
 gem "bootstrap-sass"
-
+gem "nokogiri"
 # For feed.xml.builder
 gem "builder", "~> 3.0"
