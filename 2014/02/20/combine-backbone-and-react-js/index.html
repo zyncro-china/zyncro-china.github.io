@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Zyncro API Console</title>
+    <title>Combine Backbone and React.js</title>
     <meta content='' name='description'>
     <meta content='width=device-width' name='viewport'>
     <link href='/css/normalize.css' rel='stylesheet'>
@@ -48,19 +48,67 @@
           <article>
             <div class='title'>
               <h1 class='page-header text-center'>
-                Zyncro API Console
+                Combine Backbone and React.js
               </h1>
             </div>
             <br>
-            <h1>为什么要做这个Zyncro Console</h1>
+            <h2>Get the best of both Backbone and React.js</h2>
             
-            <p>Zyncro已经有一个API
-            Console，但是再做一个可以更好地体验其API的功能，而且也不难，最重要是自己做比较有趣。</p>
+            <p>Backbone is a small and simple framework for Single Page Application. But
+            rendering views is hard, so let&rsquo;s try to use React.js together, and let
+            React.js to finish the hard work for us.</p>
             
-            <h1>Zyncro API Console</h1>
+            <h2>React.js Framework</h2>
             
-            <iframe src="https://apigee.com/ruanwz/embed/console/zyncro" width="100%"
-            height="600" scrolling="no"></iframe>
+            <h3>JSX syntax</h3>
+            
+            <p>We can use coffeescript to make writting component easier directly in the
+            coffeescript without compiling first</p>
+            
+            <h3>Object Definition and Intializaion</h3>
+            
+            <ol>
+            <li>to define a component: <code>React.createClass</code></li>
+            <li>use the component, and pass the props: <code>React.renderComponent</code></li>
+            <li>called automatically by React before a component is rendered: <code>componentWillMount</code></li>
+            <li>called before unmount component: <code>componentWillUnmount</code></li>
+            </ol>
+            
+            <h3>Reactive state</h3>
+            
+            <p>render() methods are written declaratively as functions of <code>this.props</code> and
+            <code>this.state.</code> The framework guarantees the UI is always consistent with the
+            inputs.</p>
+            
+            <p>React.js will automatically update the view according to the state</p>
+            
+            <ol>
+            <li>initialize the state: <code>getInitialState</code></li>
+            <li>update the state: <code>this.setState()</code></li>
+            </ol>
+            
+            <h3>React events</h3>
+            
+            <p>event handler should only returns false to avoid the default action</p>
+            
+            <h3>refs</h3>
+            
+            <p>refs are defined in the JSX, and use <code>getDOMNode()</code> to get the native DOM element</p>
+            <pre class="highlight javascript"><span class="nx">text</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">refs</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">getDOMNode</span><span class="p">().</span><span class="nx">value</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
+            
+            </pre>
+            <h2>Communication</h2>
+            
+            <h3>Communication from React Component to Backbone</h3>
+            
+            <p>pass the callback as the React Component&rsquo;s callback using <code>props</code></p>
+            
+            <h3>Communication from Backbone to React Component</h3>
+            
+            <p>use Backbone Model&rsquo;s event binding, like:</p>
+            <pre class="highlight coffeescript"><span class="k">this</span><span class="p">.</span><span class="na">props</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">on</span> <span class="s">&#39;change&#39;</span><span class="p">,</span><span class="o">=&gt;</span>
+              <span class="vi">@</span><span class="na">forceUpdate</span><span class="p">()</span>
+            </pre>
           </article>
           <div id="disqus_thread"></div>
                       <script type="text/javascript">

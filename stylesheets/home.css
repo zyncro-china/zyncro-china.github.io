@@ -3,7 +3,7 @@ dl{
   padding:0;
 }
 
-li.articl{
+li.article{
   border-bottom:2px dotted #5b5b5b;
   padding-bottom:20px;
   margin-bottom:20px;
@@ -11,6 +11,10 @@ li.articl{
 ul.well-lg{
   list-style-type:none;
 }
+.content_box ol {
+  list-style-type:none;
+}
+
 .asider dd{
   border-bottom:1px solid #969696;
   padding-bottom:10px;

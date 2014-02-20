@@ -5,10 +5,77 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-02-19T01:43:00Z</updated>
+  <updated>2014-02-20T03:42:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Combine Backbone and React.js</title>
+    <link rel="alternate" href="http://blog.url.com/2014/02/20/combine-backbone-and-react-js/"/>
+    <id>http://blog.url.com/2014/02/20/combine-backbone-and-react-js/</id>
+    <published>2014-02-20T03:42:00Z</published>
+    <updated>2014-02-20T14:24:07+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;Get the best of both Backbone and React.js&lt;/h2&gt;
+
+&lt;p&gt;Backbone is a small and simple framework for Single Page Application. But
+rendering views is hard, so let&amp;rsquo;s try to use React.js together, and let
+React.js to finish the hard work for us.&lt;/p&gt;
+
+&lt;h2&gt;React.js Framework&lt;/h2&gt;
+
+&lt;h3&gt;JSX syntax&lt;/h3&gt;
+
+&lt;p&gt;We can use coffeescript to make writting component easier directly in the
+coffeescript without compiling first&lt;/p&gt;
+
+&lt;h3&gt;Object Definition and Intializaion&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;to define a component: &lt;code&gt;React.createClass&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;use the component, and pass the props: &lt;code&gt;React.renderComponent&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;called automatically by React before a component is rendered: &lt;code&gt;componentWillMount&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;called before unmount component: &lt;code&gt;componentWillUnmount&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Reactive state&lt;/h3&gt;
+
+&lt;p&gt;render() methods are written declaratively as functions of &lt;code&gt;this.props&lt;/code&gt; and
+&lt;code&gt;this.state.&lt;/code&gt; The framework guarantees the UI is always consistent with the
+inputs.&lt;/p&gt;
+
+&lt;p&gt;React.js will automatically update the view according to the state&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;initialize the state: &lt;code&gt;getInitialState&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;update the state: &lt;code&gt;this.setState()&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;React events&lt;/h3&gt;
+
+&lt;p&gt;event handler should only returns false to avoid the default action&lt;/p&gt;
+
+&lt;h3&gt;refs&lt;/h3&gt;
+
+&lt;p&gt;refs are defined in the JSX, and use &lt;code&gt;getDOMNode()&lt;/code&gt; to get the native DOM element&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;&lt;span class="nx"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;refs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getDOMNode&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;trim&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h2&gt;Communication&lt;/h2&gt;
+
+&lt;h3&gt;Communication from React Component to Backbone&lt;/h3&gt;
+
+&lt;p&gt;pass the callback as the React Component&amp;rsquo;s callback using &lt;code&gt;props&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3&gt;Communication from Backbone to React Component&lt;/h3&gt;
+
+&lt;p&gt;use Backbone Model&amp;rsquo;s event binding, like:&lt;/p&gt;
+&lt;pre class="highlight coffeescript"&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;props&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;model&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;on&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;change&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class="vi"&gt;@&lt;/span&gt;&lt;span class="na"&gt;forceUpdate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>switch from guard to simpler solution</title>
     <link rel="alternate" href="http://blog.url.com/2014/02/19/switch-from-guard-to-simpler-solution/"/>
