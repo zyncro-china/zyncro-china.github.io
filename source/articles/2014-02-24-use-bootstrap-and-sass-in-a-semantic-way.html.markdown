@@ -12,6 +12,8 @@ So we try to use SASS to isolate the styles, and make the html more semantic.
 
 ## SASS features that helps
 [mixins](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins)
+and
+[extend](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#extend)
 allow you to define styles that can be re-used throughout the stylesheet
 without needing to resort to non-semantic classes like .float-left
 
@@ -25,7 +27,7 @@ The original index.haml:
 
 ```
 
-using mixin, we use more meaningful class: "highlight", and convert the above code into following haml:
+using extend, we use more meaningful class: "highlight", and convert the above code into following haml:
 
 ```haml
 #main
