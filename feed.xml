@@ -5,10 +5,119 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-02-24T03:46:00Z</updated>
+  <updated>2014-02-28T05:52:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Compile vim source with python and ruby support</title>
+    <link rel="alternate" href="http://blog.url.com/2014/02/28/compile-vim-source-with-python-and-ruby-support/"/>
+    <id>http://blog.url.com/2014/02/28/compile-vim-source-with-python-and-ruby-support/</id>
+    <published>2014-02-28T05:52:00Z</published>
+    <updated>2014-02-28T13:59:27+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h3&gt;Compile the vim after upgrade ruby to 2.1.1&lt;/h3&gt;
+
+&lt;p&gt;After I upgrade to ruby 2.1.1, I found the vim can&amp;rsquo;t work, so I get the source of vim and compile it again.&lt;/p&gt;
+
+&lt;p&gt;It is weird that the src/Makefile can&amp;rsquo;t take effect, I have to manually input the configure parameters:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+ ./configure --with-features&lt;span class="o"&gt;=&lt;/span&gt;HUGE &lt;span class="se"&gt;\&lt;/span&gt;
+--enable-multibyte&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+--enable-rubyinterp&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+    --with-ruby-command&lt;span class="o"&gt;=&lt;/span&gt;/home/david/.rvm/rubies/ruby-2.1.1/bin/ruby &lt;span class="se"&gt;\&lt;/span&gt;
+    --enable-gui&lt;span class="o"&gt;=&lt;/span&gt;gnome2 &lt;span class="se"&gt;\&lt;/span&gt;
+    --with-x &lt;span class="se"&gt;\&lt;/span&gt;
+    --enable-pythoninterp&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+--with-python-config-dir&lt;span class="o"&gt;=&lt;/span&gt;/usr/lib/python2.7/config/
+
+
+make
+
+sudo make install
+
+&lt;/pre&gt;
+&lt;p&gt;For the Command-T plugin:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;ruby
+ruby extconf.rb
+make
+&lt;/pre&gt;
+&lt;p&gt;Done!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Hacking simplewebrtc.js to change the video resolution</title>
+    <link rel="alternate" href="http://blog.url.com/2014/02/25/hacking-simplewebrtc-js-to-change-the-video-resolution/"/>
+    <id>http://blog.url.com/2014/02/25/hacking-simplewebrtc-js-to-change-the-video-resolution/</id>
+    <published>2014-02-25T07:37:00Z</published>
+    <updated>2014-02-24T16:05:44+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;Introduction webrtc and simplewebrtc.js&lt;/h2&gt;
+
+&lt;p&gt;I am very exciting about WebRTC technology. It makes the browser can provide
+some peer to peer functionalities that can&amp;rsquo;t be thought before.&lt;/p&gt;
+
+&lt;p&gt;The only limitation now is that only a few mainframe browsers support WebRTC,
+and they use different API.&lt;/p&gt;
+
+&lt;p&gt;I think this is where simplewebrtc.js can help the WebRTC development easier. By
+using the unified interface, developer don&amp;rsquo;t have to handle the difference
+between browsers.&lt;/p&gt;
+
+&lt;p&gt;I hope this library will not be too complicated, as its
+name suggests. So that I can modify when I need, without having to read many
+code that I don&amp;rsquo;t use.&lt;/p&gt;
+
+&lt;h2&gt;The SimpleWebRTC can&amp;rsquo;t customize the video resolution&lt;/h2&gt;
+
+&lt;p&gt;The simplewebrtc doesn&amp;rsquo;t support changing constraints.&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;
+&lt;span class="nx"&gt;SimpleWebRTC&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;startLocalVideo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;webrtc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;startLocalMedia&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;emit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nx"&gt;attachMediaStream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getLocalVideoContainer&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="na"&gt;muted&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;mirror&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;In order to pass in the constraints, I override this function(I write the app
+in coffeescript):&lt;/p&gt;
+&lt;pre class="highlight coffeescript"&gt;
+&lt;span class="nx"&gt;SimpleWebRTC&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;startLocalVideo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class="nx"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;
+  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;config&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;constraints&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="na"&gt;video&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;audio&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;webrtc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;startLocalMedia&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;config&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;constraints&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;
+      &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;emit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+      &lt;span class="nx"&gt;attachMediaStream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLocalVideoContainer&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="na"&gt;muted&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;mirror&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Then we can pass the constraints in the constructor:&lt;/p&gt;
+&lt;pre class="highlight coffeescript"&gt;&lt;span class="nx"&gt;webrtc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;SimpleWebRTC&lt;/span&gt;
+  &lt;span class="na"&gt;localVideoEl&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;localVideo&amp;#39;&lt;/span&gt;
+  &lt;span class="na"&gt;remoteVideosEl&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;remotes&amp;#39;&lt;/span&gt;
+  &lt;span class="na"&gt;autoRequestMedia&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+  &lt;span class="na"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+  &lt;span class="na"&gt;detectSpeakingEvents&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+  &lt;span class="na"&gt;autoAdjustMic&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;
+  &lt;span class="na"&gt;constraints&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="na"&gt;audio&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+    &lt;span class="na"&gt;video&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+      &lt;span class="na"&gt;mandatory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="na"&gt;maxWidth&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;320&lt;/span&gt;
+        &lt;span class="na"&gt;maxHeight&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>use bootstrap and sass in a semantic way</title>
     <link rel="alternate" href="http://blog.url.com/2014/02/24/use-bootstrap-and-sass-in-a-semantic-way/"/>
@@ -231,219 +340,6 @@ while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;; &lt;span class="k"&
 &lt;li&gt;cca build android&lt;/li&gt;
 &lt;li&gt;cca run android &amp;ndash;device&lt;/li&gt;
 &lt;/ul&gt;
-</content>
-  </entry>
-  <entry>
-    <title>CSS RESET</title>
-    <link rel="alternate" href="http://blog.url.com/2013/10/15/css-reset/"/>
-    <id>http://blog.url.com/2013/10/15/css-reset/</id>
-    <published>2013-10-15T00:00:00Z</published>
-    <updated>2014-01-10T14:18:32+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h1&gt;CSS RESET&lt;/h1&gt;
-
-&lt;hr&gt;
-
-&lt;h2&gt;body&lt;/h2&gt;
-
-&lt;p&gt;不同的浏览器对HTML的默认样式有着不同的渲染方式，最简单的方式就
-是用CSS重新对HTML设置一个统一的样式，即CSS RESET.  &lt;/p&gt;
-
-&lt;h3&gt;css reset&lt;/h3&gt;
-&lt;pre class="highlight css"&gt;
-&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;dl&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;dt&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;dd&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;ol&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;li&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h4&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h5&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h6&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;pre&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;form&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;fieldset&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
-&lt;span class="nt"&gt;input&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;textarea&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;blockquote&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;   
-
-&lt;span class="nt"&gt;table&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;border-collapse&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;collapse&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;border-spacing&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;   
-
-&lt;span class="nt"&gt;fieldset&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;img&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;border&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nt"&gt;address&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;caption&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;cite&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;code&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;dfn&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;em&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;strong&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;var&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-style&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;normal&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;font-weight&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;normal&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nt"&gt;ol&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;ul&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;list-style&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nt"&gt;caption&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;text-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;left&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h2&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h4&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h5&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;h6&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;font-weight&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;normal&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nt"&gt;q&lt;/span&gt;&lt;span class="nd"&gt;:before&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;q&lt;/span&gt;&lt;span class="nd"&gt;:after&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;content&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nt"&gt;abbr&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="nt"&gt;acronym&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;border;0;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;文字&lt;/h3&gt;
-&lt;pre class="highlight css"&gt;
-&lt;span class="nc"&gt;.f12&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;12px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.f13&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;13px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.f14&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;14px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.f16&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;16px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.f20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.fb&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-weight&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;bold&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.fn&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;font-weight&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;normal&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.t2&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;text-indent&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;2em&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.lh150&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;line-height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;150&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.lh180&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;line-height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;180&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.lh200&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;line-height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.unl&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;text-decoration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;underline&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.no_unl&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;text-decoration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;定位&lt;/h3&gt;
-&lt;pre class="highlight css"&gt;
-&lt;span class="nc"&gt;.tl&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;text-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;left&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.tc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;text-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;center&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.tr&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="py"&gt;test-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;right&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.bc&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;auto&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;auto&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.fl&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;float&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;left&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;inline&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.fr&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;float&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;inline&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.cb&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;both&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.cl&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;left&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.cr&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;right&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.clearfix&lt;/span&gt;&lt;span class="nd"&gt;:after&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;content&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;both&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;visibility&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;hidden&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.clearfix&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;inline-block&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="nc"&gt;.clearfix&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.Clearfix&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.vm&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;vertical-align&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.pr&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;position&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;relative&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pa&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;position&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;absolute&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.abs-right&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;position&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;absolute&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nl"&gt;right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.zoom&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="py"&gt;zoom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.hidden&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;visibility&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;hidden&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.none&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;长度高度&lt;/h3&gt;
-&lt;pre class="highlight css"&gt;
-&lt;span class="nc"&gt;.w10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w40&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;40px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w60&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;60px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w70&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;70px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w80&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;80px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w90&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;90px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w200&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;200px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w250&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;250px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w300&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;300px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w400&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;400px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w500&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;500px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w600&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;600px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w700&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;700px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.w&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.h50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.h80&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;80px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.h100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.h200&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;200px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.h&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;边距&lt;/h3&gt;
-&lt;pre class="highlight css"&gt;
-&lt;span class="nc"&gt;.m10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.m15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.m30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.mt5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mt10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mt15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mt20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mt30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mt50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mt100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.mb5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mb10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mb15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mb20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mb30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mb50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mb100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.ml5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.ml10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.ml15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.ml20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.ml30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.ml50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.ml100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.mr5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mr10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mr15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mr20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mr30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mr150&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.mr100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;margin-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.p10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.p15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.p30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.pt5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pt10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pt15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pt20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pt30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pt50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.pb5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pb10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pb15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pb20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pb30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pb50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pb100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-bottom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.pl5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pl10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pl15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pl20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pl30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pl50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pl100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-
-&lt;span class="nc"&gt;.pr5&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;5px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pr10&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pr15&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;15px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pr20&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pr30&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;30px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pr50&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;50px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;span class="nc"&gt;.pr100&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nl"&gt;padding-right&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="m"&gt;100px&lt;/span&gt;&lt;span class="p"&gt;;}&lt;/span&gt;
-&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>Zyncro API Console</title>
-    <link rel="alternate" href="http://blog.url.com/2013/10/10/zyncro-api-console/"/>
-    <id>http://blog.url.com/2013/10/10/zyncro-api-console/</id>
-    <published>2013-10-10T07:06:00Z</published>
-    <updated>2014-01-10T14:18:32+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h1&gt;为什么要做这个Zyncro Console&lt;/h1&gt;
-
-&lt;p&gt;Zyncro已经有一个API
-Console，但是再做一个可以更好地体验其API的功能，而且也不难，最重要是自己做比较有趣。&lt;/p&gt;
-
-&lt;h1&gt;Zyncro API Console&lt;/h1&gt;
-
-&lt;iframe src="https://apigee.com/ruanwz/embed/console/zyncro" width="100%"
-height="600" scrolling="no"&gt;&lt;/iframe&gt;
 </content>
   </entry>
 </feed>
