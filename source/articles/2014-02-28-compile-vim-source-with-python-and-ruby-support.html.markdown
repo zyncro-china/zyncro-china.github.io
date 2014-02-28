@@ -3,6 +3,7 @@ title: Compile vim source with python and ruby support
 date: 2014-02-28 05:52 UTC
 tags:
 ---
+vim,ruby,python
 
 ### Compile the vim after upgrade ruby to 2.1.1
 
