@@ -10,6 +10,7 @@ In order to make use of all cpu cores and increase the capability, we need to
 write concurrent programs that can communicate with each other.
 
 There are 2 different communication options:
+
 1. inter-thread
 1. inter-process
 
@@ -23,6 +24,7 @@ inter-thread option. So inter-process option is preferred in most of the cases.
 
 on unix system, There are at least 2 ways to implement inter-process
 communication:
+
 1. pipe
 1. socket(tcp, udp, unix)
 
@@ -40,6 +42,7 @@ on the same host.
 ZeroMQ provides a wrapper for inter-process(also include inter-thread) communication.
 
 The underlying implementation includes:
+
 1. tcp
   It use TCP Socket, and don't tell the port number because there is no
   authentication
@@ -51,6 +54,7 @@ The underlying implementation includes:
   Implemented in UDP multicast, but some router could ban this.
 
 The ZeroMQ communication models includes:
+
 1. REQ/REP
 1. PUB/SUB
 1. PUSH/PULL
