@@ -1,7 +1,7 @@
 ---
 title: Write an opencv android app using jruby
-date: 2014-03-05 07:25 UTC
-tags:
+date: 2014-03-06 07:25 UTC
+tags: opencv, android, rubuto, jruby
 ---
 
 ## Download opencv lib
