@@ -57,9 +57,12 @@
             <p>In order to make use of all cpu cores and increase the capability, we need to
             write concurrent programs that can communicate with each other.</p>
             
-            <p>There are 2 different communication options:
-            1. inter-thread
-            1. inter-process</p>
+            <p>There are 2 different communication options:</p>
+            
+            <ol>
+            <li>inter-thread</li>
+            <li>inter-process</li>
+            </ol>
             
             <p>When using inter-thread option, the thread can share the same memory space in
             the process. But shared data in different running thread can also easily cause some bug that is hard to find. It is also limited on the same host. So it is not scalable.</p>
@@ -70,9 +73,12 @@
             <h2>Inter-Process communication</h2>
             
             <p>on unix system, There are at least 2 ways to implement inter-process
-            communication:
-            1. pipe
-            1. socket(tcp, udp, unix)</p>
+            communication:</p>
+            
+            <ol>
+            <li>pipe</li>
+            <li>socket(tcp, udp, unix)</li>
+            </ol>
             
             <p>In the shell, using | can pass the data between different program.</p>
             
@@ -86,22 +92,28 @@
             
             <p>ZeroMQ provides a wrapper for inter-process(also include inter-thread) communication.</p>
             
-            <p>The underlying implementation includes:
-            1. tcp
-              It use TCP Socket, and don&rsquo;t tell the port number because there is no
-              authentication
-            1. ipc
-              It use UNIX Socket.
-            1. inproc
-              It avoid manually shared data between different threads.
-            1. multicast
-              Implemented in UDP multicast, but some router could ban this.</p>
+            <p>The underlying implementation includes:</p>
             
-            <p>The ZeroMQ communication models includes:
-            1. REQ/REP
-            1. PUB/SUB
-            1. PUSH/PULL
-            1. PAIR</p>
+            <ol>
+            <li>tcp
+            It use TCP Socket, and don&rsquo;t tell the port number because there is no
+            authentication</li>
+            <li>ipc
+            It use UNIX Socket.</li>
+            <li>inproc
+            It avoid manually shared data between different threads.</li>
+            <li>multicast
+            Implemented in UDP multicast, but some router could ban this.</li>
+            </ol>
+            
+            <p>The ZeroMQ communication models includes:</p>
+            
+            <ol>
+            <li>REQ/REP</li>
+            <li>PUB/SUB</li>
+            <li>PUSH/PULL</li>
+            <li>PAIR</li>
+            </ol>
             
             <h2>Using ZeroMQ in Ruby</h2>
             

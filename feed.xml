@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/03/05/zeromq-in-ruby/"/>
     <id>http://blog.url.com/2014/03/05/zeromq-in-ruby/</id>
     <published>2014-03-05T03:01:00Z</published>
-    <updated>2014-03-05T12:07:30+08:00</updated>
+    <updated>2014-03-05T13:24:48+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -23,9 +23,12 @@
 &lt;p&gt;In order to make use of all cpu cores and increase the capability, we need to
 write concurrent programs that can communicate with each other.&lt;/p&gt;
 
-&lt;p&gt;There are 2 different communication options:
-1. inter-thread
-1. inter-process&lt;/p&gt;
+&lt;p&gt;There are 2 different communication options:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;inter-thread&lt;/li&gt;
+&lt;li&gt;inter-process&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;When using inter-thread option, the thread can share the same memory space in
 the process. But shared data in different running thread can also easily cause some bug that is hard to find. It is also limited on the same host. So it is not scalable.&lt;/p&gt;
@@ -36,9 +39,12 @@ inter-thread option. So inter-process option is preferred in most of the cases.&
 &lt;h2&gt;Inter-Process communication&lt;/h2&gt;
 
 &lt;p&gt;on unix system, There are at least 2 ways to implement inter-process
-communication:
-1. pipe
-1. socket(tcp, udp, unix)&lt;/p&gt;
+communication:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;pipe&lt;/li&gt;
+&lt;li&gt;socket(tcp, udp, unix)&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;In the shell, using | can pass the data between different program.&lt;/p&gt;
 
@@ -52,22 +58,28 @@ on the same host.&lt;/p&gt;
 
 &lt;p&gt;ZeroMQ provides a wrapper for inter-process(also include inter-thread) communication.&lt;/p&gt;
 
-&lt;p&gt;The underlying implementation includes:
-1. tcp
-  It use TCP Socket, and don&amp;rsquo;t tell the port number because there is no
-  authentication
-1. ipc
-  It use UNIX Socket.
-1. inproc
-  It avoid manually shared data between different threads.
-1. multicast
-  Implemented in UDP multicast, but some router could ban this.&lt;/p&gt;
+&lt;p&gt;The underlying implementation includes:&lt;/p&gt;
 
-&lt;p&gt;The ZeroMQ communication models includes:
-1. REQ/REP
-1. PUB/SUB
-1. PUSH/PULL
-1. PAIR&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;tcp
+It use TCP Socket, and don&amp;rsquo;t tell the port number because there is no
+authentication&lt;/li&gt;
+&lt;li&gt;ipc
+It use UNIX Socket.&lt;/li&gt;
+&lt;li&gt;inproc
+It avoid manually shared data between different threads.&lt;/li&gt;
+&lt;li&gt;multicast
+Implemented in UDP multicast, but some router could ban this.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The ZeroMQ communication models includes:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;REQ/REP&lt;/li&gt;
+&lt;li&gt;PUB/SUB&lt;/li&gt;
+&lt;li&gt;PUSH/PULL&lt;/li&gt;
+&lt;li&gt;PAIR&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h2&gt;Using ZeroMQ in Ruby&lt;/h2&gt;
 
