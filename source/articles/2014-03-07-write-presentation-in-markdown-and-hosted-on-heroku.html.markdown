@@ -63,6 +63,14 @@ var basic = auth.basic({
 
 app.use(auth.connect(basic));
 ```
+
+### generate the user/password
+
+```shell
+
+mkdir data; cd data
+htpasswd -c users.htpasswd david
+```
 ### troubleshooting
 
 If express start failed(call: node web.js), then select the express version:
