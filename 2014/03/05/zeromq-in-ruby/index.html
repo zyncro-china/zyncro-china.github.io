@@ -1,0 +1,192 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+    <title>ZeroMQ in Ruby</title>
+    <meta content='' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/normalize.css' rel='stylesheet'>
+    <link href='/css/main.css' rel='stylesheet'>
+    <link href='/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='/stylesheets/background.css' rel='stylesheet'>
+    <link href='/stylesheets/article.css' rel='stylesheet'>
+    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
+    <script src='/js/bootstrap.min.js'></script>
+    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='navbar-header'>
+          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand'></a>
+        </div>
+        <div class='collapse navbar-collapse navbar-ex1-collapse'>
+          <ul class='nav navbar-nav'>
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href='/feed.xml'>Feed</a>
+            </li>
+            <li>
+              <a href='/about'>About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <section class='main'>
+      <div id='main' role='main'>
+        <div class='container'>
+          <article>
+            <div class='title'>
+              <h1 class='page-header text-center'>
+                ZeroMQ in Ruby
+              </h1>
+            </div>
+            <br>
+            <h2>2 ways to write concurrent program</h2>
+            
+            <p>In order to make use of all cpu cores and increase the capability, we need to
+            write concurrent programs that can communicate with each other.</p>
+            
+            <p>There are 2 different communication options:
+            1. inter-thread
+            1. inter-process</p>
+            
+            <p>When using inter-thread option, the thread can share the same memory space in
+            the process. But shared data in different running thread can also easily cause some bug that is hard to find. It is also limited on the same host. So it is not scalable.</p>
+            
+            <p>Inter-process takes more memory space, but it has no disadvantage as the
+            inter-thread option. So inter-process option is preferred in most of the cases.</p>
+            
+            <h2>Inter-Process communication</h2>
+            
+            <p>on unix system, There are at least 2 ways to implement inter-process
+            communication:
+            1. pipe
+            1. socket(tcp, udp, unix)</p>
+            
+            <p>In the shell, using | can pass the data between different program.</p>
+            
+            <p>And mkfifo can also create a named pipe(fifo). It can easily be used to shared
+            data between unrelated process.</p>
+            
+            <p>TCP socket is reliable and UDP is not reliable. UNIX socket is only available
+            on the same host.</p>
+            
+            <h2>ZeroMQ and its communication models</h2>
+            
+            <p>ZeroMQ provides a wrapper for inter-process(also include inter-thread) communication.</p>
+            
+            <p>The underlying implementation includes:
+            1. tcp
+              It use TCP Socket, and don&rsquo;t tell the port number because there is no
+              authentication
+            1. ipc
+              It use UNIX Socket.
+            1. inproc
+              It avoid manually shared data between different threads.
+            1. multicast
+              Implemented in UDP multicast, but some router could ban this.</p>
+            
+            <p>The ZeroMQ communication models includes:
+            1. REQ/REP
+            1. PUB/SUB
+            1. PUSH/PULL
+            1. PAIR</p>
+            
+            <h2>Using ZeroMQ in Ruby</h2>
+            
+            <h3>Install</h3>
+            
+            <p>gem install zmq</p>
+            
+            <h3>Usage</h3>
+            
+            <p>For the REQ/REP model:</p>
+            <pre class="highlight ruby">
+            <span class="c1"># rep.rb</span>
+            
+            <span class="nb">require</span> <span class="s1">&#39;zmq&#39;</span>
+            
+            <span class="n">context</span> <span class="o">=</span> <span class="no">ZMQ</span><span class="o">::</span><span class="no">Context</span><span class="nf">.new</span>
+            <span class="n">socket</span> <span class="o">=</span> <span class="n">context</span><span class="nf">.socket</span> <span class="no">ZMQ</span><span class="o">::</span><span class="no">REP</span>
+            <span class="n">socket</span><span class="nf">.bind</span> <span class="s1">&#39;tcp://127.0.0.1:5000&#39;</span>
+            
+            <span class="kp">loop</span> <span class="k">do</span>
+              <span class="n">msg</span> <span class="o">=</span> <span class="n">socket</span><span class="nf">.recv</span>
+              <span class="nb">puts</span> <span class="s2">&quot;Got: &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+              <span class="n">socket</span><span class="nf">.send</span> <span class="n">msg</span>
+            <span class="k">end</span>
+            
+            <span class="c1"># req.rb</span>
+            
+            <span class="nb">require</span> <span class="s1">&#39;zmq&#39;</span>
+            
+            <span class="n">context</span> <span class="o">=</span> <span class="no">ZMQ</span><span class="o">::</span><span class="no">Context</span><span class="nf">.new</span>
+            <span class="n">socket</span> <span class="o">=</span> <span class="n">context</span><span class="nf">.socket</span> <span class="no">ZMQ</span><span class="o">::</span><span class="no">REQ</span>
+            <span class="n">socket</span><span class="nf">.connect</span> <span class="s1">&#39;tcp://127.0.0.1:5000&#39;</span>
+            
+            <span class="p">(</span><span class="mi">1</span><span class="nf">..</span><span class="mi">3</span><span class="p">)</span><span class="nf">.each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+              <span class="n">socket</span><span class="nf">.send</span><span class="p">(</span><span class="s2">&quot;msg %s&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+              <span class="n">msg</span> <span class="o">=</span> <span class="n">socket</span><span class="nf">.recv</span>
+              <span class="nb">puts</span> <span class="s2">&quot;Replied: &quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">end</span>
+            <span class="nb">puts</span> <span class="s1">&#39;the end&#39;</span>
+            <span class="n">socket</span><span class="nf">.close</span>
+            
+            </pre>
+            <p>Remember to call socket.close before exit the program.</p>
+            
+            <p>Using * instead of 127.0.0.1 can accept all hosts</p>
+            
+            <p>The client and server don&rsquo;t have to start in order.</p>
+            
+            <h3>Create a Chatting Service</h3>
+            
+            <p>Using Push/Pull and Pub/Sub models, we can create a chatting service.
+            We need 2 sockets:
+            1. message-queue
+            1. message-display</p>
+            
+            <p>The chatting client push the new message to the message-queue socket, and subscribe a message-display socket.</p>
+            
+            <p>The chatting server pull from the message-queue socket, then publish to the message-display socket</p>
+          </article>
+          <div id="disqus_thread"></div>
+                      <script type="text/javascript">
+                      //<![CDATA[
+                          (function() {
+                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                      //]]>
+                      </script>
+                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                  </script>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <script type="text/javascript">
+      //<![CDATA[
+        var _gaq=[['_setAccount','UA-44086232-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+      //]]>
+      </script>
+    </footer>
+  </body>
+</html>
+
