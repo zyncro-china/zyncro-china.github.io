@@ -5,10 +5,66 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-03-05T03:01:00Z</updated>
+  <updated>2014-03-06T07:25:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Write an opencv android app using jruby</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/06/write-an-opencv-android-app-using-jruby/"/>
+    <id>http://blog.url.com/2014/03/06/write-an-opencv-android-app-using-jruby/</id>
+    <published>2014-03-06T07:25:00Z</published>
+    <updated>2014-03-05T22:39:30+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;Download opencv lib&lt;/h2&gt;
+
+&lt;p&gt;Download lib from http://sourceforge.net/projects/opencvlibrary/files/opencv-android/2.4.8/
+Unzip the files&lt;/p&gt;
+
+&lt;h2&gt;Setup ruboto project&lt;/h2&gt;
+
+&lt;h3&gt;use Ruboto CLI to create a new project&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+ruboto gen app -t 15 --package org.ruboto.example.opencv
+
+&lt;/pre&gt;
+&lt;h3&gt;Add the opencv project into the project.properties&lt;/h3&gt;
+&lt;pre class="highlight java"&gt;
+&lt;span class="n"&gt;android&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;library&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;reference&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;=../&lt;/span&gt;&lt;span class="n"&gt;OpenCV&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;android&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sdk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sdk&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt; 
+&lt;/pre&gt;
+&lt;h3&gt;Add following import lines into the Activity file:&lt;/h3&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;org.opencv.android.BaseLoaderCallback&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;org.opencv.android.LoaderCallbackInterface&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;org.opencv.android.OpenCVLoader&amp;#39;&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;Now you can run following command to build the app and check if the OpenCV Lib
+is imported correctly.&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+rake install start
+&lt;/pre&gt;
+&lt;h3&gt;Start from here to write the awesome OpenCV App using ruby&lt;/h3&gt;
+
+&lt;p&gt;Now we can start to write the app.&lt;/p&gt;
+
+&lt;h3&gt;Trouble Shooting&lt;/h3&gt;
+
+&lt;h4&gt;missing build.xml&lt;/h4&gt;
+
+&lt;p&gt;Seems the new android version require build.xml, so just copy this file from
+other project and change the project name in it.&lt;/p&gt;
+
+&lt;h4&gt;Failure [INSTALL&lt;em&gt;FAILED&lt;/em&gt;ALREADY_EXISTS]&lt;/h4&gt;
+
+&lt;p&gt;use the adb command to delete the existed app:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+adb uninstall org.ruboto.ruanwz.opencv_demo
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>ZeroMQ in Ruby</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/05/zeromq-in-ruby/"/>
@@ -362,72 +418,5 @@ without needing to resort to non-semantic classes like .float-left&lt;/p&gt;
 &lt;p&gt;It seems like that we have to write more lines, but isolating things will pay
 the costs in the long term when the project grow bigger.&lt;/p&gt;
 </content>
-  </entry>
-  <entry>
-    <title>Combine Backbone and React.js</title>
-    <link rel="alternate" href="http://blog.url.com/2014/02/20/combine-backbone-and-react-js/"/>
-    <id>http://blog.url.com/2014/02/20/combine-backbone-and-react-js/</id>
-    <published>2014-02-20T03:42:00Z</published>
-    <updated>2014-02-20T14:24:07+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Get the best of both Backbone and React.js&lt;/h2&gt;
-
-&lt;p&gt;Backbone is a small and simple framework for Single Page Application. But
-rendering views is hard, so let&amp;rsquo;s try to use React.js together, and let
-React.js to finish the hard work for us.&lt;/p&gt;
-
-&lt;h2&gt;React.js Framework&lt;/h2&gt;
-
-&lt;h3&gt;JSX syntax&lt;/h3&gt;
-
-&lt;p&gt;We can use coffeescript to make writting component easier directly in the
-coffeescript without compiling first&lt;/p&gt;
-
-&lt;h3&gt;Object Definition and Intializaion&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;to define a component: &lt;code&gt;React.createClass&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;use the component, and pass the props: &lt;code&gt;React.renderComponent&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;called automatically by React before a component is rendered: &lt;code&gt;componentWillMount&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;called before unmount component: &lt;code&gt;componentWillUnmount&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;Reactive state&lt;/h3&gt;
-
-&lt;p&gt;render() methods are written declaratively as functions of &lt;code&gt;this.props&lt;/code&gt; and
-&lt;code&gt;this.state.&lt;/code&gt; The framework guarantees the UI is always consistent with the
-inputs.&lt;/p&gt;
-
-&lt;p&gt;React.js will automatically update the view according to the state&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;initialize the state: &lt;code&gt;getInitialState&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;update the state: &lt;code&gt;this.setState()&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;React events&lt;/h3&gt;
-
-&lt;p&gt;event handler should only returns false to avoid the default action&lt;/p&gt;
-
-&lt;h3&gt;refs&lt;/h3&gt;
-
-&lt;p&gt;refs are defined in the JSX, and use &lt;code&gt;getDOMNode()&lt;/code&gt; to get the native DOM element&lt;/p&gt;
-&lt;pre class="highlight javascript"&gt;&lt;span class="nx"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;refs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getDOMNode&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;trim&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h2&gt;Communication&lt;/h2&gt;
-
-&lt;h3&gt;Communication from React Component to Backbone&lt;/h3&gt;
-
-&lt;p&gt;pass the callback as the React Component&amp;rsquo;s callback using &lt;code&gt;props&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3&gt;Communication from Backbone to React Component&lt;/h3&gt;
-
-&lt;p&gt;use Backbone Model&amp;rsquo;s event binding, like:&lt;/p&gt;
-&lt;pre class="highlight coffeescript"&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;props&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;model&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;on&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;change&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
-  &lt;span class="vi"&gt;@&lt;/span&gt;&lt;span class="na"&gt;forceUpdate&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;</content>
   </entry>
 </feed>

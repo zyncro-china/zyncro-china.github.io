@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Write an opencv android app using jruby</title>
+    <meta content='' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/normalize.css' rel='stylesheet'>
+    <link href='/css/main.css' rel='stylesheet'>
+    <link href='/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='/stylesheets/background.css' rel='stylesheet'>
+    <link href='/stylesheets/article.css' rel='stylesheet'>
+    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
+    <script src='/js/bootstrap.min.js'></script>
+    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='navbar-header'>
+          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand'></a>
+        </div>
+        <div class='collapse navbar-collapse navbar-ex1-collapse'>
+          <ul class='nav navbar-nav'>
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href='/feed.xml'>Feed</a>
+            </li>
+            <li>
+              <a href='/about'>About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <section class='main'>
+      <div id='main' role='main'>
+        <div class='container'>
+          <article>
+            <div class='title'>
+              <h1 class='page-header text-center'>
+                Write an opencv android app using jruby
+              </h1>
+            </div>
+            <br>
+            <h2>Download opencv lib</h2>
+            
+            <p>Download lib from http://sourceforge.net/projects/opencvlibrary/files/opencv-android/2.4.8/
+            Unzip the files</p>
+            
+            <h2>Setup ruboto project</h2>
+            
+            <h3>use Ruboto CLI to create a new project</h3>
+            <pre class="highlight shell">
+            ruboto gen app -t 15 --package org.ruboto.example.opencv
+            
+            </pre>
+            <h3>Add the opencv project into the project.properties</h3>
+            <pre class="highlight java">
+            <span class="n">android</span><span class="o">.</span><span class="na">library</span><span class="o">.</span><span class="na">reference</span><span class="o">.</span><span class="mi">1</span><span class="o">=../</span><span class="n">OpenCV</span><span class="o">-</span><span class="mf">2.4</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="n">android</span><span class="o">-</span><span class="n">sdk</span><span class="o">/</span><span class="n">sdk</span><span class="o">/</span><span class="n">java</span> 
+            </pre>
+            <h3>Add following import lines into the Activity file:</h3>
+            <pre class="highlight ruby">
+            <span class="n">import</span> <span class="s1">&#39;org.opencv.android.BaseLoaderCallback&#39;</span>
+            <span class="n">import</span> <span class="s1">&#39;org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame&#39;</span>
+            <span class="n">import</span> <span class="s1">&#39;org.opencv.android.LoaderCallbackInterface&#39;</span>
+            <span class="n">import</span> <span class="s1">&#39;org.opencv.android.OpenCVLoader&#39;</span>
+            
+            </pre>
+            <p>Now you can run following command to build the app and check if the OpenCV Lib
+            is imported correctly.</p>
+            <pre class="highlight shell">
+            rake install start
+            </pre>
+            <h3>Start from here to write the awesome OpenCV App using ruby</h3>
+            
+            <p>Now we can start to write the app.</p>
+            
+            <h3>Trouble Shooting</h3>
+            
+            <h4>missing build.xml</h4>
+            
+            <p>Seems the new android version require build.xml, so just copy this file from
+            other project and change the project name in it.</p>
+            
+            <h4>Failure [INSTALL<em>FAILED</em>ALREADY_EXISTS]</h4>
+            
+            <p>use the adb command to delete the existed app:</p>
+            <pre class="highlight shell">
+            adb uninstall org.ruboto.ruanwz.opencv_demo
+            </pre>
+          </article>
+          <div id="disqus_thread"></div>
+                      <script type="text/javascript">
+                      //<![CDATA[
+                          (function() {
+                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                      //]]>
+                      </script>
+                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                  </script>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <script type="text/javascript">
+      //<![CDATA[
+        var _gaq=[['_setAccount','UA-44086232-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+      //]]>
+      </script>
+    </footer>
+  </body>
+</html>
+
