@@ -1,5 +1,5 @@
 ---
-title: improve my reading speed
+title: Improve my reading speed
 date: 2014-03-08 15:19 UTC
 tags: speedreading, chrome, extension
 ---
