@@ -35,3 +35,26 @@ panel.setCurrentTextSpeed(200);
 ```
 
 Let's see if I can increase it in future.
+
+## Add some control to pause and resume
+
+In public/javascripts/initialize.js
+
+```javascript
+
+document.getElementById('pause').addEventListener('click', function() {
+  pauseText();
+});
+
+document.getElementById('resume').addEventListener('click', function() {
+  resumeText();
+});
+
+function pauseText(text) {
+  window.panel.pauseText();
+}
+function resumeText(text) {
+  window.panel.resumeText();
+}
+
+```
