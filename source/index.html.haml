@@ -16,10 +16,12 @@ per_page: 10
       - if paginate && num_pages > 1
         %p
           Page #{page_number} of #{num_pages}
-        - if prev_page
-          %p= link_to 'Previous page', prev_page
-      
-      - blog.articles.each_with_index do |article, i|
+        %ul.pager
+          - if prev_page && next_page
+            %li= link_to 'Previous page', prev_page
+            %li= link_to 'Next page', next_page
+      - start = (page_number-1) * per_page 
+      - blog.articles[start..(start+per_page)].each_with_index do |article, i|
         %li.article
           %h2
             = link_to article.title, article
@@ -30,9 +32,12 @@ per_page: 10
           = article.summary
           = link_to 'Read More...', article
       - if paginate
-        - if next_page
-          %p= link_to 'Next page', next_page
-  
+
+        %ul.pager
+          - if prev_page
+            %li= link_to 'Previous page', prev_page
+          - if next_page
+            %li= link_to 'Next page', next_page
   .col-lg-4.hidden-xs.asider.hidden-md.hidden-sm
     %dl.well-lg.content_box
       %dt 
