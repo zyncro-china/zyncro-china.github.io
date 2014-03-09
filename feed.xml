@@ -5,10 +5,138 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-03-06T07:25:00Z</updated>
+  <updated>2014-03-08T15:19:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Improve my reading speed</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/08/improve-my-reading-speed/"/>
+    <id>http://blog.url.com/2014/03/08/improve-my-reading-speed/</id>
+    <published>2014-03-08T15:19:00Z</published>
+    <updated>2014-03-07T13:32:04+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;I heard about this today that can help to increase the reading speed&lt;/h2&gt;
+
+&lt;p&gt;Today I have found this site &lt;a href="http://www.spritzinc.com"&gt;spritz&lt;/a&gt;. It has some
+theory about &lt;a href="http://www.spritzinc.com/the-science/"&gt;how to improve the reading
+speed&lt;/a&gt;. I have read about some kind of
+this theory before. And have installed some iOS app for training speed reading
+that based the theory. But most of time I don&amp;rsquo;t have time to do the training
+separated. I have to most of content in browser.&lt;/p&gt;
+
+&lt;h2&gt;A browser extension for spritz&lt;/h2&gt;
+
+&lt;p&gt;There is a chrome extension that can display any selected text in the spritz
+window at a &lt;a href="https://github.com/fantactuka/spritz-chrome-extension"&gt;github
+repository&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After installing it, now I can try spritz when reading news, blogs or any
+material.&lt;/p&gt;
+
+&lt;p&gt;I am looking forward for the spritz to support more languages. They said more
+languages are &lt;a href="http://www.spritzinc.com/faq/"&gt;coming&lt;/a&gt;. &lt;/p&gt;
+
+&lt;h2&gt;Slow down the speed in the extension&lt;/h2&gt;
+
+&lt;p&gt;The preset reading speed is too fast for me (500 WPM), I have to set a lower
+value in the public/javascripts/initialize.js of that extension:&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;
+&lt;span class="nx"&gt;panel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setCurrentTextSpeed&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Let&amp;rsquo;s see if I can increase it in future.&lt;/p&gt;
+
+&lt;h2&gt;Add some control to pause and resume&lt;/h2&gt;
+
+&lt;p&gt;In public/javascripts/initialize.js&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pause&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;pauseText&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;resume&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;click&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;resumeText&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;pauseText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;panel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pauseText&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;resumeText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;panel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;resumeText&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;/pre&gt;</content>
+  </entry>
+  <entry>
+    <title>Write presentation in markdown and hosted on heroku</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/"/>
+    <id>http://blog.url.com/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/</id>
+    <published>2014-03-07T14:34:00Z</published>
+    <updated>2014-03-05T22:54:43+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;Write docs in Markdown&lt;/h2&gt;
+
+&lt;p&gt;As more and more docs and email can be written in markdown format, It is time
+to try it in the slides/presentation.&lt;/p&gt;
+
+&lt;h2&gt;Reveal.js&lt;/h2&gt;
+
+&lt;p&gt;Seems reveal.js is very easy to use, I try to use it to write slides, and
+I hope it can be hosted on heroku, so I can use it no matter what devices I am
+using, and where I am.&lt;/p&gt;
+
+&lt;h2&gt;Installation&lt;/h2&gt;
+
+&lt;h3&gt;install reveal.js&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+git clone git@github.com:MichaelBitard/revealjs_heroku.git
+
+&lt;/pre&gt;
+&lt;h3&gt;use express to host&lt;/h3&gt;
+&lt;pre class="highlight javascript"&gt;&lt;span class="c1"&gt;//web.js
+&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;express&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;express&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;express&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;express&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;express&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="kr"&gt;static&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;__dirname&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;env&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;PORT&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="mi"&gt;5000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Listening on &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;port&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;add heroku Procfile&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+web: node web.js
+
+&lt;/pre&gt;
+&lt;h3&gt;add http basic auth to protect the content&lt;/h3&gt;
+&lt;pre class="highlight javascript"&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;auth&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;http-auth&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;basic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;auth&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;basic&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+    &lt;span class="na"&gt;realm&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Zyncro China Presentation.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="na"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;__dirname&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/data/users.htpasswd&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;// gevorg:gpass, Sarah:testpass ...
+&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+
+&lt;span class="nx"&gt;app&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;auth&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;basic&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;generate the user/password&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+mkdir data; &lt;span class="nb"&gt;cd &lt;/span&gt;data
+htpasswd -c users.htpasswd david
+&lt;/pre&gt;
+&lt;h3&gt;troubleshooting&lt;/h3&gt;
+
+&lt;p&gt;If express start failed(call: node web.js), then select the express version:
+3.1.x&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Write an opencv android app using jruby</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/06/write-an-opencv-android-app-using-jruby/"/>
@@ -294,129 +422,6 @@ ruby extconf.rb
 make
 &lt;/pre&gt;
 &lt;p&gt;Done!&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Hacking simplewebrtc.js to change the video resolution</title>
-    <link rel="alternate" href="http://blog.url.com/2014/02/25/hacking-simplewebrtc-js-to-change-the-video-resolution/"/>
-    <id>http://blog.url.com/2014/02/25/hacking-simplewebrtc-js-to-change-the-video-resolution/</id>
-    <published>2014-02-25T07:37:00Z</published>
-    <updated>2014-02-24T16:05:44+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Introduction webrtc and simplewebrtc.js&lt;/h2&gt;
-
-&lt;p&gt;I am very exciting about WebRTC technology. It makes the browser can provide
-some peer to peer functionalities that can&amp;rsquo;t be thought before.&lt;/p&gt;
-
-&lt;p&gt;The only limitation now is that only a few mainframe browsers support WebRTC,
-and they use different API.&lt;/p&gt;
-
-&lt;p&gt;I think this is where simplewebrtc.js can help the WebRTC development easier. By
-using the unified interface, developer don&amp;rsquo;t have to handle the difference
-between browsers.&lt;/p&gt;
-
-&lt;p&gt;I hope this library will not be too complicated, as its
-name suggests. So that I can modify when I need, without having to read many
-code that I don&amp;rsquo;t use.&lt;/p&gt;
-
-&lt;h2&gt;The SimpleWebRTC can&amp;rsquo;t customize the video resolution&lt;/h2&gt;
-
-&lt;p&gt;The simplewebrtc doesn&amp;rsquo;t support changing constraints.&lt;/p&gt;
-&lt;pre class="highlight javascript"&gt;
-&lt;span class="nx"&gt;SimpleWebRTC&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;startLocalVideo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;webrtc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;startLocalMedia&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;emit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="nx"&gt;attachMediaStream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getLocalVideoContainer&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="na"&gt;muted&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;mirror&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;});&lt;/span&gt;
-&lt;span class="p"&gt;};&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;In order to pass in the constraints, I override this function(I write the app
-in coffeescript):&lt;/p&gt;
-&lt;pre class="highlight coffeescript"&gt;
-&lt;span class="nx"&gt;SimpleWebRTC&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;startLocalVideo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-  &lt;span class="nx"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;
-  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;config&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;constraints&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="na"&gt;video&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;audio&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;webrtc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;startLocalMedia&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;config&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;constraints&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;
-      &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;emit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt;
-      &lt;span class="nx"&gt;attachMediaStream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nx"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLocalVideoContainer&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-        &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="na"&gt;muted&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;mirror&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Then we can pass the constraints in the constructor:&lt;/p&gt;
-&lt;pre class="highlight coffeescript"&gt;&lt;span class="nx"&gt;webrtc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;SimpleWebRTC&lt;/span&gt;
-  &lt;span class="na"&gt;localVideoEl&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;localVideo&amp;#39;&lt;/span&gt;
-  &lt;span class="na"&gt;remoteVideosEl&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;remotes&amp;#39;&lt;/span&gt;
-  &lt;span class="na"&gt;autoRequestMedia&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
-  &lt;span class="na"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
-  &lt;span class="na"&gt;detectSpeakingEvents&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
-  &lt;span class="na"&gt;autoAdjustMic&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;
-  &lt;span class="na"&gt;constraints&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-    &lt;span class="na"&gt;audio&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
-    &lt;span class="na"&gt;video&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-      &lt;span class="na"&gt;mandatory&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-        &lt;span class="na"&gt;maxWidth&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;320&lt;/span&gt;
-        &lt;span class="na"&gt;maxHeight&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;
-&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>use bootstrap and sass in a semantic way</title>
-    <link rel="alternate" href="http://blog.url.com/2014/02/24/use-bootstrap-and-sass-in-a-semantic-way/"/>
-    <id>http://blog.url.com/2014/02/24/use-bootstrap-and-sass-in-a-semantic-way/</id>
-    <published>2014-02-24T03:46:00Z</published>
-    <updated>2014-02-24T15:34:47+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Using twitter bootstrap directly means mix things together&lt;/h2&gt;
-
-&lt;p&gt;When developing the web page, using bootstrap could accelerate the process. But
-mixing the content and the display style is not a very good solution.&lt;/p&gt;
-
-&lt;p&gt;So we try to use SASS to isolate the styles, and make the html more semantic.&lt;/p&gt;
-
-&lt;h2&gt;SASS features that helps&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins"&gt;mixins&lt;/a&gt;
-and
-&lt;a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#extend"&gt;extend&lt;/a&gt;
-allow you to define styles that can be re-used throughout the stylesheet
-without needing to resort to non-semantic classes like .float-left&lt;/p&gt;
-
-&lt;h2&gt;Convert an example that use bootstrap style to semantic html&lt;/h2&gt;
-
-&lt;p&gt;The original index.haml:&lt;/p&gt;
-&lt;pre class="highlight haml"&gt;
-&lt;span class="nf"&gt;#main&lt;/span&gt;
-  &lt;span class="nt"&gt;%a&lt;/span&gt;&lt;span class="nc"&gt;.btn.btn-primary&lt;/span&gt; Press Me
-
-&lt;/pre&gt;
-&lt;p&gt;using extend, we use more meaningful class: &amp;ldquo;highlight&amp;rdquo;, and convert the above code into following haml:&lt;/p&gt;
-&lt;pre class="highlight haml"&gt;&lt;span class="nf"&gt;#main&lt;/span&gt;
-  &lt;span class="nt"&gt;%a&lt;/span&gt;&lt;span class="nc"&gt;.highlight&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;p&gt;and the scss file: &lt;/p&gt;
-&lt;pre class="highlight scss"&gt;
-&lt;span class="k"&gt;@import&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;variables&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;@import&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;bootstrap&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="nn"&gt;#main&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="nc"&gt;.highlight&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;@extend&lt;/span&gt; &lt;span class="nc"&gt;.btn&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;@extend&lt;/span&gt; &lt;span class="nc"&gt;.btn-primary&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;It seems like that we have to write more lines, but isolating things will pay
-the costs in the long term when the project grow bigger.&lt;/p&gt;
 </content>
   </entry>
 </feed>
