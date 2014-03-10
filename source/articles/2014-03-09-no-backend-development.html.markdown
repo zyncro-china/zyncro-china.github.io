@@ -163,3 +163,11 @@ Now just push to heroku
 git push origin master
 ```
 Then access from http://herokuhost.com/dashboard
+
+### Connect to mongolab to check the data:
+
+```shell
+
+mongo -u heroku_app2239 -p password_str --port 3355 --host
+ds033.mongolab.com heroku_app2239
+```
