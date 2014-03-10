@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/03/09/no-backend-development/"/>
     <id>http://blog.url.com/2014/03/09/no-backend-development/</id>
     <published>2014-03-09T02:38:00Z</published>
-    <updated>2014-03-07T12:51:09+08:00</updated>
+    <updated>2014-03-10T10:23:58+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -156,7 +156,12 @@ git commit -m &lt;span class="s1"&gt;&amp;#39;add resources/\n&amp;#39;&lt;/span
 git push origin master
 &lt;/pre&gt;
 &lt;p&gt;Then access from http://herokuhost.com/dashboard&lt;/p&gt;
-</content>
+
+&lt;h3&gt;Connect to mongolab to check the data:&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+mongo -u heroku_app2239 -p password_str --port 3355 --host
+ds033.mongolab.com heroku_app2239
+&lt;/pre&gt;</content>
   </entry>
   <entry>
     <title>Improve my reading speed</title>
@@ -223,7 +228,7 @@ value in the public/javascripts/initialize.js of that extension:&lt;/p&gt;
     <link rel="alternate" href="http://blog.url.com/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/"/>
     <id>http://blog.url.com/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/</id>
     <published>2014-03-07T14:34:00Z</published>
-    <updated>2014-03-05T22:54:43+08:00</updated>
+    <updated>2014-03-10T17:17:21+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -280,6 +285,12 @@ web: node web.js
 mkdir data; &lt;span class="nb"&gt;cd &lt;/span&gt;data
 htpasswd -c users.htpasswd david
 &lt;/pre&gt;
+&lt;h3&gt;use haml template&lt;/h3&gt;
+&lt;pre class="highlight text"&gt;
+npm install grunt-contrib-haml --save
+&lt;/pre&gt;
+&lt;p&gt;Then add haml task into Gruntfile.js&lt;/p&gt;
+
 &lt;h3&gt;troubleshooting&lt;/h3&gt;
 
 &lt;p&gt;If express start failed(call: node web.js), then select the express version:

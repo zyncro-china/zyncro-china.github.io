@@ -190,6 +190,12 @@
             git push origin master
             </pre>
             <p>Then access from http://herokuhost.com/dashboard</p>
+            
+            <h3>Connect to mongolab to check the data:</h3>
+            <pre class="highlight shell">
+            mongo -u heroku_app2239 -p password_str --port 3355 --host
+            ds033.mongolab.com heroku_app2239
+            </pre>
           </article>
           <div id="disqus_thread"></div>
                       <script type="text/javascript">
