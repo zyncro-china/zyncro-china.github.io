@@ -71,6 +71,13 @@ app.use(auth.connect(basic));
 mkdir data; cd data
 htpasswd -c users.htpasswd david
 ```
+### use haml template
+```
+
+npm install grunt-contrib-haml --save
+```
+
+Then add haml task into Gruntfile.js
 ### troubleshooting
 
 If express start failed(call: node web.js), then select the express version:
