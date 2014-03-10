@@ -77,7 +77,30 @@ htpasswd -c users.htpasswd david
 npm install grunt-contrib-haml --save
 ```
 
-Then add haml task into Gruntfile.js
+Then add haml task and enable livereload into Gruntfile.js
+
+```javascript
+
+haml: {                              // Task
+  dist: {                            // Target
+    files: {                         // Dictionary of files
+      'index.html': 'index.haml',       // 'destination': 'source'
+      'widgets.html': 'widgets.haml'
+    }
+  }
+},
+
+
+watch: {
+        haml: {
+		files: [ '*.haml' ],
+		tasks: 'haml',
+                options: {
+                  livereload: true,
+                }
+        }
+}
+```
 ### troubleshooting
 
 If express start failed(call: node web.js), then select the express version:
