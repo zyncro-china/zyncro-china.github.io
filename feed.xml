@@ -228,7 +228,7 @@ value in the public/javascripts/initialize.js of that extension:&lt;/p&gt;
     <link rel="alternate" href="http://blog.url.com/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/"/>
     <id>http://blog.url.com/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/</id>
     <published>2014-03-07T14:34:00Z</published>
-    <updated>2014-03-10T17:17:21+08:00</updated>
+    <updated>2014-03-10T17:55:35+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -289,8 +289,28 @@ htpasswd -c users.htpasswd david
 &lt;pre class="highlight text"&gt;
 npm install grunt-contrib-haml --save
 &lt;/pre&gt;
-&lt;p&gt;Then add haml task into Gruntfile.js&lt;/p&gt;
+&lt;p&gt;Then add haml task and enable livereload into Gruntfile.js&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;
+&lt;span class="nx"&gt;haml&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;                              &lt;span class="c1"&gt;// Task
+&lt;/span&gt;  &lt;span class="nl"&gt;dist&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;                            &lt;span class="c1"&gt;// Target
+&lt;/span&gt;    &lt;span class="nl"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;                         &lt;span class="c1"&gt;// Dictionary of files
+&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;index.haml&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="c1"&gt;// &amp;#39;destination&amp;#39;: &amp;#39;source&amp;#39;
+&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;widgets.html&amp;#39;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;widgets.haml&amp;#39;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;},&lt;/span&gt;
 
+
+&lt;span class="nx"&gt;watch&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;haml&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="na"&gt;files&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;*.haml&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="na"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;haml&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="na"&gt;options&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                  &lt;span class="na"&gt;livereload&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
 &lt;h3&gt;troubleshooting&lt;/h3&gt;
 
 &lt;p&gt;If express start failed(call: node web.js), then select the express version:

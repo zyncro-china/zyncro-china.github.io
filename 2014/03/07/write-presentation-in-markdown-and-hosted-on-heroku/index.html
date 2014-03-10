@@ -109,8 +109,28 @@
             <pre class="highlight text">
             npm install grunt-contrib-haml --save
             </pre>
-            <p>Then add haml task into Gruntfile.js</p>
+            <p>Then add haml task and enable livereload into Gruntfile.js</p>
+            <pre class="highlight javascript">
+            <span class="nx">haml</span><span class="err">:</span> <span class="p">{</span>                              <span class="c1">// Task
+            </span>  <span class="nl">dist</span><span class="p">:</span> <span class="p">{</span>                            <span class="c1">// Target
+            </span>    <span class="nl">files</span><span class="p">:</span> <span class="p">{</span>                         <span class="c1">// Dictionary of files
+            </span>      <span class="s1">&#39;index.html&#39;</span><span class="err">:</span> <span class="s1">&#39;index.haml&#39;</span><span class="p">,</span>       <span class="c1">// &#39;destination&#39;: &#39;source&#39;
+            </span>      <span class="s1">&#39;widgets.html&#39;</span><span class="err">:</span> <span class="s1">&#39;widgets.haml&#39;</span>
+                <span class="p">}</span>
+              <span class="p">}</span>
+            <span class="p">},</span>
             
+            
+            <span class="nx">watch</span><span class="err">:</span> <span class="p">{</span>
+                    <span class="na">haml</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">files</span><span class="p">:</span> <span class="p">[</span> <span class="s1">&#39;*.haml&#39;</span> <span class="p">],</span>
+                    <span class="na">tasks</span><span class="p">:</span> <span class="s1">&#39;haml&#39;</span><span class="p">,</span>
+                            <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+                              <span class="na">livereload</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                            <span class="p">}</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+            </pre>
             <h3>troubleshooting</h3>
             
             <p>If express start failed(call: node web.js), then select the express version:
