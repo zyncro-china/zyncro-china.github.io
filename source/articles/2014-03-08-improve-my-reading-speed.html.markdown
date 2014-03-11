@@ -58,3 +58,7 @@ function resumeText(text) {
 }
 
 ```
+
+### Update
+Seems this bookmarklet is better:
+https://github.com/Miserlou/OpenSpritz
