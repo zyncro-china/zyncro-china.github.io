@@ -168,7 +168,7 @@ ds033.mongolab.com heroku_app2239
     <link rel="alternate" href="http://blog.url.com/2014/03/08/improve-my-reading-speed/"/>
     <id>http://blog.url.com/2014/03/08/improve-my-reading-speed/</id>
     <published>2014-03-08T15:19:00Z</published>
-    <updated>2014-03-07T13:32:04+08:00</updated>
+    <updated>2014-03-11T10:01:56+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -221,7 +221,12 @@ value in the public/javascripts/initialize.js of that extension:&lt;/p&gt;
   &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;panel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;resumeText&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;/pre&gt;</content>
+&lt;/pre&gt;
+&lt;h3&gt;Update&lt;/h3&gt;
+
+&lt;p&gt;Seems this bookmarklet is better:
+https://github.com/Miserlou/OpenSpritz&lt;/p&gt;
+</content>
   </entry>
   <entry>
     <title>Write presentation in markdown and hosted on heroku</title>
