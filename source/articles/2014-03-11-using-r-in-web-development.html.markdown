@@ -178,3 +178,48 @@ shinyServer(function(input, output) {
 1. Observers are an implementation of Reactive endpoints. They can access
  reactive sources and reactive expressions, and they don’t return a value;
  they are used for their side effects.
+## manipulate CSV
+
+### import CSV into data frame
+
+```R
+
+data <- read.table("simulation1.csv", header=TRUE, sep=",")
+```
+
+### query
+
+```R
+league_table$team[league_table$home_wins > 8]
+```
+### merge
+
+```R
+
+> league <- merge(league_table, points, by='team')
+```
+
+### sorting
+
+```R
+
+> with(league, league[order(-pts),])
+```
+
+### insert more rows
+
+```R
+
+rbind(with(league, league[order(-pts),]), another_table)
+```
+
+### format date string
+
+```R
+
+alldates <- format(as.Date(sent_data$date), '%Y-%m')
+```
+## user login
+
+We should be able to use nginx or apach to do the http basic authentication,
+then foward the request to local Shiny server
