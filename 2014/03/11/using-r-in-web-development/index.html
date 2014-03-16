@@ -1,0 +1,273 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Using R in web development</title>
+    <meta content='' name='description'>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/normalize.css' rel='stylesheet'>
+    <link href='/css/main.css' rel='stylesheet'>
+    <link href='/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='/stylesheets/background.css' rel='stylesheet'>
+    <link href='/stylesheets/article.css' rel='stylesheet'>
+    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
+    <script src='/js/bootstrap.min.js'></script>
+    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <header>
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='navbar-header'>
+          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand'></a>
+        </div>
+        <div class='collapse navbar-collapse navbar-ex1-collapse'>
+          <ul class='nav navbar-nav'>
+            <li>
+              <a href='/'>Home</a>
+            </li>
+            <li>
+              <a href='/feed.xml'>Feed</a>
+            </li>
+            <li>
+              <a href='/about'>About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <section class='main'>
+      <div id='main' role='main'>
+        <div class='container'>
+          <article>
+            <div class='title'>
+              <h1 class='page-header text-center'>
+                Using R in web development
+              </h1>
+            </div>
+            <br>
+            <h2>Statistic Tool: R</h2>
+            
+            <p>I have been want to use R in my work for a long time. But seem it is not so
+            easy to combine it into the normal work flow very easily.</p>
+            
+            <h2>Now we have a web development using R and Bootstrap: Shiny</h2>
+            
+            <p>Shiny seems would be very useful for rapid development for some web project.</p>
+            
+            <p>I can pass all the statistic job to R, which is more suitable for it, then
+            I can develop other business logic in javascript. And maybe I can learn some
+            statistic knowledges by using R. That is great!</p>
+            
+            <h2>Shiny setup</h2>
+            
+            <p>Shiny is a package in R. So to install shiny:</p>
+            <pre class="highlight shell">
+            install.packages<span class="o">(</span><span class="s2">&quot;shiny&quot;</span><span class="o">)</span>
+            </pre>
+            <p>Then in a directory, prepare 2 R files:</p>
+            
+            <ol>
+            <li>ui.R</li>
+            <li>server.R</li>
+            </ol>
+            
+            <h3>Bootstrap2.3.2 components and other libs</h3>
+            
+            <p>According to the source, shiny integrate following javascript libs:</p>
+            <pre class="highlight text">
+            ▾ inst/
+              ▾ www/
+                ▾ shared/
+                  ▸ bootstrap/
+                  ▸ datatables/
+                  ▸ datepicker/
+                  ▸ font-awesome/
+                  ▸ highlight/
+                  ▸ jqueryui/
+                  ▸ selectize/
+                  ▸ showdown/
+                  ▸ slider/
+                    jquery.js
+            </pre>
+            <p>Shiny use Bootstrap2.3.2. And it is very easy to use the components available.</p>
+            
+            <p>In ui.R:</p>
+            <pre class="highlight r">
+            <span class="n">shinyUI</span><span class="p">(</span><span class="n">pageWithSidebar</span><span class="p">(</span>
+              <span class="n">headerPanel</span><span class="p">(</span><span class="s2">&quot;Minimal Example&quot;</span><span class="p">),</span>
+              <span class="n">sidebarPanel</span><span class="p">(</span>
+                           <span class="n">textInput</span><span class="p">(</span><span class="n">inputId</span> <span class="o">=</span> <span class="s1">&#39;comment&#39;</span><span class="p">,</span>
+                                     <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Say&quot;</span><span class="p">,</span>
+                                     <span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
+              <span class="n">mainPanel</span><span class="p">(</span>
+                        <span class="n">h3</span><span class="p">(</span><span class="s2">&quot;This is you saying it&quot;</span><span class="p">),</span>
+                        <span class="n">textOutput</span><span class="p">(</span><span class="s1">&#39;textDisplay&#39;</span><span class="p">)</span>
+                        <span class="p">)</span>
+            
+            <span class="p">))</span>
+            </pre>
+            <p>Notice that we use headerPanel, sidebarPanel and mainPanel, they are defined in R/bootstrap.R . And there are more UI componts defined in that file.</p>
+            
+            <p>In server.R, we will update the output:</p>
+            <pre class="highlight r">
+            <span class="n">library</span><span class="p">(</span><span class="n">shiny</span><span class="p">)</span>
+            <span class="n">shinyServer</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">output</span><span class="o">$</span><span class="n">textDisplay</span> <span class="o">&lt;-</span><span class="n">renderText</span><span class="p">({</span>
+                <span class="n">paste0</span><span class="p">(</span><span class="s2">&quot;You said &quot;</span><span class="p">,</span> <span class="n">input</span><span class="o">$</span><span class="n">comment</span><span class="p">,</span> <span class="s2">&quot; there are &quot;</span><span class="p">,</span> <span class="n">nchar</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">comment</span><span class="p">),</span> <span class="s2">&quot; characters in this.&quot;</span><span class="p">)</span>
+              <span class="p">})</span>
+            <span class="p">})</span>
+            </pre>
+            <p>It does 2 things:</p>
+            
+            <ol>
+            <li>gives the output name: testDisplay</li>
+            <li>it tells shiny that the content contained whthin is reactive</li>
+            <li>paste0 links strings without spaces</li>
+            </ol>
+            
+            <h3>run gist</h3>
+            <pre class="highlight text">
+            &gt; runGist(1233456)
+            </pre>
+            <h3>show all widgets</h3>
+            <pre class="highlight text">
+            &gt; runGist(6571951)
+            </pre>
+            <h3>more about reactivity</h3>
+            
+            <p>To understand the reactive programming used in Shiny, I need to read the <a href="http://rstudio.github.io/shiny/tutorial/#reactivity-overview">Shiny
+            tutorial page</a></p>
+            
+            <p>There are 3 kinds of objects in reactive programming:</p>
+            
+            <ol>
+            <li>Reactive source</li>
+            <li>Reactive conductor</li>
+            <li>Reactive endpoint</li>
+            </ol>
+            
+            <p>In the simple case, we only need Reactive source and the Reactive endpoint. But
+            in the case that we don&rsquo;t want to calculate the same middle result several
+            times, we can use Rective conductor. The following is an example for fib():</p>
+            <pre class="highlight r">
+            <span class="n">fib</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="n">ifelse</span><span class="p">(</span><span class="n">n</span><span class="o">&lt;</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="m">-1</span><span class="p">)</span><span class="o">+</span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="m">-2</span><span class="p">))</span>
+            
+            <span class="n">shinyServer</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">currentFib</span>         <span class="o">&lt;-</span> <span class="n">reactive</span><span class="p">({</span> <span class="n">fib</span><span class="p">(</span><span class="n">as.numeric</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">n</span><span class="p">))</span> <span class="p">})</span>
+            
+              <span class="n">output</span><span class="o">$</span><span class="n">nthValue</span>    <span class="o">&lt;-</span> <span class="n">renderText</span><span class="p">({</span> <span class="n">currentFib</span><span class="p">()</span> <span class="p">})</span>
+              <span class="n">output</span><span class="o">$</span><span class="n">nthValueInv</span> <span class="o">&lt;-</span> <span class="n">renderText</span><span class="p">({</span> <span class="m">1</span> <span class="o">/</span> <span class="n">currentFib</span><span class="p">()</span> <span class="p">})</span>
+            <span class="p">})</span>
+            
+            </pre>
+            <h3>More notes for reactive object</h3>
+            
+            <p>We can&rsquo;t access the reactive value or expressions from outside a reactive
+            context.</p>
+            
+            <p>The following code can&rsquo;t work:</p>
+            <pre class="highlight r">
+            <span class="n">shinyServer</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="p">{</span>
+              <span class="c1"># Will give error
+            </span>  <span class="n">currentFib</span>      <span class="o">&lt;-</span> <span class="n">fib</span><span class="p">(</span><span class="n">as.numeric</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">n</span><span class="p">))</span>
+              <span class="n">output</span><span class="o">$</span><span class="n">nthValue</span> <span class="o">&lt;-</span> <span class="n">renderText</span><span class="p">({</span> <span class="n">currentFib</span> <span class="p">})</span>
+            <span class="p">})</span>
+            </pre>
+            <p>But we can define a function, then call it in the reactive world:</p>
+            <pre class="highlight r">
+            <span class="n">shinyServer</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="p">{</span>
+              <span class="c1"># OK, as long as this is called from the reactive world:
+            </span>  <span class="n">currentFib</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">fib</span><span class="p">(</span><span class="n">as.numeric</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">n</span><span class="p">))</span>
+              <span class="p">}</span>
+            
+              <span class="n">output</span><span class="o">$</span><span class="n">nthValue</span> <span class="o">&lt;-</span> <span class="n">renderText</span><span class="p">({</span> <span class="n">currentFib</span><span class="p">()</span> <span class="p">})</span>
+            <span class="p">})</span>
+            </pre>
+            <h3>Reactive object implementation</h3>
+            
+            <ol>
+            <li>Reactive values are an implementation of Reactive sources; that is, 
+            they are an implementation of that role.</li>
+            <li><p>Reactive expressions are an implementation of Reactive conductors. They can
+            access reactive values or other reactive expressions, and they return a value.</p>
+            
+            <p>A reactive expressions can be useful for caching the results of any procedure that happens in response to user input, including:</p>
+            
+            <ol>
+            <li>accessing a database</li>
+            <li>reading data from a file</li>
+            <li>downloading data over the network</li>
+            <li>performing an expensive computation</li>
+            </ol></li>
+            <li><p>Observers are an implementation of Reactive endpoints. They can access
+            reactive sources and reactive expressions, and they don’t return a value;
+            they are used for their side effects.</p>
+            
+            <h2>manipulate CSV</h2></li>
+            </ol>
+            
+            <h3>import CSV into data frame</h3>
+            <pre class="highlight r">
+            <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s2">&quot;simulation1.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            </pre>
+            <h3>query</h3>
+            <pre class="highlight r"><span class="n">league_table</span><span class="o">$</span><span class="n">team</span><span class="p">[</span><span class="n">league_table</span><span class="o">$</span><span class="n">home_wins</span> <span class="o">&gt;</span> <span class="m">8</span><span class="p">]</span>
+            </pre>
+            <h3>merge</h3>
+            <pre class="highlight r">
+            <span class="o">&gt;</span> <span class="n">league</span> <span class="o">&lt;-</span> <span class="n">merge</span><span class="p">(</span><span class="n">league_table</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;team&#39;</span><span class="p">)</span>
+            </pre>
+            <h3>sorting</h3>
+            <pre class="highlight r">
+            <span class="o">&gt;</span> <span class="n">with</span><span class="p">(</span><span class="n">league</span><span class="p">,</span> <span class="n">league</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="o">-</span><span class="n">pts</span><span class="p">),])</span>
+            </pre>
+            <h3>insert more rows</h3>
+            <pre class="highlight r">
+            <span class="n">rbind</span><span class="p">(</span><span class="n">with</span><span class="p">(</span><span class="n">league</span><span class="p">,</span> <span class="n">league</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="o">-</span><span class="n">pts</span><span class="p">),]),</span> <span class="n">another_table</span><span class="p">)</span>
+            </pre>
+            <h3>format date string</h3>
+            <pre class="highlight r">
+            <span class="n">alldates</span> <span class="o">&lt;-</span> <span class="n">format</span><span class="p">(</span><span class="n">as.Date</span><span class="p">(</span><span class="n">sent_data</span><span class="o">$</span><span class="n">date</span><span class="p">),</span> <span class="s1">&#39;%Y-%m&#39;</span><span class="p">)</span>
+            </pre>
+            <h2>user login</h2>
+            
+            <p>We should be able to use nginx or apach to do the http basic authentication,
+            then foward the request to local Shiny server</p>
+          </article>
+          <div id="disqus_thread"></div>
+                      <script type="text/javascript">
+                      //<![CDATA[
+                          (function() {
+                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                      //]]>
+                      </script>
+                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                  </script>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <script type="text/javascript">
+      //<![CDATA[
+        var _gaq=[['_setAccount','UA-44086232-1'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+      //]]>
+      </script>
+    </footer>
+  </body>
+</html>
+

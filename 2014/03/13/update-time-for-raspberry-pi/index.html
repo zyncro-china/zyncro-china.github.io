@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Zyncro Dev Blog</title>
+    <title>Update time for raspberry pi</title>
     <meta content='' name='description'>
     <meta content='width=device-width' name='viewport'>
     <link href='/css/normalize.css' rel='stylesheet'>
@@ -45,42 +45,49 @@
     <section class='main'>
       <div id='main' role='main'>
         <div class='container'>
-          <div class='content_box well-lg'>
-            <h1>
-              Archive for
-              2014
-            </h1>
-            <p>
-              Page 2 of 2
-            </p>
-            <p><a href="/2014/">Previous page</a></p>
-            <ul>
-              <li>
-                <a href="/2014/02/28/compile-vim-source-with-python-and-ruby-support/">Compile vim source with python and ruby support</a>
-                <span>Feb 28</span>
-              </li>
-              <li>
-                <a href="/2014/02/25/hacking-simplewebrtc-js-to-change-the-video-resolution/">Hacking simplewebrtc.js to change the video resolution</a>
-                <span>Feb 25</span>
-              </li>
-              <li>
-                <a href="/2014/02/24/use-bootstrap-and-sass-in-a-semantic-way/">use bootstrap and sass in a semantic way</a>
-                <span>Feb 24</span>
-              </li>
-              <li>
-                <a href="/2014/02/20/combine-backbone-and-react-js/">Combine Backbone and React.js</a>
-                <span>Feb 20</span>
-              </li>
-              <li>
-                <a href="/2014/02/19/switch-from-guard-to-simpler-solution/">switch from guard to simpler solution</a>
-                <span>Feb 19</span>
-              </li>
-              <li>
-                <a href="/2014/02/01/android-chrome-app/">在android上创建chrome app</a>
-                <span>Feb  1</span>
-              </li>
-            </ul>
-          </div>
+          <article>
+            <div class='title'>
+              <h1 class='page-header text-center'>
+                Update time for raspberry pi
+              </h1>
+            </div>
+            <br>
+            <h2>The date problem</h2>
+            
+            <p>The raspberry pi doesn&rsquo;t has a real time clock, so every time start the
+            raspberry pi, we have to resest the time.</p>
+            
+            <h2>manually set the time from ntp server</h2>
+            <pre class="highlight shell">sudo /etc/init.d/ntp stop
+            sudo ntpdate 1.cn.pool.ntp.org
+            </pre>
+            <h2>Solution 2: set the ntp server</h2>
+            <pre class="highlight shell">
+            <span class="c"># in /etc/ntp.conf</span>
+            
+            server 1.cn.pool.ntp.org
+            server 1.asia.pool.ntp.org
+            server 2.asia.pool.ntp.org
+            
+            </pre>
+            <h2>Solution 3: setup the RTC module</h2>
+            
+            <p>When using the ntp server, it still delay some time after power up the board.
+            So I try to make use of the RTC module bought online.</p>
+          </article>
+          <div id="disqus_thread"></div>
+                      <script type="text/javascript">
+                      //<![CDATA[
+                          (function() {
+                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                          })();
+                      //]]>
+                      </script>
+                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                  </script>
         </div>
       </div>
     </section>
@@ -96,3 +103,4 @@
     </footer>
   </body>
 </html>
+
