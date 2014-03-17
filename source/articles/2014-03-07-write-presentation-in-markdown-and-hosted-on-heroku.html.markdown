@@ -101,6 +101,24 @@ watch: {
         }
 }
 ```
+
+### use markdown in haml template
+
+To use markdown in haml, we need to use the following format:
+
+```
+
+%section{"data-markdown" =>""}
+  %script{:type => "text/template"}
+    :markdown
+      ## Requirement
+        1. support CRUD operation
+          1. JSON Format
+        1. HTTP REST Interface
+        1. Reliable and Scalable
+
+```
+
 ### troubleshooting
 
 If express start failed(call: node web.js), then select the express version:
