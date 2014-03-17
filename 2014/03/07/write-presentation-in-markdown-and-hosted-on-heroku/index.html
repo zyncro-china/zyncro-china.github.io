@@ -131,6 +131,20 @@
                     <span class="p">}</span>
             <span class="p">}</span>
             </pre>
+            <h3>use markdown in haml template</h3>
+            
+            <p>To use markdown in haml, we need to use the following format:</p>
+            <pre class="highlight text">
+            %section{&quot;data-markdown&quot; =&gt;&quot;&quot;}
+              %script{:type =&gt; &quot;text/template&quot;}
+                :markdown
+                  ## Requirement
+                    1. support CRUD operation
+                      1. JSON Format
+                    1. HTTP REST Interface
+                    1. Reliable and Scalable
+            
+            </pre>
             <h3>troubleshooting</h3>
             
             <p>If express start failed(call: node web.js), then select the express version:
