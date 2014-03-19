@@ -187,6 +187,14 @@ shinyServer(function(input, output) {
 data <- read.table("simulation1.csv", header=TRUE, sep=",")
 ```
 
+### export sample data into csv
+
+```R
+
+> write.csv(women, file = "MyData.csv")
+
+```
+
 ### query
 
 ```R
@@ -223,3 +231,19 @@ alldates <- format(as.Date(sent_data$date), '%Y-%m')
 
 We should be able to use nginx or apach to do the http basic authentication,
 then foward the request to local Shiny server
+
+## sample data of R
+
+### load sample data
+
+```R
+
+> data(women)
+> women
+   height weight
+1      58    115
+2      59    117
+3      60    120
+
+```
+
