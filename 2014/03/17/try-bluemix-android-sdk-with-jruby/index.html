@@ -83,6 +83,11 @@
             <pre class="highlight ruby">
             <span class="n">record</span> <span class="o">=</span> <span class="no">IBMDataObject</span><span class="nf">.new</span> <span class="s1">&#39;record&#39;</span>
             </pre>
+            <h3>Upload data using Rest way</h3>
+            <pre class="highlight shell">
+             curl -v
+             <span class="s2">&quot;https://mobile.ng.bluemix.net/data/rest/v1/apps/{app_id}/uploads&quot;</span> -X POST -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s1">&#39;[{&quot;className&quot;: &quot;MyPeople&quot;,&quot;objectId&quot;:&quot;123&quot;,&quot;attributes&quot;:{&quot;name&quot;:&quot;BBB&quot;}}]&#39;&#39;
+            </span></pre>
           </article>
           <div id="disqus_thread"></div>
                       <script type="text/javascript">

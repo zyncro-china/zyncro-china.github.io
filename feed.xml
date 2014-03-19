@@ -55,7 +55,7 @@ https://groups.google.com/forum/#!searchin/shiny-discuss/multiple/shiny-discuss/
     <link rel="alternate" href="http://blog.url.com/2014/03/17/try-bluemix-android-sdk-with-jruby/"/>
     <id>http://blog.url.com/2014/03/17/try-bluemix-android-sdk-with-jruby/</id>
     <published>2014-03-17T08:41:00Z</published>
-    <updated>2014-03-17T18:00:40+08:00</updated>
+    <updated>2014-03-19T13:01:18+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -89,7 +89,12 @@ http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip&lt;/p&gt;
 &lt;h3&gt;Usage of the classes&lt;/h3&gt;
 &lt;pre class="highlight ruby"&gt;
 &lt;span class="n"&gt;record&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;IBMDataObject&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;record&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;</content>
+&lt;/pre&gt;
+&lt;h3&gt;Upload data using Rest way&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+ curl -v
+ &lt;span class="s2"&gt;&amp;quot;https://mobile.ng.bluemix.net/data/rest/v1/apps/{app_id}/uploads&amp;quot;&lt;/span&gt; -X POST -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;[{&amp;quot;className&amp;quot;: &amp;quot;MyPeople&amp;quot;,&amp;quot;objectId&amp;quot;:&amp;quot;123&amp;quot;,&amp;quot;attributes&amp;quot;:{&amp;quot;name&amp;quot;:&amp;quot;BBB&amp;quot;}}]&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/pre&gt;</content>
   </entry>
   <entry>
     <title>Run microsoft window virtual machine for free</title>
