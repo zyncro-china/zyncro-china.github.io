@@ -5,10 +5,51 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-03-17T08:41:00Z</updated>
+  <updated>2014-03-18T01:53:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Deploy R application to shinyapps.io</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/"/>
+    <id>http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/</id>
+    <published>2014-03-18T01:53:00Z</published>
+    <updated>2014-03-18T22:01:07+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;An R hosting Service&lt;/h2&gt;
+
+&lt;p&gt;Today I got an invitation for ShinyApps.io testing. This seems to be very
+useful because other PaaS like Heroku not allowing install R.&lt;/p&gt;
+
+&lt;h2&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;Just follow the guide from
+https://github.com/rstudio/shinyapps/blob/master/guide/guide.mdhttps://github.com/rstudio/shinyapps/blob/master/guide/guide.md&lt;/p&gt;
+
+&lt;h2&gt;run the App&lt;/h2&gt;
+&lt;pre class="highlight r"&gt;
+&lt;span class="n"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;shiny&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;runApp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h2&gt;Trouble Shooting&lt;/h2&gt;
+
+&lt;p&gt;When the first time I deploy my apps, it always returns: &lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;deployApp&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+Preparing to deploy application...Error: /v1/applications/ 400 - Bad Request
+&lt;/pre&gt;
+&lt;p&gt;Finally I found that it is because my project directory is used as the app
+name, so change it to something else make it works.&lt;/p&gt;
+
+&lt;h2&gt;Multiple pages solution&lt;/h2&gt;
+
+&lt;p&gt;Shiny App only support Single Page Application workflow, but there is some
+discussion for multiple pages:
+https://groups.google.com/forum/#!searchin/shiny-discuss/multiple/shiny-discuss/GAiZ4m13EHY/yKpkqmv9QuMJ&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Try bluemix android SDK with jruby</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/17/try-bluemix-android-sdk-with-jruby/"/>
@@ -216,205 +257,5 @@ and even to change the object being delegated to at a later time with
   &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>Using R in web development</title>
-    <link rel="alternate" href="http://blog.url.com/2014/03/11/using-r-in-web-development/"/>
-    <id>http://blog.url.com/2014/03/11/using-r-in-web-development/</id>
-    <published>2014-03-11T05:47:00Z</published>
-    <updated>2014-03-11T21:45:45+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Statistic Tool: R&lt;/h2&gt;
-
-&lt;p&gt;I have been want to use R in my work for a long time. But seem it is not so
-easy to combine it into the normal work flow very easily.&lt;/p&gt;
-
-&lt;h2&gt;Now we have a web development using R and Bootstrap: Shiny&lt;/h2&gt;
-
-&lt;p&gt;Shiny seems would be very useful for rapid development for some web project.&lt;/p&gt;
-
-&lt;p&gt;I can pass all the statistic job to R, which is more suitable for it, then
-I can develop other business logic in javascript. And maybe I can learn some
-statistic knowledges by using R. That is great!&lt;/p&gt;
-
-&lt;h2&gt;Shiny setup&lt;/h2&gt;
-
-&lt;p&gt;Shiny is a package in R. So to install shiny:&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;
-install.packages&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;shiny&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Then in a directory, prepare 2 R files:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;ui.R&lt;/li&gt;
-&lt;li&gt;server.R&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;Bootstrap2.3.2 components and other libs&lt;/h3&gt;
-
-&lt;p&gt;According to the source, shiny integrate following javascript libs:&lt;/p&gt;
-&lt;pre class="highlight text"&gt;
-▾ inst/
-  ▾ www/
-    ▾ shared/
-      ▸ bootstrap/
-      ▸ datatables/
-      ▸ datepicker/
-      ▸ font-awesome/
-      ▸ highlight/
-      ▸ jqueryui/
-      ▸ selectize/
-      ▸ showdown/
-      ▸ slider/
-        jquery.js
-&lt;/pre&gt;
-&lt;p&gt;Shiny use Bootstrap2.3.2. And it is very easy to use the components available.&lt;/p&gt;
-
-&lt;p&gt;In ui.R:&lt;/p&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;shinyUI&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pageWithSidebar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-  &lt;span class="n"&gt;headerPanel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Minimal Example&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-  &lt;span class="n"&gt;sidebarPanel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-               &lt;span class="n"&gt;textInput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inputId&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;comment&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                         &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Say&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                         &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
-  &lt;span class="n"&gt;mainPanel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-            &lt;span class="n"&gt;h3&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;This is you saying it&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-            &lt;span class="n"&gt;textOutput&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;textDisplay&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Notice that we use headerPanel, sidebarPanel and mainPanel, they are defined in R/bootstrap.R . And there are more UI componts defined in that file.&lt;/p&gt;
-
-&lt;p&gt;In server.R, we will update the output:&lt;/p&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;shiny&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;shinyServer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;textDisplay&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt;&lt;span class="n"&gt;renderText&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
-    &lt;span class="n"&gt;paste0&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;You said &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;comment&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; there are &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nchar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;comment&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot; characters in this.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;It does 2 things:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;gives the output name: testDisplay&lt;/li&gt;
-&lt;li&gt;it tells shiny that the content contained whthin is reactive&lt;/li&gt;
-&lt;li&gt;paste0 links strings without spaces&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;run gist&lt;/h3&gt;
-&lt;pre class="highlight text"&gt;
-&amp;gt; runGist(1233456)
-&lt;/pre&gt;
-&lt;h3&gt;show all widgets&lt;/h3&gt;
-&lt;pre class="highlight text"&gt;
-&amp;gt; runGist(6571951)
-&lt;/pre&gt;
-&lt;h3&gt;more about reactivity&lt;/h3&gt;
-
-&lt;p&gt;To understand the reactive programming used in Shiny, I need to read the &lt;a href="http://rstudio.github.io/shiny/tutorial/#reactivity-overview"&gt;Shiny
-tutorial page&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;There are 3 kinds of objects in reactive programming:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Reactive source&lt;/li&gt;
-&lt;li&gt;Reactive conductor&lt;/li&gt;
-&lt;li&gt;Reactive endpoint&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In the simple case, we only need Reactive source and the Reactive endpoint. But
-in the case that we don&amp;rsquo;t want to calculate the same middle result several
-times, we can use Rective conductor. The following is an example for fib():&lt;/p&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;fib&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ifelse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="m"&gt;-1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="m"&gt;-2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-
-&lt;span class="n"&gt;shinyServer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="n"&gt;currentFib&lt;/span&gt;         &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;reactive&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as.numeric&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-
-  &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;nthValue&lt;/span&gt;    &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;renderText&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="n"&gt;currentFib&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;nthValueInv&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;renderText&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;currentFib&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;})&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h3&gt;More notes for reactive object&lt;/h3&gt;
-
-&lt;p&gt;We can&amp;rsquo;t access the reactive value or expressions from outside a reactive
-context.&lt;/p&gt;
-
-&lt;p&gt;The following code can&amp;rsquo;t work:&lt;/p&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;shinyServer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;# Will give error
-&lt;/span&gt;  &lt;span class="n"&gt;currentFib&lt;/span&gt;      &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as.numeric&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;nthValue&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;renderText&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="n"&gt;currentFib&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;But we can define a function, then call it in the reactive world:&lt;/p&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;shinyServer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;# OK, as long as this is called from the reactive world:
-&lt;/span&gt;  &lt;span class="n"&gt;currentFib&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;fib&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as.numeric&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt;
-
-  &lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;nthValue&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;renderText&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="n"&gt;currentFib&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;Reactive object implementation&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Reactive values are an implementation of Reactive sources; that is, 
-they are an implementation of that role.&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Reactive expressions are an implementation of Reactive conductors. They can
-access reactive values or other reactive expressions, and they return a value.&lt;/p&gt;
-
-&lt;p&gt;A reactive expressions can be useful for caching the results of any procedure that happens in response to user input, including:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;accessing a database&lt;/li&gt;
-&lt;li&gt;reading data from a file&lt;/li&gt;
-&lt;li&gt;downloading data over the network&lt;/li&gt;
-&lt;li&gt;performing an expensive computation&lt;/li&gt;
-&lt;/ol&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Observers are an implementation of Reactive endpoints. They can access
-reactive sources and reactive expressions, and they don’t return a value;
-they are used for their side effects.&lt;/p&gt;
-
-&lt;h2&gt;manipulate CSV&lt;/h2&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;import CSV into data frame&lt;/h3&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;read.table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;simulation1.csv&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;header&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;TRUE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sep&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;,&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;query&lt;/h3&gt;
-&lt;pre class="highlight r"&gt;&lt;span class="n"&gt;league_table&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;team&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;league_table&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;home_wins&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;merge&lt;/h3&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;league&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;league_table&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;team&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;sorting&lt;/h3&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;league&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;league&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pts&lt;/span&gt;&lt;span class="p"&gt;),])&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;insert more rows&lt;/h3&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;rbind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;league&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;league&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;order&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pts&lt;/span&gt;&lt;span class="p"&gt;),]),&lt;/span&gt; &lt;span class="n"&gt;another_table&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;format date string&lt;/h3&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;alldates&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;as.Date&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sent_data&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;%Y-%m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h2&gt;user login&lt;/h2&gt;
-
-&lt;p&gt;We should be able to use nginx or apach to do the http basic authentication,
-then foward the request to local Shiny server&lt;/p&gt;
-</content>
   </entry>
 </feed>

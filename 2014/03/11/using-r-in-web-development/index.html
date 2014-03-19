@@ -218,6 +218,11 @@
             <pre class="highlight r">
             <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">read.table</span><span class="p">(</span><span class="s2">&quot;simulation1.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
             </pre>
+            <h3>export sample data into csv</h3>
+            <pre class="highlight r">
+            <span class="o">&gt;</span> <span class="n">write.csv</span><span class="p">(</span><span class="n">women</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s2">&quot;MyData.csv&quot;</span><span class="p">)</span>
+            
+            </pre>
             <h3>query</h3>
             <pre class="highlight r"><span class="n">league_table</span><span class="o">$</span><span class="n">team</span><span class="p">[</span><span class="n">league_table</span><span class="o">$</span><span class="n">home_wins</span> <span class="o">&gt;</span> <span class="m">8</span><span class="p">]</span>
             </pre>
@@ -241,6 +246,19 @@
             
             <p>We should be able to use nginx or apach to do the http basic authentication,
             then foward the request to local Shiny server</p>
+            
+            <h2>sample data of R</h2>
+            
+            <h3>load sample data</h3>
+            <pre class="highlight r">
+            <span class="o">&gt;</span> <span class="n">data</span><span class="p">(</span><span class="n">women</span><span class="p">)</span>
+            <span class="o">&gt;</span> <span class="n">women</span>
+               <span class="n">height</span> <span class="n">weight</span>
+            <span class="m">1</span>      <span class="m">58</span>    <span class="m">115</span>
+            <span class="m">2</span>      <span class="m">59</span>    <span class="m">117</span>
+            <span class="m">3</span>      <span class="m">60</span>    <span class="m">120</span>
+            
+            </pre>
           </article>
           <div id="disqus_thread"></div>
                       <script type="text/javascript">
