@@ -42,3 +42,12 @@ java_import com.ibm.mobile.services.data.IBMQueryResult
 
 record = IBMDataObject.new 'record'
 ```
+
+### Upload data using Rest way
+
+```shell
+
+ curl -v
+ "https://mobile.ng.bluemix.net/data/rest/v1/apps/{app_id}/uploads" -X POST -H "Content-Type: application/json" -d '[{"className": "MyPeople","objectId":"123","attributes":{"name":"BBB"}}]''
+```
+
