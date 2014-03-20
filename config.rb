@@ -43,6 +43,7 @@ activate :livereload
 activate :syntax #, :line_numbers => true
 activate :google_analytics do |ga|
   ga.tracking_id = 'UA-44086232-1'
+  ga.tracking_domain = 'zyncro-china.com'
 end
 ###
 # Compass
