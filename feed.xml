@@ -5,16 +5,191 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-03-18T01:53:00Z</updated>
+  <updated>2014-03-27T06:38:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Reading notes of a rubymotion book</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/27/reading-notes-of-a-rubymotion-book/"/>
+    <id>http://blog.url.com/2014/03/27/reading-notes-of-a-rubymotion-book/</id>
+    <published>2014-03-27T06:38:00Z</published>
+    <updated>2014-05-19T16:20:01+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h3&gt;Use NSLog instead of puts&lt;/h3&gt;
+
+&lt;p&gt;Because puts wouldn&amp;rsquo;t output to device logs&lt;/p&gt;
+
+&lt;h3&gt;RubyMotion provide help for 3 things&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;flexible workflow(editor, command line, repl)&lt;/li&gt;
+&lt;li&gt;use ruby language&lt;/li&gt;
+&lt;li&gt;skip the large set of new API have to learn&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Value Object&lt;/h3&gt;
+
+&lt;p&gt;There are 4 value object classes
+1. NSString
+1. NSNumber
+1. NSDate
+1. NSData( for byte buffers)&lt;/p&gt;
+
+&lt;h3&gt;Major design patterns in iOS development&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;MVC(the main difference from rails is that working with user interactions
+and system events instead of HTTP requests)&lt;/li&gt;
+&lt;li&gt;Delegation&lt;/li&gt;
+&lt;li&gt;Protocols&lt;/li&gt;
+&lt;li&gt;Notification Center(Pub/Sub)&lt;/li&gt;
+&lt;li&gt;Target-Action&lt;/li&gt;
+&lt;li&gt;Key-Value Observing(more Observers)&lt;/li&gt;
+&lt;li&gt;View Hierarchy&lt;/li&gt;
+&lt;li&gt;responder Chain&lt;/li&gt;
+&lt;li&gt;Receptionist&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;MVC pattern&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;difference between iOS and Rails
+The main changes to controller and view layers in relation to events&lt;/li&gt;
+&lt;li&gt;models are not alwasy database based&lt;/li&gt;
+&lt;li&gt;view objects are inherit from UIView or NSView, and responsible for drawing
+theirselves and subviews. In the case of controls, handling user interaction
+and input, then tell the controller about it.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
+  <entry>
+    <title>create iOS app using Promotion</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/24/create-ios-app-using-promotion/"/>
+    <id>http://blog.url.com/2014/03/24/create-ios-app-using-promotion/</id>
+    <published>2014-03-24T09:10:00Z</published>
+    <updated>2014-05-19T16:20:01+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;The Goal&lt;/h2&gt;
+
+&lt;p&gt;Create an iOS app as quickly as we can.&lt;/p&gt;
+
+&lt;h2&gt;Project Setup&lt;/h2&gt;
+
+&lt;h3&gt;Create a new app&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+promotion new membershipapp
+&lt;/pre&gt;
+&lt;h3&gt;run tests automatically&lt;/h3&gt;
+&lt;pre class="highlight shell"&gt;
+gem install when-files-change
+when-files-change &lt;span class="s2"&gt;&amp;quot;clear &amp;amp;&amp;amp; bundle exec rake spec&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h2&gt;write test cases&lt;/h2&gt;
+
+&lt;p&gt;The Promotion TDD framework will instantiate @controller and add a test @app by tests method, we need to call the Promotion::Screen.new and want to use screen instead of controller:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;#home_screen_spec.rb&lt;/span&gt;
+
+&lt;span class="n"&gt;describe&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;tests&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt;
+
+  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;controller&lt;/span&gt;
+    &lt;span class="vi"&gt;@controller&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;alias&lt;/span&gt; &lt;span class="ss"&gt;:screen&lt;/span&gt; &lt;span class="ss"&gt;:controller&lt;/span&gt;
+
+  &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;is a TableScreen&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;screen&lt;/span&gt;&lt;span class="nf"&gt;.should.be.kind_of&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;PM&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;TableScreen&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h2&gt;create a basic tab screen&lt;/h2&gt;
+
+&lt;p&gt;The Tabs module is mixed into PM::Screen, to use it, just prepare all the screens, declaring their title and icon, then init screens then call open_tab_bar(*screens) in the main screen&lt;/p&gt;
+
+&lt;h2&gt;Styling the screen using teacup&lt;/h2&gt;
+
+&lt;p&gt;Don&amp;rsquo;t forget to set height and width attributes in the Teacup::Stylesheet, I forget to set it and get nothing to display in the screen.&lt;/p&gt;
+
+&lt;h2&gt;Fix the UITableView Hiding Under Scroll Bar in iOS7&lt;/h2&gt;
+
+&lt;p&gt;to fix this, just use the navigation controller together.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>tips learn from confident ruby</title>
+    <link rel="alternate" href="http://blog.url.com/2014/03/24/tips-learn-from-confident-ruby/"/>
+    <id>http://blog.url.com/2014/03/24/tips-learn-from-confident-ruby/</id>
+    <published>2014-03-24T03:21:00Z</published>
+    <updated>2014-05-19T16:20:01+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;The book confident ruby&lt;/h2&gt;
+
+&lt;p&gt;After reading the book confident ruby, I want the screen cast with that book
+and learned following tips&lt;/p&gt;
+
+&lt;h3&gt;use each&lt;em&gt;with&lt;/em&gt;object instead of initialize an empty object before the each&lt;/h3&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt;
+&lt;span class="n"&gt;another_list&lt;/span&gt;&lt;span class="nf"&gt;.each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;should turn into&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;another_list&lt;/span&gt;&lt;span class="nf"&gt;.each_with_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;topics_list&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;don&amp;rsquo;t use collection.present? to check if collection exist and nonempty ,use Array()&lt;/h3&gt;
+
+&lt;h3&gt;skip the iteration at the top of the block&lt;/h3&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="k"&gt;next&lt;/span&gt; &lt;span class="k"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;topics&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;accept user or user_id with confident&lt;/h3&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="n"&gt;user_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;
+&lt;span class="n"&gt;user_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="nf"&gt;.id&lt;/span&gt; &lt;span class="k"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="nf"&gt;.class&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="no"&gt;Fixnum&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;To reduce the duplication, refactor to:
+&amp;ldquo;`ruby&lt;/p&gt;
+
+&lt;p&gt;private
+def user&lt;em&gt;id&lt;/em&gt;for(user&lt;em&gt;or&lt;/em&gt;id)
+  case user&lt;em&gt;or&lt;/em&gt;id
+  when Integer then user&lt;em&gt;or&lt;/em&gt;id
+  else
+    user&lt;em&gt;or&lt;/em&gt;id.id
+  end
+end
+&amp;rdquo;`&lt;/p&gt;
+
+&lt;p&gt;if define the private method, then use:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;user_id_for&lt;/span&gt;
+&lt;span class="nf"&gt;..&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="nb"&gt;private_class_method&lt;/span&gt; &lt;span class="ss"&gt;:user_id_for&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;return early(using guard) instead of using if at the top of the method&lt;/h3&gt;
+
+&lt;h3&gt;rescue at the top level of the method, to avoid the indent and begin block&lt;/h3&gt;
+</content>
+  </entry>
   <entry>
     <title>Deploy R application to shinyapps.io</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/"/>
     <id>http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/</id>
     <published>2014-03-18T01:53:00Z</published>
-    <updated>2014-03-18T22:01:07+08:00</updated>
+    <updated>2014-05-19T16:20:01+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -55,7 +230,7 @@ https://groups.google.com/forum/#!searchin/shiny-discuss/multiple/shiny-discuss/
     <link rel="alternate" href="http://blog.url.com/2014/03/17/try-bluemix-android-sdk-with-jruby/"/>
     <id>http://blog.url.com/2014/03/17/try-bluemix-android-sdk-with-jruby/</id>
     <published>2014-03-17T08:41:00Z</published>
-    <updated>2014-03-19T13:01:18+08:00</updated>
+    <updated>2014-05-19T16:20:01+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -101,7 +276,7 @@ http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip&lt;/p&gt;
     <link rel="alternate" href="http://blog.url.com/2014/03/16/run-microsoft-window-virtual-machine-for-free/"/>
     <id>http://blog.url.com/2014/03/16/run-microsoft-window-virtual-machine-for-free/</id>
     <published>2014-03-16T13:28:00Z</published>
-    <updated>2014-03-17T09:29:46+08:00</updated>
+    <updated>2014-05-19T16:20:01+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -118,149 +293,5 @@ or other malware.&lt;/p&gt;
 VM images for windows OS, for testing the IE. So I download the windows OS here
 and don&amp;rsquo;t have to worry too much about the virus or malware problems.&lt;/p&gt;
 </content>
-  </entry>
-  <entry>
-    <title>Record terminal session using asciinema</title>
-    <link rel="alternate" href="http://blog.url.com/2014/03/14/record-terminal-session-using-asciinema/"/>
-    <id>http://blog.url.com/2014/03/14/record-terminal-session-using-asciinema/</id>
-    <published>2014-03-14T09:09:00Z</published>
-    <updated>2014-03-12T17:28:22+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;My IDE is based on the Terminal&lt;/h2&gt;
-
-&lt;h2&gt;Install asciinema&lt;/h2&gt;
-&lt;pre class="highlight shell"&gt;
-sudo pip install --upgrade asciinema
-&lt;/pre&gt;
-&lt;h2&gt;Usage&lt;/h2&gt;
-
-&lt;h3&gt;Authenticate yourself&lt;/h3&gt;
-
-&lt;p&gt;In order to be able to delete or edit your terminal screencast, it require to
-login first. Use the below command and follow the instructions. &lt;/p&gt;
-&lt;pre class="highlight shell"&gt;
-asciinema auth
-&lt;/pre&gt;
-&lt;h3&gt;Start to record the session&lt;/h3&gt;
-&lt;pre class="highlight shell"&gt;
-asciinema
-&lt;/pre&gt;
-&lt;h3&gt;To embed a terminal screencast in a page&lt;/h3&gt;
-
-&lt;p&gt;We can embed a screencast using javascript as below:&lt;/p&gt;
-
-&lt;script type="text/javascript" src="https://asciinema.org/a/4348.js"
-id="asciicast-4348" async&gt;&lt;/script&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Update time for raspberry pi</title>
-    <link rel="alternate" href="http://blog.url.com/2014/03/13/update-time-for-raspberry-pi/"/>
-    <id>http://blog.url.com/2014/03/13/update-time-for-raspberry-pi/</id>
-    <published>2014-03-13T04:53:00Z</published>
-    <updated>2014-03-12T14:55:58+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;The date problem&lt;/h2&gt;
-
-&lt;p&gt;The raspberry pi doesn&amp;rsquo;t has a real time clock, so every time start the
-raspberry pi, we have to resest the time.&lt;/p&gt;
-
-&lt;h2&gt;manually set the time from ntp server&lt;/h2&gt;
-&lt;pre class="highlight shell"&gt;sudo /etc/init.d/ntp stop
-sudo ntpdate 1.cn.pool.ntp.org
-&lt;/pre&gt;
-&lt;h2&gt;Solution 2: set the ntp server&lt;/h2&gt;
-&lt;pre class="highlight shell"&gt;
-&lt;span class="c"&gt;# in /etc/ntp.conf&lt;/span&gt;
-
-server 1.cn.pool.ntp.org
-server 1.asia.pool.ntp.org
-server 2.asia.pool.ntp.org
-
-&lt;/pre&gt;
-&lt;h2&gt;Solution 3: setup the RTC module&lt;/h2&gt;
-
-&lt;p&gt;When using the ntp server, it still delay some time after power up the board.
-So I try to make use of the RTC module bought online.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Delegate in ruby</title>
-    <link rel="alternate" href="http://blog.url.com/2014/03/12/delegate-in-ruby/"/>
-    <id>http://blog.url.com/2014/03/12/delegate-in-ruby/</id>
-    <published>2014-03-12T03:03:00Z</published>
-    <updated>2014-03-12T12:51:36+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Serveral ways to delegate in Ruby&lt;/h2&gt;
-
-&lt;p&gt;There are serveral ways to delegate in Ruby:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;SimpleDelegator&lt;/li&gt;
-&lt;li&gt;DelegateClass&lt;/li&gt;
-&lt;li&gt;Delegator&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;SimpleDelegator&lt;/h3&gt;
-
-&lt;p&gt;A concrete implementation of Delegator, this class provides the means to
-delegate all supported method calls to the object passed into the constructor
-and even to change the object being delegated to at a later time with
-#__setobj__.&lt;/p&gt;
-
-&lt;p&gt;When using SimpleDelegator, the delegator is passed in the initalize method of SimpleDelegator Class,&lt;/p&gt;
-
-&lt;p&gt;Examples:&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;delegate&amp;#39;&lt;/span&gt;
-
-&lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;MyArray&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;SimpleDelegator&lt;/span&gt;
-
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;myarray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;MyArray&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h3&gt;DelegateClass&lt;/h3&gt;
-
-&lt;p&gt;There are 2 steps&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;pass the DelegateTo Class in class definition&lt;/li&gt;
-&lt;li&gt;call super(obj_of_ClassToDelegateTo in the initialize method&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;DelegateClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;ClassToDelegateTo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# Step 1&lt;/span&gt;
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;initialize&lt;/span&gt;
-    &lt;span class="k"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj_of_ClassToDelegateTo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;              &lt;span class="c1"&gt;# Step 2&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h3&gt;Delegator&lt;/h3&gt;
-
-&lt;p&gt;We can define a customized delegator like SimpleDelegator&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;SimpleDelegator&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;Delegator&lt;/span&gt;
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;super&lt;/span&gt;                  &lt;span class="c1"&gt;# pass obj to Delegator constructor, required&lt;/span&gt;
-    &lt;span class="vi"&gt;@delegate_sd_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="c1"&gt;# store obj for future use&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;__getobj__&lt;/span&gt;
-    &lt;span class="vi"&gt;@delegate_sd_obj&lt;/span&gt; &lt;span class="c1"&gt;# return object we are delegating to, required&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;__setobj__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="vi"&gt;@delegate_sd_obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="c1"&gt;# change delegation object,&lt;/span&gt;
-                           &lt;span class="c1"&gt;# a feature we&amp;#39;re providing&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;</content>
   </entry>
 </feed>
