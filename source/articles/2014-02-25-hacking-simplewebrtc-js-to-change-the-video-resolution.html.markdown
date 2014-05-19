@@ -68,3 +68,7 @@ webrtc = new SimpleWebRTC
         maxWidth: 320
         maxHeight: 180
 ```
+
+## Update
+The SimpleWebRTC github commit on Mar 23 fix this problem. this hack is not
+needed anymore.
