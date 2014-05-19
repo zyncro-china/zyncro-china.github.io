@@ -5,16 +5,92 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-03-27T06:38:00Z</updated>
+  <updated>2014-05-19T08:56:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Try facebook testing lib Jest</title>
+    <link rel="alternate" href="http://blog.url.com/2014/05/19/try-facebook-testing-lib-jest/"/>
+    <id>http://blog.url.com/2014/05/19/try-facebook-testing-lib-jest/</id>
+    <published>2014-05-19T08:56:00Z</published>
+    <updated>2014-05-19T17:24:38+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;The new testing framework from facebook&lt;/h2&gt;
+
+&lt;p&gt;Facebook released their new testing framework:
+&lt;a href="http://facebook.github.io/jest/"&gt;Jest&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;It seems to be very nice that can help you to mock the dependencies
+automatically:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In order to write an effective unit test, you want to be able to isolate a unit
+of code and test only that unit – nothing else. It is fairly common and good
+practice to consider a module such a unit, and this is where Jest excels. Jest
+makes isolating a module from its dependencies extremely easy by automatically
+generating mocks for each of the module&amp;rsquo;s depenedencies and providing those
+mocks (rather than the real dependency modules) by default.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Jest actually inspect the file that the code under test are requiring, then
+mock every properties of the required object, and generate the mocked function.&lt;/p&gt;
+
+&lt;p&gt;In this way, we don&amp;rsquo;t have to manually generate mocks for testing. This is
+a huge benefits when writteing tests.&lt;/p&gt;
+
+&lt;h2&gt;writing tests in coffeescript&lt;/h2&gt;
+
+&lt;p&gt;I also like to use coffeescript these days. But everytime, it seems that I need
+to pay more efforts to make it works, especially when the project is mainly
+developed only using javascript.&lt;/p&gt;
+
+&lt;p&gt;Jest have a page explained &lt;a href="http://facebook.github.io/jest/docs/tutorial-coffeescript.html#content"&gt;how to use
+coffeescript&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Just added following contents:&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;&lt;span class="c1"&gt;// package.json
+&lt;/span&gt;  &lt;span class="s2"&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;coffee-script&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;*&amp;quot;&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt;
+  &lt;span class="s2"&gt;&amp;quot;jest&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;scriptPreprocessor&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;preprocessor.js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;testFileExtensions&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;coffee&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="c1"&gt;// preprocessor.js
+&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;coffee&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;coffee-script&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exports&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="na"&gt;process&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\.coffee$/&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;coffee&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;bare&amp;#39;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;I have used that way and it can&amp;rsquo;t work, it always return following result:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt; Found 0 matching tests...
+&lt;/pre&gt;
+&lt;p&gt;After some code reading, I found the TestRunner.js in Jest may construct the RegExp incorrectly. For js and coffeescript, it generate following RegExp:&lt;/p&gt;
+&lt;pre class="highlight text"&gt;//__tests__/.*\.(js\|coffee)$/
+&lt;/pre&gt;
+&lt;p&gt;But it should be &lt;/p&gt;
+&lt;pre class="highlight text"&gt;//__tests__/.*\.(js|coffee)$/
+&lt;/pre&gt;
+&lt;p&gt;After testing, and submit the patch to Jest&amp;rsquo;s github &lt;a href="https://github.com/facebook/jest/pull/34"&gt;pullrequest&lt;/a&gt;. Then I found that I also need to sign the CLA(Contributor License Agreement) to submit the code to facebook. And that CLA link is blocked in China. Fortunately I have a VPN. So I think there will be very little patch from China.&lt;/p&gt;
+
+&lt;p&gt;Now I can continue trying Jest after spending half of the day to figure out this problem.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Reading notes of a rubymotion book</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/27/reading-notes-of-a-rubymotion-book/"/>
     <id>http://blog.url.com/2014/03/27/reading-notes-of-a-rubymotion-book/</id>
     <published>2014-03-27T06:38:00Z</published>
-    <updated>2014-05-19T16:20:01+08:00</updated>
+    <updated>2014-05-19T16:48:52+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -70,7 +146,7 @@ and input, then tell the controller about it.&lt;/li&gt;
     <link rel="alternate" href="http://blog.url.com/2014/03/24/create-ios-app-using-promotion/"/>
     <id>http://blog.url.com/2014/03/24/create-ios-app-using-promotion/</id>
     <published>2014-03-24T09:10:00Z</published>
-    <updated>2014-05-19T16:20:01+08:00</updated>
+    <updated>2014-05-19T16:43:30+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -270,28 +346,5 @@ http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip&lt;/p&gt;
  curl -v
  &lt;span class="s2"&gt;&amp;quot;https://mobile.ng.bluemix.net/data/rest/v1/apps/{app_id}/uploads&amp;quot;&lt;/span&gt; -X POST -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;[{&amp;quot;className&amp;quot;: &amp;quot;MyPeople&amp;quot;,&amp;quot;objectId&amp;quot;:&amp;quot;123&amp;quot;,&amp;quot;attributes&amp;quot;:{&amp;quot;name&amp;quot;:&amp;quot;BBB&amp;quot;}}]&amp;#39;&amp;#39;
 &lt;/span&gt;&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>Run microsoft window virtual machine for free</title>
-    <link rel="alternate" href="http://blog.url.com/2014/03/16/run-microsoft-window-virtual-machine-for-free/"/>
-    <id>http://blog.url.com/2014/03/16/run-microsoft-window-virtual-machine-for-free/</id>
-    <published>2014-03-16T13:28:00Z</published>
-    <updated>2014-05-19T16:20:01+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;My laptop run linux but still need windows&lt;/h2&gt;
-
-&lt;p&gt;Although I am not using windows in development and other daily job. I still
-need to be able to use windows some times. But I don&amp;rsquo;t want to pay for the
-windows. And I don&amp;rsquo;t want to use some cracked windows that may contains virus
-or other malware.&lt;/p&gt;
-
-&lt;h2&gt;Install a official VM legally&lt;/h2&gt;
-
-&lt;p&gt;This &lt;a href="http://www.modern.ie/en-us/virtualization-tools#downloads"&gt;site&lt;/a&gt; provide
-VM images for windows OS, for testing the IE. So I download the windows OS here
-and don&amp;rsquo;t have to worry too much about the virus or malware problems.&lt;/p&gt;
-</content>
   </entry>
 </feed>

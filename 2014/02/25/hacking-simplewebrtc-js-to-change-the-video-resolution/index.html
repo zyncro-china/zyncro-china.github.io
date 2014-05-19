@@ -1,151 +1,153 @@
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Hacking simplewebrtc.js to change the video resolution</title>
-    <meta content='' name='description'>
-    <meta content='width=device-width' name='viewport'>
-    <link href='/css/normalize.css' rel='stylesheet'>
-    <link href='/css/main.css' rel='stylesheet'>
-    <link href='/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='/stylesheets/background.css' rel='stylesheet'>
-    <link href='/stylesheets/article.css' rel='stylesheet'>
-    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
-    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
-    <script src='/js/bootstrap.min.js'></script>
-    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <header>
-      <nav class='navbar navbar-default' role='navigation'>
-        <div class='navbar-header'>
-          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </button>
-          <a class='navbar-brand'></a>
-        </div>
-        <div class='collapse navbar-collapse navbar-ex1-collapse'>
-          <ul class='nav navbar-nav'>
-            <li>
-              <a href='/'>Home</a>
-            </li>
-            <li>
-              <a href='/feed.xml'>Feed</a>
-            </li>
-            <li>
-              <a href='/about'>About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <section class='main'>
-      <div id='main' role='main'>
-        <div class='container'>
-          <article>
-            <div class='title'>
-              <h1 class='page-header text-center'>
-                Hacking simplewebrtc.js to change the video resolution
-              </h1>
-            </div>
-            <br>
-            <h2>Introduction webrtc and simplewebrtc.js</h2>
-            
-            <p>I am very exciting about WebRTC technology. It makes the browser can provide
-            some peer to peer functionalities that can&rsquo;t be thought before.</p>
-            
-            <p>The only limitation now is that only a few mainframe browsers support WebRTC,
-            and they use different API.</p>
-            
-            <p>I think this is where simplewebrtc.js can help the WebRTC development easier. By
-            using the unified interface, developer don&rsquo;t have to handle the difference
-            between browsers.</p>
-            
-            <p>I hope this library will not be too complicated, as its
-            name suggests. So that I can modify when I need, without having to read many
-            code that I don&rsquo;t use.</p>
-            
-            <h2>The SimpleWebRTC can&rsquo;t customize the video resolution</h2>
-            
-            <p>The simplewebrtc doesn&rsquo;t support changing constraints.</p>
-            <pre class="highlight javascript">
-            <span class="nx">SimpleWebRTC</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startLocalVideo</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-                <span class="k">this</span><span class="p">.</span><span class="nx">webrtc</span><span class="p">.</span><span class="nx">startLocalMedia</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">stream</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                        <span class="nx">attachMediaStream</span><span class="p">(</span><span class="nx">stream</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getLocalVideoContainer</span><span class="p">(),</span> <span class="p">{</span><span class="na">muted</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">mirror</span><span class="p">:</span> <span class="kc">true</span><span class="p">});</span>
-                    <span class="p">}</span>
-                <span class="p">});</span>
-            <span class="p">};</span>
-            </pre>
-            <p>In order to pass in the constraints, I override this function(I write the app
-            in coffeescript):</p>
-            <pre class="highlight coffeescript">
-            <span class="nx">SimpleWebRTC</span><span class="p">.</span><span class="na">prototype</span><span class="p">.</span><span class="na">startLocalVideo</span> <span class="o">=</span> <span class="o">-&gt;</span>
-              <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span>
-              <span class="k">this</span><span class="p">.</span><span class="na">config</span><span class="p">.</span><span class="na">constraints</span> <span class="o">||=</span> <span class="p">{</span><span class="na">video</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span> <span class="na">audio</span><span class="o">:</span> <span class="no">true</span><span class="p">}</span>
-              <span class="k">this</span><span class="p">.</span><span class="na">webrtc</span><span class="p">.</span><span class="na">startLocalMedia</span> <span class="k">this</span><span class="p">.</span><span class="na">config</span><span class="p">.</span><span class="na">constraints</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">stream</span><span class="p">)</span><span class="o">-&gt;</span>
-                <span class="k">if</span> <span class="nx">err</span>
-                  <span class="nx">self</span><span class="p">.</span><span class="na">emit</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-                <span class="k">else</span>
-                  <span class="nx">attachMediaStream</span><span class="p">(</span><span class="nx">stream</span><span class="p">,</span>
-                    <span class="nx">self</span><span class="p">.</span><span class="na">getLocalVideoContainer</span><span class="p">(),</span>
-                    <span class="p">{</span><span class="na">muted</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span> <span class="na">mirror</span><span class="o">:</span> <span class="no">true</span><span class="p">})</span>
-            </pre>
-            <p>Then we can pass the constraints in the constructor:</p>
-            <pre class="highlight coffeescript"><span class="nx">webrtc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SimpleWebRTC</span>
-              <span class="na">localVideoEl</span><span class="o">:</span> <span class="s">&#39;localVideo&#39;</span>
-              <span class="na">remoteVideosEl</span><span class="o">:</span> <span class="s">&#39;remotes&#39;</span>
-              <span class="na">autoRequestMedia</span><span class="o">:</span> <span class="no">true</span>
-              <span class="na">debug</span><span class="o">:</span> <span class="no">true</span>
-              <span class="na">detectSpeakingEvents</span><span class="o">:</span> <span class="no">true</span>
-              <span class="na">autoAdjustMic</span><span class="o">:</span> <span class="no">false</span>
-              <span class="na">constraints</span><span class="o">:</span>
-                <span class="na">audio</span><span class="o">:</span> <span class="no">true</span>
-                <span class="na">video</span><span class="o">:</span>
-                  <span class="na">mandatory</span><span class="o">:</span>
-                    <span class="na">maxWidth</span><span class="o">:</span> <span class="mi">320</span>
-                    <span class="na">maxHeight</span><span class="o">:</span> <span class="mi">180</span>
-            </pre>
-            <h2>Update</h2>
-            
-            <p>The SimpleWebRTC github commit on Mar 23 fix this problem. this hack is not
-            needed anymore.</p>
-          </article>
-          <div id="disqus_thread"></div>
-                      <script type="text/javascript">
-                      //<![CDATA[
-                          (function() {
-                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
-                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                          })();
-                      //]]>
-                      </script>
-                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-                  </script>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <script type="text/javascript">
-      //<![CDATA[
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      
-        ga('create', 'UA-44086232-1', 'zyncro-china.com');
-        ga('send', 'pageview');
-      //]]>
-      </script>
-    </footer>
-  </body>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Hacking simplewebrtc.js to change the video resolution</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Hacking simplewebrtc.js to change the video resolution
+</h1>
+</div>
+<br>
+<h2>Introduction webrtc and simplewebrtc.js</h2>
+
+<p>I am very exciting about WebRTC technology. It makes the browser can provide
+some peer to peer functionalities that can&rsquo;t be thought before.</p>
+
+<p>The only limitation now is that only a few mainframe browsers support WebRTC,
+and they use different API.</p>
+
+<p>I think this is where simplewebrtc.js can help the WebRTC development easier. By
+using the unified interface, developer don&rsquo;t have to handle the difference
+between browsers.</p>
+
+<p>I hope this library will not be too complicated, as its
+name suggests. So that I can modify when I need, without having to read many
+code that I don&rsquo;t use.</p>
+
+<h2>The SimpleWebRTC can&rsquo;t customize the video resolution</h2>
+
+<p>The simplewebrtc doesn&rsquo;t support changing constraints.</p>
+<pre class="highlight javascript">
+<span class="nx">SimpleWebRTC</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startLocalVideo</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">webrtc</span><span class="p">.</span><span class="nx">startLocalMedia</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">stream</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">attachMediaStream</span><span class="p">(</span><span class="nx">stream</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getLocalVideoContainer</span><span class="p">(),</span> <span class="p">{</span><span class="na">muted</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">mirror</span><span class="p">:</span> <span class="kc">true</span><span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+</pre>
+<p>In order to pass in the constraints, I override this function(I write the app
+in coffeescript):</p>
+<pre class="highlight coffeescript">
+<span class="nx">SimpleWebRTC</span><span class="p">.</span><span class="na">prototype</span><span class="p">.</span><span class="na">startLocalVideo</span> <span class="o">=</span> <span class="o">-&gt;</span>
+  <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">config</span><span class="p">.</span><span class="na">constraints</span> <span class="o">||=</span> <span class="p">{</span><span class="na">video</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span> <span class="na">audio</span><span class="o">:</span> <span class="no">true</span><span class="p">}</span>
+  <span class="k">this</span><span class="p">.</span><span class="na">webrtc</span><span class="p">.</span><span class="na">startLocalMedia</span> <span class="k">this</span><span class="p">.</span><span class="na">config</span><span class="p">.</span><span class="na">constraints</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">stream</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">err</span>
+      <span class="nx">self</span><span class="p">.</span><span class="na">emit</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="nx">attachMediaStream</span><span class="p">(</span><span class="nx">stream</span><span class="p">,</span>
+        <span class="nx">self</span><span class="p">.</span><span class="na">getLocalVideoContainer</span><span class="p">(),</span>
+        <span class="p">{</span><span class="na">muted</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span> <span class="na">mirror</span><span class="o">:</span> <span class="no">true</span><span class="p">})</span>
+</pre>
+<p>Then we can pass the constraints in the constructor:</p>
+<pre class="highlight coffeescript"><span class="nx">webrtc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SimpleWebRTC</span>
+  <span class="na">localVideoEl</span><span class="o">:</span> <span class="s">&#39;localVideo&#39;</span>
+  <span class="na">remoteVideosEl</span><span class="o">:</span> <span class="s">&#39;remotes&#39;</span>
+  <span class="na">autoRequestMedia</span><span class="o">:</span> <span class="no">true</span>
+  <span class="na">debug</span><span class="o">:</span> <span class="no">true</span>
+  <span class="na">detectSpeakingEvents</span><span class="o">:</span> <span class="no">true</span>
+  <span class="na">autoAdjustMic</span><span class="o">:</span> <span class="no">false</span>
+  <span class="na">constraints</span><span class="o">:</span>
+    <span class="na">audio</span><span class="o">:</span> <span class="no">true</span>
+    <span class="na">video</span><span class="o">:</span>
+      <span class="na">mandatory</span><span class="o">:</span>
+        <span class="na">maxWidth</span><span class="o">:</span> <span class="mi">320</span>
+        <span class="na">maxHeight</span><span class="o">:</span> <span class="mi">180</span>
+</pre>
+<h2>Update</h2>
+
+<p>The SimpleWebRTC github commit on Mar 23 fix this problem. this hack is not
+needed anymore.</p>
+
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
 </html>
 

@@ -1,270 +1,271 @@
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>CSS RESET</title>
-    <meta content='' name='description'>
-    <meta content='width=device-width' name='viewport'>
-    <link href='/css/normalize.css' rel='stylesheet'>
-    <link href='/css/main.css' rel='stylesheet'>
-    <link href='/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='/stylesheets/background.css' rel='stylesheet'>
-    <link href='/stylesheets/article.css' rel='stylesheet'>
-    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
-    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
-    <script src='/js/bootstrap.min.js'></script>
-    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <header>
-      <nav class='navbar navbar-default' role='navigation'>
-        <div class='navbar-header'>
-          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </button>
-          <a class='navbar-brand'></a>
-        </div>
-        <div class='collapse navbar-collapse navbar-ex1-collapse'>
-          <ul class='nav navbar-nav'>
-            <li>
-              <a href='/'>Home</a>
-            </li>
-            <li>
-              <a href='/feed.xml'>Feed</a>
-            </li>
-            <li>
-              <a href='/about'>About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <section class='main'>
-      <div id='main' role='main'>
-        <div class='container'>
-          <article>
-            <div class='title'>
-              <h1 class='page-header text-center'>
-                CSS RESET
-              </h1>
-            </div>
-            <br>
-            <h1>CSS RESET</h1>
-            
-            <hr>
-            
-            <h2>body</h2>
-            
-            <p>不同的浏览器对HTML的默认样式有着不同的渲染方式，最简单的方式就
-            是用CSS重新对HTML设置一个统一的样式，即CSS RESET.  </p>
-            
-            <h3>css reset</h3>
-            <pre class="highlight css">
-            <span class="nt">body</span><span class="o">,</span><span class="nt">div</span><span class="o">,</span><span class="nt">dl</span><span class="o">,</span><span class="nt">dt</span><span class="o">,</span><span class="nt">dd</span><span class="o">,</span><span class="nt">ul</span><span class="o">,</span><span class="nt">ol</span><span class="o">,</span><span class="nt">li</span><span class="o">,</span><span class="nt">h1</span><span class="o">,</span><span class="nt">h2</span><span class="o">,</span><span class="nt">h3</span><span class="o">,</span><span class="nt">h4</span><span class="o">,</span><span class="nt">h5</span><span class="o">,</span><span class="nt">h6</span><span class="o">,</span><span class="nt">pre</span><span class="o">,</span><span class="nt">form</span><span class="o">,</span><span class="nt">fieldset</span><span class="o">,</span>
-            <span class="nt">input</span><span class="o">,</span><span class="nt">textarea</span><span class="o">,</span><span class="nt">p</span><span class="o">,</span><span class="nt">blockquote</span><span class="o">,</span><span class="nt">th</span><span class="o">,</span><span class="nt">td</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">padding</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>   
-            
-            <span class="nt">table</span><span class="p">{</span><span class="nl">border-collapse</span><span class="p">:</span><span class="nb">collapse</span><span class="p">;</span><span class="nl">border-spacing</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>   
-            
-            <span class="nt">fieldset</span><span class="o">,</span><span class="nt">img</span><span class="p">{</span><span class="nl">border</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>
-            
-            <span class="nt">address</span><span class="o">,</span><span class="nt">caption</span><span class="o">,</span><span class="nt">cite</span><span class="o">,</span><span class="nt">code</span><span class="o">,</span><span class="nt">dfn</span><span class="o">,</span><span class="nt">em</span><span class="o">,</span><span class="nt">strong</span><span class="o">,</span><span class="nt">th</span><span class="o">,</span><span class="nt">var</span><span class="p">{</span><span class="nl">font-style</span><span class="p">:</span><span class="nb">normal</span><span class="p">;</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">normal</span><span class="p">;}</span>
-            
-            <span class="nt">ol</span><span class="o">,</span><span class="nt">ul</span><span class="p">{</span><span class="nl">list-style</span><span class="p">:</span><span class="nb">none</span><span class="p">;}</span>
-            
-            <span class="nt">caption</span><span class="o">,</span><span class="nt">th</span><span class="p">{</span><span class="nl">text-align</span><span class="p">:</span><span class="nb">left</span><span class="p">;}</span>
-            
-            <span class="nt">h1</span><span class="o">,</span><span class="nt">h2</span><span class="o">,</span><span class="nt">h3</span><span class="o">,</span><span class="nt">h4</span><span class="o">,</span><span class="nt">h5</span><span class="o">,</span><span class="nt">h6</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">100</span><span class="err">%</span><span class="p">;</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">normal</span><span class="p">;}</span>
-            
-            <span class="nt">q</span><span class="nd">:before</span><span class="o">,</span><span class="nt">q</span><span class="nd">:after</span><span class="p">{</span><span class="nl">content</span><span class="p">:</span><span class="s2">&#39;&#39;</span><span class="p">;}</span>
-            
-            <span class="nt">abbr</span><span class="o">,</span><span class="nt">acronym</span><span class="p">{</span><span class="err">border;0;</span><span class="p">}</span>
-            </pre>
-            <h3>文字</h3>
-            <pre class="highlight css">
-            <span class="nc">.f12</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">12px</span><span class="p">;}</span>
-            <span class="nc">.f13</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">13px</span><span class="p">;}</span>
-            <span class="nc">.f14</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">14px</span><span class="p">;}</span>
-            <span class="nc">.f16</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">16px</span><span class="p">;}</span>
-            <span class="nc">.f20</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            
-            <span class="nc">.fb</span><span class="p">{</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">bold</span><span class="p">;}</span>
-            <span class="nc">.fn</span><span class="p">{</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">normal</span><span class="p">;}</span>
-            
-            <span class="nc">.t2</span><span class="p">{</span><span class="nl">text-indent</span><span class="p">:</span><span class="m">2em</span><span class="p">;}</span>
-            
-            <span class="nc">.lh150</span><span class="p">{</span><span class="nl">line-height</span><span class="p">:</span><span class="m">150</span><span class="err">%</span><span class="p">;}</span>
-            <span class="nc">.lh180</span><span class="p">{</span><span class="nl">line-height</span><span class="p">:</span><span class="m">180</span><span class="err">%</span><span class="p">;}</span>
-            <span class="nc">.lh200</span><span class="p">{</span><span class="nl">line-height</span><span class="p">:</span><span class="m">200</span><span class="err">%</span><span class="p">;}</span>
-            
-            <span class="nc">.unl</span><span class="p">{</span><span class="nl">text-decoration</span><span class="p">:</span><span class="nb">underline</span><span class="p">;}</span>
-            <span class="nc">.no_unl</span><span class="p">{</span><span class="nl">text-decoration</span><span class="p">:</span><span class="nb">none</span><span class="p">;}</span>
-            </pre>
-            <h3>定位</h3>
-            <pre class="highlight css">
-            <span class="nc">.tl</span><span class="p">{</span><span class="nl">text-align</span><span class="p">:</span><span class="nb">left</span><span class="p">;}</span>
-            <span class="nc">.tc</span><span class="p">{</span><span class="nl">text-align</span><span class="p">:</span><span class="nb">center</span><span class="p">;}</span>
-            <span class="nc">.tr</span><span class="p">{</span><span class="py">test-align</span><span class="p">:</span><span class="nb">right</span><span class="p">;}</span>
-            
-            <span class="nc">.bc</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="nb">auto</span><span class="p">;</span><span class="nl">margin-right</span><span class="p">:</span><span class="nb">auto</span><span class="p">;}</span>
-            
-            <span class="nc">.fl</span><span class="p">{</span><span class="nl">float</span><span class="p">:</span><span class="nb">left</span><span class="p">;</span><span class="nl">display</span><span class="p">:</span><span class="nb">inline</span><span class="p">;}</span>
-            <span class="nc">.fr</span><span class="p">{</span><span class="nl">float</span><span class="p">:</span><span class="nb">right</span><span class="p">:</span><span class="n">display</span><span class="p">:</span><span class="nb">inline</span><span class="p">;}</span>
-            
-            <span class="nc">.cb</span><span class="p">{</span><span class="nl">clear</span><span class="p">:</span><span class="nb">both</span><span class="p">;}</span>
-            <span class="nc">.cl</span><span class="p">{</span><span class="nl">clear</span><span class="p">:</span><span class="nb">left</span><span class="p">;}</span>
-            <span class="nc">.cr</span><span class="p">{</span><span class="nl">clear</span><span class="p">:</span><span class="nb">right</span><span class="p">;}</span>
-            
-            <span class="nc">.clearfix</span><span class="nd">:after</span><span class="p">{</span><span class="nl">content</span><span class="p">:</span><span class="s1">&quot;.&quot;</span><span class="p">;</span><span class="nl">display</span><span class="p">:</span><span class="nb">block</span><span class="p">;</span><span class="nl">height</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">clear</span><span class="p">:</span><span class="nb">both</span><span class="p">;</span><span class="nl">visibility</span><span class="p">:</span><span class="nb">hidden</span><span class="p">;}</span>
-            <span class="nc">.clearfix</span><span class="p">{</span><span class="nl">display</span><span class="p">:</span><span class="n">inline-block</span><span class="p">;}</span>
-            <span class="o">*</span><span class="nt">html</span> <span class="nc">.clearfix</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">1</span><span class="err">%</span><span class="p">;}</span>
-            <span class="nc">.Clearfix</span><span class="p">{</span><span class="nl">display</span><span class="p">:</span><span class="nb">block</span><span class="p">;}</span>
-            
-            <span class="nc">.vm</span><span class="p">{</span><span class="nl">vertical-align</span><span class="p">:</span><span class="nb">middle</span><span class="p">;}</span>
-            
-            <span class="nc">.pr</span><span class="p">{</span><span class="nl">position</span><span class="p">:</span><span class="nb">relative</span><span class="p">;}</span>
-            <span class="nc">.pa</span><span class="p">{</span><span class="nl">position</span><span class="p">:</span><span class="nb">absolute</span><span class="p">;}</span>
-            
-            <span class="nc">.abs-right</span><span class="p">{</span><span class="nl">position</span><span class="p">:</span><span class="nb">absolute</span><span class="p">;</span><span class="nl">right</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>
-            
-            <span class="nc">.zoom</span><span class="p">{</span><span class="py">zoom</span><span class="p">:</span><span class="m">1</span><span class="p">;}</span>
-            
-            <span class="nc">.hidden</span><span class="p">{</span><span class="nl">visibility</span><span class="p">:</span><span class="nb">hidden</span><span class="p">;}</span>
-            <span class="nc">.none</span><span class="p">{</span><span class="nl">display</span><span class="p">:</span><span class="nb">none</span><span class="p">;}</span>
-            </pre>
-            <h3>长度高度</h3>
-            <pre class="highlight css">
-            <span class="nc">.w10</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.w20</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.w30</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.w40</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">40px</span><span class="p">;}</span>
-            <span class="nc">.w50</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.w60</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">60px</span><span class="p">;}</span>
-            <span class="nc">.w70</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">70px</span><span class="p">;}</span>
-            <span class="nc">.w80</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">80px</span><span class="p">;}</span>
-            <span class="nc">.w90</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">90px</span><span class="p">;}</span>
-            <span class="nc">.w100</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            <span class="nc">.w200</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">200px</span><span class="p">;}</span>
-            <span class="nc">.w250</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">250px</span><span class="p">;}</span>
-            <span class="nc">.w300</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">300px</span><span class="p">;}</span>
-            <span class="nc">.w400</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">400px</span><span class="p">;}</span>
-            <span class="nc">.w500</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">500px</span><span class="p">;}</span>
-            <span class="nc">.w600</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">600px</span><span class="p">;}</span>
-            <span class="nc">.w700</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">700px</span><span class="p">;}</span>
-            <span class="nc">.w</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">100</span><span class="err">%</span><span class="p">;}</span>
-            
-            <span class="nc">.h50</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.h80</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">80px</span><span class="p">;}</span>
-            <span class="nc">.h100</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            <span class="nc">.h200</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">200px</span><span class="p">;}</span>
-            
-            <span class="nc">.h</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">100</span><span class="err">%</span><span class="p">;}</span>
-            </pre>
-            <h3>边距</h3>
-            <pre class="highlight css">
-            <span class="nc">.m10</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.m15</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.m30</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            
-            <span class="nc">.mt5</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.mt10</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.mt15</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.mt20</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.mt30</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.mt50</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.mt100</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            
-            <span class="nc">.mb5</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.mb10</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.mb15</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.mb20</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.mb30</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.mb50</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.mb100</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            
-            <span class="nc">.ml5</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.ml10</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.ml15</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.ml20</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.ml30</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.ml50</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.ml100</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            
-            <span class="nc">.mr5</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.mr10</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.mr15</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.mr20</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.mr30</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.mr150</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.mr100</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            
-            <span class="nc">.p10</span><span class="p">{</span><span class="nl">padding</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.p15</span><span class="p">{</span><span class="nl">padding</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.p30</span><span class="p">{</span><span class="nl">padding</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            
-            <span class="nc">.pt5</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.pt10</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.pt15</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.pt20</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.pt30</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.pt50</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            
-            <span class="nc">.pb5</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.pb10</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.pb15</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.pb20</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.pb30</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.pb50</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.pb100</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            
-            <span class="nc">.pl5</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.pl10</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.pl15</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.pl20</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.pl30</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.pl50</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.pl100</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            
-            <span class="nc">.pr5</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
-            <span class="nc">.pr10</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
-            <span class="nc">.pr15</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
-            <span class="nc">.pr20</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
-            <span class="nc">.pr30</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
-            <span class="nc">.pr50</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
-            <span class="nc">.pr100</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
-            </pre>
-          </article>
-          <div id="disqus_thread"></div>
-                      <script type="text/javascript">
-                      //<![CDATA[
-                          (function() {
-                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
-                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                          })();
-                      //]]>
-                      </script>
-                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-                  </script>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <script type="text/javascript">
-      //<![CDATA[
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      
-        ga('create', 'UA-44086232-1', 'zyncro-china.com');
-        ga('send', 'pageview');
-      //]]>
-      </script>
-    </footer>
-  </body>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>CSS RESET</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+CSS RESET
+</h1>
+</div>
+<br>
+<h1>CSS RESET</h1>
+
+<hr>
+
+<h2>body</h2>
+
+<p>不同的浏览器对HTML的默认样式有着不同的渲染方式，最简单的方式就
+是用CSS重新对HTML设置一个统一的样式，即CSS RESET.  </p>
+
+<h3>css reset</h3>
+<pre class="highlight css">
+<span class="nt">body</span><span class="o">,</span><span class="nt">div</span><span class="o">,</span><span class="nt">dl</span><span class="o">,</span><span class="nt">dt</span><span class="o">,</span><span class="nt">dd</span><span class="o">,</span><span class="nt">ul</span><span class="o">,</span><span class="nt">ol</span><span class="o">,</span><span class="nt">li</span><span class="o">,</span><span class="nt">h1</span><span class="o">,</span><span class="nt">h2</span><span class="o">,</span><span class="nt">h3</span><span class="o">,</span><span class="nt">h4</span><span class="o">,</span><span class="nt">h5</span><span class="o">,</span><span class="nt">h6</span><span class="o">,</span><span class="nt">pre</span><span class="o">,</span><span class="nt">form</span><span class="o">,</span><span class="nt">fieldset</span><span class="o">,</span>
+<span class="nt">input</span><span class="o">,</span><span class="nt">textarea</span><span class="o">,</span><span class="nt">p</span><span class="o">,</span><span class="nt">blockquote</span><span class="o">,</span><span class="nt">th</span><span class="o">,</span><span class="nt">td</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">padding</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>   
+
+<span class="nt">table</span><span class="p">{</span><span class="nl">border-collapse</span><span class="p">:</span><span class="nb">collapse</span><span class="p">;</span><span class="nl">border-spacing</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>   
+
+<span class="nt">fieldset</span><span class="o">,</span><span class="nt">img</span><span class="p">{</span><span class="nl">border</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>
+
+<span class="nt">address</span><span class="o">,</span><span class="nt">caption</span><span class="o">,</span><span class="nt">cite</span><span class="o">,</span><span class="nt">code</span><span class="o">,</span><span class="nt">dfn</span><span class="o">,</span><span class="nt">em</span><span class="o">,</span><span class="nt">strong</span><span class="o">,</span><span class="nt">th</span><span class="o">,</span><span class="nt">var</span><span class="p">{</span><span class="nl">font-style</span><span class="p">:</span><span class="nb">normal</span><span class="p">;</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">normal</span><span class="p">;}</span>
+
+<span class="nt">ol</span><span class="o">,</span><span class="nt">ul</span><span class="p">{</span><span class="nl">list-style</span><span class="p">:</span><span class="nb">none</span><span class="p">;}</span>
+
+<span class="nt">caption</span><span class="o">,</span><span class="nt">th</span><span class="p">{</span><span class="nl">text-align</span><span class="p">:</span><span class="nb">left</span><span class="p">;}</span>
+
+<span class="nt">h1</span><span class="o">,</span><span class="nt">h2</span><span class="o">,</span><span class="nt">h3</span><span class="o">,</span><span class="nt">h4</span><span class="o">,</span><span class="nt">h5</span><span class="o">,</span><span class="nt">h6</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">100</span><span class="err">%</span><span class="p">;</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">normal</span><span class="p">;}</span>
+
+<span class="nt">q</span><span class="nd">:before</span><span class="o">,</span><span class="nt">q</span><span class="nd">:after</span><span class="p">{</span><span class="nl">content</span><span class="p">:</span><span class="s2">&#39;&#39;</span><span class="p">;}</span>
+
+<span class="nt">abbr</span><span class="o">,</span><span class="nt">acronym</span><span class="p">{</span><span class="err">border;0;</span><span class="p">}</span>
+</pre>
+<h3>文字</h3>
+<pre class="highlight css">
+<span class="nc">.f12</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">12px</span><span class="p">;}</span>
+<span class="nc">.f13</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">13px</span><span class="p">;}</span>
+<span class="nc">.f14</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">14px</span><span class="p">;}</span>
+<span class="nc">.f16</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">16px</span><span class="p">;}</span>
+<span class="nc">.f20</span><span class="p">{</span><span class="nl">font-size</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+
+<span class="nc">.fb</span><span class="p">{</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">bold</span><span class="p">;}</span>
+<span class="nc">.fn</span><span class="p">{</span><span class="nl">font-weight</span><span class="p">:</span><span class="nb">normal</span><span class="p">;}</span>
+
+<span class="nc">.t2</span><span class="p">{</span><span class="nl">text-indent</span><span class="p">:</span><span class="m">2em</span><span class="p">;}</span>
+
+<span class="nc">.lh150</span><span class="p">{</span><span class="nl">line-height</span><span class="p">:</span><span class="m">150</span><span class="err">%</span><span class="p">;}</span>
+<span class="nc">.lh180</span><span class="p">{</span><span class="nl">line-height</span><span class="p">:</span><span class="m">180</span><span class="err">%</span><span class="p">;}</span>
+<span class="nc">.lh200</span><span class="p">{</span><span class="nl">line-height</span><span class="p">:</span><span class="m">200</span><span class="err">%</span><span class="p">;}</span>
+
+<span class="nc">.unl</span><span class="p">{</span><span class="nl">text-decoration</span><span class="p">:</span><span class="nb">underline</span><span class="p">;}</span>
+<span class="nc">.no_unl</span><span class="p">{</span><span class="nl">text-decoration</span><span class="p">:</span><span class="nb">none</span><span class="p">;}</span>
+</pre>
+<h3>定位</h3>
+<pre class="highlight css">
+<span class="nc">.tl</span><span class="p">{</span><span class="nl">text-align</span><span class="p">:</span><span class="nb">left</span><span class="p">;}</span>
+<span class="nc">.tc</span><span class="p">{</span><span class="nl">text-align</span><span class="p">:</span><span class="nb">center</span><span class="p">;}</span>
+<span class="nc">.tr</span><span class="p">{</span><span class="py">test-align</span><span class="p">:</span><span class="nb">right</span><span class="p">;}</span>
+
+<span class="nc">.bc</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="nb">auto</span><span class="p">;</span><span class="nl">margin-right</span><span class="p">:</span><span class="nb">auto</span><span class="p">;}</span>
+
+<span class="nc">.fl</span><span class="p">{</span><span class="nl">float</span><span class="p">:</span><span class="nb">left</span><span class="p">;</span><span class="nl">display</span><span class="p">:</span><span class="nb">inline</span><span class="p">;}</span>
+<span class="nc">.fr</span><span class="p">{</span><span class="nl">float</span><span class="p">:</span><span class="nb">right</span><span class="p">:</span><span class="n">display</span><span class="p">:</span><span class="nb">inline</span><span class="p">;}</span>
+
+<span class="nc">.cb</span><span class="p">{</span><span class="nl">clear</span><span class="p">:</span><span class="nb">both</span><span class="p">;}</span>
+<span class="nc">.cl</span><span class="p">{</span><span class="nl">clear</span><span class="p">:</span><span class="nb">left</span><span class="p">;}</span>
+<span class="nc">.cr</span><span class="p">{</span><span class="nl">clear</span><span class="p">:</span><span class="nb">right</span><span class="p">;}</span>
+
+<span class="nc">.clearfix</span><span class="nd">:after</span><span class="p">{</span><span class="nl">content</span><span class="p">:</span><span class="s1">&quot;.&quot;</span><span class="p">;</span><span class="nl">display</span><span class="p">:</span><span class="nb">block</span><span class="p">;</span><span class="nl">height</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">clear</span><span class="p">:</span><span class="nb">both</span><span class="p">;</span><span class="nl">visibility</span><span class="p">:</span><span class="nb">hidden</span><span class="p">;}</span>
+<span class="nc">.clearfix</span><span class="p">{</span><span class="nl">display</span><span class="p">:</span><span class="n">inline-block</span><span class="p">;}</span>
+<span class="o">*</span><span class="nt">html</span> <span class="nc">.clearfix</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">1</span><span class="err">%</span><span class="p">;}</span>
+<span class="nc">.Clearfix</span><span class="p">{</span><span class="nl">display</span><span class="p">:</span><span class="nb">block</span><span class="p">;}</span>
+
+<span class="nc">.vm</span><span class="p">{</span><span class="nl">vertical-align</span><span class="p">:</span><span class="nb">middle</span><span class="p">;}</span>
+
+<span class="nc">.pr</span><span class="p">{</span><span class="nl">position</span><span class="p">:</span><span class="nb">relative</span><span class="p">;}</span>
+<span class="nc">.pa</span><span class="p">{</span><span class="nl">position</span><span class="p">:</span><span class="nb">absolute</span><span class="p">;}</span>
+
+<span class="nc">.abs-right</span><span class="p">{</span><span class="nl">position</span><span class="p">:</span><span class="nb">absolute</span><span class="p">;</span><span class="nl">right</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>
+
+<span class="nc">.zoom</span><span class="p">{</span><span class="py">zoom</span><span class="p">:</span><span class="m">1</span><span class="p">;}</span>
+
+<span class="nc">.hidden</span><span class="p">{</span><span class="nl">visibility</span><span class="p">:</span><span class="nb">hidden</span><span class="p">;}</span>
+<span class="nc">.none</span><span class="p">{</span><span class="nl">display</span><span class="p">:</span><span class="nb">none</span><span class="p">;}</span>
+</pre>
+<h3>长度高度</h3>
+<pre class="highlight css">
+<span class="nc">.w10</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.w20</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.w30</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.w40</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">40px</span><span class="p">;}</span>
+<span class="nc">.w50</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.w60</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">60px</span><span class="p">;}</span>
+<span class="nc">.w70</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">70px</span><span class="p">;}</span>
+<span class="nc">.w80</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">80px</span><span class="p">;}</span>
+<span class="nc">.w90</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">90px</span><span class="p">;}</span>
+<span class="nc">.w100</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+<span class="nc">.w200</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">200px</span><span class="p">;}</span>
+<span class="nc">.w250</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">250px</span><span class="p">;}</span>
+<span class="nc">.w300</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">300px</span><span class="p">;}</span>
+<span class="nc">.w400</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">400px</span><span class="p">;}</span>
+<span class="nc">.w500</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">500px</span><span class="p">;}</span>
+<span class="nc">.w600</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">600px</span><span class="p">;}</span>
+<span class="nc">.w700</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">700px</span><span class="p">;}</span>
+<span class="nc">.w</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span><span class="m">100</span><span class="err">%</span><span class="p">;}</span>
+
+<span class="nc">.h50</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.h80</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">80px</span><span class="p">;}</span>
+<span class="nc">.h100</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+<span class="nc">.h200</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">200px</span><span class="p">;}</span>
+
+<span class="nc">.h</span><span class="p">{</span><span class="nl">height</span><span class="p">:</span><span class="m">100</span><span class="err">%</span><span class="p">;}</span>
+</pre>
+<h3>边距</h3>
+<pre class="highlight css">
+<span class="nc">.m10</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.m15</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.m30</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+
+<span class="nc">.mt5</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.mt10</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.mt15</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.mt20</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.mt30</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.mt50</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.mt100</span><span class="p">{</span><span class="nl">margin-top</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+
+<span class="nc">.mb5</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.mb10</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.mb15</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.mb20</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.mb30</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.mb50</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.mb100</span><span class="p">{</span><span class="nl">margin-bottom</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+
+<span class="nc">.ml5</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.ml10</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.ml15</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.ml20</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.ml30</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.ml50</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.ml100</span><span class="p">{</span><span class="nl">margin-left</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+
+<span class="nc">.mr5</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.mr10</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.mr15</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.mr20</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.mr30</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.mr150</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.mr100</span><span class="p">{</span><span class="nl">margin-right</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+
+<span class="nc">.p10</span><span class="p">{</span><span class="nl">padding</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.p15</span><span class="p">{</span><span class="nl">padding</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.p30</span><span class="p">{</span><span class="nl">padding</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+
+<span class="nc">.pt5</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.pt10</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.pt15</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.pt20</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.pt30</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.pt50</span><span class="p">{</span><span class="nl">padding-top</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+
+<span class="nc">.pb5</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.pb10</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.pb15</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.pb20</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.pb30</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.pb50</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.pb100</span><span class="p">{</span><span class="nl">padding-bottom</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+
+<span class="nc">.pl5</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.pl10</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.pl15</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.pl20</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.pl30</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.pl50</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.pl100</span><span class="p">{</span><span class="nl">padding-left</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+
+<span class="nc">.pr5</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">5px</span><span class="p">;}</span>
+<span class="nc">.pr10</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">10px</span><span class="p">;}</span>
+<span class="nc">.pr15</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">15px</span><span class="p">;}</span>
+<span class="nc">.pr20</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">20px</span><span class="p">;}</span>
+<span class="nc">.pr30</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">30px</span><span class="p">;}</span>
+<span class="nc">.pr50</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">50px</span><span class="p">;}</span>
+<span class="nc">.pr100</span><span class="p">{</span><span class="nl">padding-right</span><span class="p">:</span><span class="m">100px</span><span class="p">;}</span>
+</pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
 </html>
 

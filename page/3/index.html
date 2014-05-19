@@ -1,742 +1,786 @@
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Zyncro Dev Blog</title>
-    <meta content='' name='description'>
-    <meta content='width=device-width' name='viewport'>
-    <link href='/css/normalize.css' rel='stylesheet'>
-    <link href='/css/main.css' rel='stylesheet'>
-    <link href='/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='/stylesheets/background.css' rel='stylesheet'>
-    <link href='/stylesheets/article.css' rel='stylesheet'>
-    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
-    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
-    <script src='/js/bootstrap.min.js'></script>
-    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <header>
-      <nav class='navbar navbar-default' role='navigation'>
-        <div class='navbar-header'>
-          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </button>
-          <a class='navbar-brand'></a>
-        </div>
-        <div class='collapse navbar-collapse navbar-ex1-collapse'>
-          <ul class='nav navbar-nav'>
-            <li>
-              <a href='/'>Home</a>
-            </li>
-            <li>
-              <a href='/feed.xml'>Feed</a>
-            </li>
-            <li>
-              <a href='/about'>About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <section class='main'>
-      <div id='main' role='main'>
-        <div class='container'>
-          <div class='jumbotron content_box'>
-            <div class='container'>
-              <div class='row'>
-                <div class='col-lg-2 col-xs-4'>
-                  <img alt='logo' class='img-responsive' src='/img/logo.jpg'>
-                </div>
-                <h1 class='col-lg-10 col-xs-8'>
-                  Zyncro China Dev Blog
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div class='row'>
-            <div class='col-lg-8 col-xs-12'>
-              <ul class='well-lg content_box'>
-                <p>
-                  Page 3 of 3
-                </p>
-                <ul class='pager'>
-                </ul>
-                <li class='article'>
-                  <h2>
-                    <a href="/2014/02/19/switch-from-guard-to-simpler-solution/">switch from guard to simpler solution</a>
-                    <span>Feb 19</span>
-                  </h2>
-                  <!--
-                    use article.summary(250) if you have Nokogiri available to show just
-                    the first 250 characters
-                  -->
-                  <h2>The weird problem when using guard</h2>
-                  
-                  <p>I have recently encounter a problem: when using guard to watch file changes,
-                  and run tasks automatically, they run multiple times, or remove the result.
-                  <a href="https://github.com/netzpirat/guard-coffeescript/issues/28">Some similiar issues on github</a></p>
-                  
-                  <h2>Fix the problem or avoid it</h2>
-                  <a href="/2014/02/19/switch-from-guard-to-simpler-solution/">Read More...</a>
-                </li>
-                <li class='article'>
-                  <h2>
-                    <a href="/2014/02/01/android-chrome-app/">在android上创建chrome app</a>
-                    <span>Feb  1</span>
-                  </h2>
-                  <!--
-                    use article.summary(250) if you have Nokogiri available to show just
-                    the first 250 characters
-                  -->
-                  <h2>Why not just using phonegap to build the mobile app</h2>
-                  
-                  <p>Because setup phonegap toolchain takes more time, while <a href="https://github.com/MobileChromeApps/mobile-chrome-apps">cca</a> is much faster. Further more, it can make use of chrome api.</p>
-                  
-                  <h2>installation</h2>
-                  
-                  <p>sudo npm install -g cca</p>
-                  
-                  <h2>create project</h2>
-                  
-                  <p>cca create test –android</p>
-                  <a href="/2014/02/01/android-chrome-app/">Read More...</a>
-                </li>
-                <li class='article'>
-                  <h2>
-                    <a href="/2013/10/15/css-reset/">CSS RESET</a>
-                    <span>Oct 15</span>
-                  </h2>
-                  <!--
-                    use article.summary(250) if you have Nokogiri available to show just
-                    the first 250 characters
-                  -->
-                  <h1>CSS RESET</h1>
-                  
-                  <hr><h2>body</h2>
-                  
-                  <p>不同的浏览器对HTML的默认样式有着不同的渲染方式，最简单的方式就
-                  是用CSS重新对HTML设置一个统一的样式，即CSS RESET.  </p>
-                  
-                  <h3>css reset</h3>
-                  <pre class="highlight css">
-                  <span class="nt">body</span><span class="o">,</span><span class="nt">div</span><span class="o">,</span><span class="nt">dl</span><span class="o">,</span><span class="nt">dt</span><span class="o">,</span><span class="nt">dd</span><span class="o">,</span><span class="nt">ul</span><span class="o">,</span><span class="nt">ol</span><span class="o">,</span><span class="nt">li</span><span class="o">,</span><span class="nt">h1</span><span class="o">,</span><span class="nt">h2</span><span class="o">,</span><span class="nt">h3</span><span class="o">,</span><span class="nt">h4</span><span class="o">,</span><span class="nt">h5</span><span class="o">,</span><span class="nt">h6</span><span class="o">,</span><span class="nt">pre</span><span class="o">,</span><span class="nt">form</span><span class="o">,</span><span class="nt">fieldset</span><span class="o">,</span>
-                  <span class="nt">input</span><span class="o">,</span><span class="nt">textarea</span><span class="o">,</span><span class="nt">p</span><span class="o">,</span><span class="nt">blockquote</span><span class="o">,</span><span class="nt">th</span><span class="o">,</span><span class="nt">td</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">padding</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>   
-                  
-                  <span class="nt">table</span><span class="p">{</span><span class="nl">border-collapse</span><span class="p">:</span><span class="nb">collapse</span></pre>
-                  <a href="/2013/10/15/css-reset/">Read More...</a>
-                </li>
-                <li class='article'>
-                  <h2>
-                    <a href="/2013/10/10/zyncro-api-console/">Zyncro API Console</a>
-                    <span>Oct 10</span>
-                  </h2>
-                  <!--
-                    use article.summary(250) if you have Nokogiri available to show just
-                    the first 250 characters
-                  -->
-                  <h1>为什么要做这个Zyncro Console</h1>
-                  
-                  <p>Zyncro已经有一个API
-                  Console，但是再做一个可以更好地体验其API的功能，而且也不难，最重要是自己做比较有趣。</p>
-                  
-                  <h1>Zyncro API Console</h1>
-                  
-                  <iframe src="https://apigee.com/ruanwz/embed/console/zyncro" width="100%"
-                  height="600" scrolling="no"></iframe>
-                  <a href="/2013/10/10/zyncro-api-console/">Read More...</a>
-                </li>
-                <li class='article'>
-                  <h2>
-                    <a href="/2012/01/01/example-article/">Example Article</a>
-                    <span>Jan  1</span>
-                  </h2>
-                  <!--
-                    use article.summary(250) if you have Nokogiri available to show just
-                    the first 250 characters
-                  -->
-                  <h1>This is a Heading Title</h1>
-                  
-                  <h2>This is smaller title</h2>
-                  
-                  <ol>
-                  <li>go home</li>
-                  <li>cook dinner</li>
-                  </ol><ul>
-                  <li>this is a option</li>
-                  <li>option 2
-                  Thisssss is an example article. You probably want to delete it and write your own articles!</li>
-                  </ul><pre class="highlight ruby"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-                    <span class="nb">puts</span> <span class="n">message</span>
-                    <span class="k">return</span> <span class="kp">nil</span>
-                  <span class="k">end</span>
-                  </pre><pre class="highlight javascript"><span class="kd">var</span></pre>
-                  <a href="/2012/01/01/example-article/">Read More...</a>
-                </li>
-                <ul class='pager'>
-                  <li><a href="/page/2/">Previous page</a></li>
-                </ul>
-              </ul>
-            </div>
-            <div class='col-lg-4 hidden-xs asider hidden-md hidden-sm'>
-              <dl class='well-lg content_box'>
-                <dt>
-                  <h2>Recent Articles</h2>
-                </dt>
-                <dd>
-                  <ol>
-                    <li>
-                      <a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
-                      <span>Mar 27</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
-                      <span>Mar 24</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
-                      <span>Mar 24</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-                      <span>Mar 18</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-                      <span>Mar 17</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/16/run-microsoft-window-virtual-machine-for-free/">Run microsoft window virtual machine for free</a>
-                      <span>Mar 16</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/14/record-terminal-session-using-asciinema/">Record terminal session using asciinema</a>
-                      <span>Mar 14</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/13/update-time-for-raspberry-pi/">Update time for raspberry pi</a>
-                      <span>Mar 13</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/12/delegate-in-ruby/">Delegate in ruby</a>
-                      <span>Mar 12</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/11/using-r-in-web-development/">Using R in web development</a>
-                      <span>Mar 11</span>
-                    </li>
-                  </ol>
-                </dd>
-                <dt>
-                  <h2>Tags</h2>
-                </dt>
-                <dd>
-                  <ol>
-                    <li>
-                      <a href="/tags/opencv/">opencv</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/android/">android</a>
-                      (3)
-                    </li>
-                    <li>
-                      <a href="/tags/rubuto/">rubuto</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/jruby/">jruby</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/vim/">vim</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/guard/">guard</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/unix/">unix</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/pipe/">pipe</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/tmux/">tmux</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/ruby/">ruby</a>
-                      (4)
-                    </li>
-                    <li>
-                      <a href="/tags/delegate/">delegate</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/raspberrypi/">raspberrypi</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/upstart/">upstart</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/example/">example</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/mobile/">mobile</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/chrome/">chrome</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/phonegap/">phonegap</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/r/">R</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/web/">web</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/bootstrap/">bootstrap</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/sass/">sass</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/windows/">windows</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/virtualbox/">virtualbox</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/linux/">linux</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/statics/">statics</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/rubymotion/">rubymotion</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/ios/">iOS</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/promotion/">ProMotion</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/teacup/">teacup</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/zeromq/">zeromq</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/message_queue/">message_queue</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/screencast/">screencast</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/terminal/">terminal</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/baas/">BaaS</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/nodejs/">nodejs</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/paas/">PaaS</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/heroku/">heroku</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/rtc/">rtc</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/api/">api</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/oauth/">oauth</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/rest/">rest</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/speedreading/">speedreading</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/extension/">extension</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/webrtc/">webrtc</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/markdown/">markdown</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/presentation/">presentation</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/reveal-js/">reveal.js</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/ruboto/">ruboto</a>
-                      (1)
-                    </li>
-                  </ol>
-                </dd>
-                <dt>
-                  <h2>By Year</h2>
-                </dt>
-                <dd>
-                  <ol>
-                    <li>
-                      <a href="/2014/">2014</a>
-                      (22)
-                    </li>
-                    <li>
-                      <a href="/2013/">2013</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/2012/">2012</a>
-                      (1)
-                    </li>
-                  </ol>
-                </dd>
-              </dl>
-            </div>
-          </div>
-          <div class='row'>
-            <div class='col-xs-12 hidden-lg asider'>
-              <dl class='well-lg content_box'>
-                <dt>
-                  <h2>Recent Articles</h2>
-                </dt>
-                <dd>
-                  <ol>
-                    <li>
-                      <a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
-                      <span>Mar 27</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
-                      <span>Mar 24</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
-                      <span>Mar 24</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-                      <span>Mar 18</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-                      <span>Mar 17</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/16/run-microsoft-window-virtual-machine-for-free/">Run microsoft window virtual machine for free</a>
-                      <span>Mar 16</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/14/record-terminal-session-using-asciinema/">Record terminal session using asciinema</a>
-                      <span>Mar 14</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/13/update-time-for-raspberry-pi/">Update time for raspberry pi</a>
-                      <span>Mar 13</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/12/delegate-in-ruby/">Delegate in ruby</a>
-                      <span>Mar 12</span>
-                    </li>
-                    <li>
-                      <a href="/2014/03/11/using-r-in-web-development/">Using R in web development</a>
-                      <span>Mar 11</span>
-                    </li>
-                  </ol>
-                </dd>
-                <dt>
-                  <h2>Tags</h2>
-                </dt>
-                <dd>
-                  <ol>
-                    <li>
-                      <a href="/tags/opencv/">opencv</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/android/">android</a>
-                      (3)
-                    </li>
-                    <li>
-                      <a href="/tags/rubuto/">rubuto</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/jruby/">jruby</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/vim/">vim</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/guard/">guard</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/unix/">unix</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/pipe/">pipe</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/tmux/">tmux</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/ruby/">ruby</a>
-                      (4)
-                    </li>
-                    <li>
-                      <a href="/tags/delegate/">delegate</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/raspberrypi/">raspberrypi</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/upstart/">upstart</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/example/">example</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/mobile/">mobile</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/chrome/">chrome</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/phonegap/">phonegap</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/r/">R</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/web/">web</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/bootstrap/">bootstrap</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/sass/">sass</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/windows/">windows</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/virtualbox/">virtualbox</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/linux/">linux</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/statics/">statics</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/rubymotion/">rubymotion</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/ios/">iOS</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/promotion/">ProMotion</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/teacup/">teacup</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/zeromq/">zeromq</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/message_queue/">message_queue</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/screencast/">screencast</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/terminal/">terminal</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/baas/">BaaS</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/nodejs/">nodejs</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/paas/">PaaS</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/heroku/">heroku</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/tags/rtc/">rtc</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/api/">api</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/oauth/">oauth</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/rest/">rest</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/speedreading/">speedreading</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/extension/">extension</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/webrtc/">webrtc</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/markdown/">markdown</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/presentation/">presentation</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/reveal-js/">reveal.js</a>
-                      (1)
-                    </li>
-                    <li>
-                      <a href="/tags/ruboto/">ruboto</a>
-                      (1)
-                    </li>
-                  </ol>
-                </dd>
-                <dt>
-                  <h2>By Year</h2>
-                </dt>
-                <dd>
-                  <ol>
-                    <li>
-                      <a href="/2014/">2014</a>
-                      (22)
-                    </li>
-                    <li>
-                      <a href="/2013/">2013</a>
-                      (2)
-                    </li>
-                    <li>
-                      <a href="/2012/">2012</a>
-                      (1)
-                    </li>
-                  </ol>
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <script type="text/javascript">
-      //<![CDATA[
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      
-        ga('create', 'UA-44086232-1', 'zyncro-china.com');
-        ga('send', 'pageview');
-      //]]>
-      </script>
-    </footer>
-  </body>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Zyncro Dev Blog</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<div class='jumbotron content_box'>
+<div class='container'>
+<div class='row'>
+<div class='col-lg-2 col-xs-4'>
+<img alt='logo' class='img-responsive' src='/img/logo.jpg'>
+</div>
+<h1 class='col-lg-10 col-xs-8'>
+Zyncro China Dev Blog
+</h1>
+</div>
+</div>
+</div>
+<div class='row'>
+<div class='col-lg-8 col-xs-12'>
+<ul class='well-lg content_box'>
+<p>
+Page 3 of 3
+</p>
+<ul class='pager'>
+</ul>
+<li class='article'>
+<h2>
+<a href="/2014/02/20/combine-backbone-and-react-js/">Combine Backbone and React.js</a>
+<span>Feb 20</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>Get the best of both Backbone and React.js</h2>
+
+<p>Backbone is a small and simple framework for Single Page Application. But
+rendering views is hard, so let’s try to use React.js together, and let
+React.js to finish the hard work for us.</p>
+
+<h2>React.js Framework</h2>
+<a href="/2014/02/20/combine-backbone-and-react-js/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/02/19/switch-from-guard-to-simpler-solution/">switch from guard to simpler solution</a>
+<span>Feb 19</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>The weird problem when using guard</h2>
+
+<p>I have recently encounter a problem: when using guard to watch file changes,
+and run tasks automatically, they run multiple times, or remove the result.
+<a href="https://github.com/netzpirat/guard-coffeescript/issues/28">Some similiar issues on github</a></p>
+
+<h2>Fix the problem or avoid it</h2>
+<a href="/2014/02/19/switch-from-guard-to-simpler-solution/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/02/01/android-chrome-app/">在android上创建chrome app</a>
+<span>Feb  1</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>Why not just using phonegap to build the mobile app</h2>
+
+<p>Because setup phonegap toolchain takes more time, while <a href="https://github.com/MobileChromeApps/mobile-chrome-apps">cca</a> is much faster. Further more, it can make use of chrome api.</p>
+
+<h2>installation</h2>
+
+<p>sudo npm install -g cca</p>
+
+<h2>create project</h2>
+
+<p>cca create test –android</p>
+<a href="/2014/02/01/android-chrome-app/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2013/10/15/css-reset/">CSS RESET</a>
+<span>Oct 15</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h1>CSS RESET</h1>
+
+<hr><h2>body</h2>
+
+<p>不同的浏览器对HTML的默认样式有着不同的渲染方式，最简单的方式就
+是用CSS重新对HTML设置一个统一的样式，即CSS RESET.  </p>
+
+<h3>css reset</h3>
+<pre class="highlight css">
+<span class="nt">body</span><span class="o">,</span><span class="nt">div</span><span class="o">,</span><span class="nt">dl</span><span class="o">,</span><span class="nt">dt</span><span class="o">,</span><span class="nt">dd</span><span class="o">,</span><span class="nt">ul</span><span class="o">,</span><span class="nt">ol</span><span class="o">,</span><span class="nt">li</span><span class="o">,</span><span class="nt">h1</span><span class="o">,</span><span class="nt">h2</span><span class="o">,</span><span class="nt">h3</span><span class="o">,</span><span class="nt">h4</span><span class="o">,</span><span class="nt">h5</span><span class="o">,</span><span class="nt">h6</span><span class="o">,</span><span class="nt">pre</span><span class="o">,</span><span class="nt">form</span><span class="o">,</span><span class="nt">fieldset</span><span class="o">,</span>
+<span class="nt">input</span><span class="o">,</span><span class="nt">textarea</span><span class="o">,</span><span class="nt">p</span><span class="o">,</span><span class="nt">blockquote</span><span class="o">,</span><span class="nt">th</span><span class="o">,</span><span class="nt">td</span><span class="p">{</span><span class="nl">margin</span><span class="p">:</span><span class="m">0</span><span class="p">;</span><span class="nl">padding</span><span class="p">:</span><span class="m">0</span><span class="p">;}</span>   
+
+<span class="nt">table</span><span class="p">{</span><span class="nl">border-collapse</span><span class="p">:</span><span class="nb">collapse</span></pre>
+<a href="/2013/10/15/css-reset/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2013/10/10/zyncro-api-console/">Zyncro API Console</a>
+<span>Oct 10</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h1>为什么要做这个Zyncro Console</h1>
+
+<p>Zyncro已经有一个API
+Console，但是再做一个可以更好地体验其API的功能，而且也不难，最重要是自己做比较有趣。</p>
+
+<h1>Zyncro API Console</h1>
+
+<iframe src="https://apigee.com/ruanwz/embed/console/zyncro" width="100%"
+height="600" scrolling="no"></iframe>
+
+<a href="/2013/10/10/zyncro-api-console/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2012/01/01/example-article/">Example Article</a>
+<span>Jan  1</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h1>This is a Heading Title</h1>
+
+<h2>This is smaller title</h2>
+
+<ol>
+<li>go home</li>
+<li>cook dinner</li>
+</ol><ul>
+<li>this is a option</li>
+<li>option 2
+Thisssss is an example article. You probably want to delete it and write your own articles!</li>
+</ul><pre class="highlight ruby"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="n">message</span>
+  <span class="k">return</span> <span class="kp">nil</span>
+<span class="k">end</span>
+</pre><pre class="highlight javascript"><span class="kd">var</span></pre>
+<a href="/2012/01/01/example-article/">Read More...</a>
+</li>
+<ul class='pager'>
+<li><a href="/page/2/">Previous page</a></li>
+</ul>
+</ul>
+</div>
+<div class='col-lg-4 hidden-xs asider hidden-md hidden-sm'>
+<dl class='well-lg content_box'>
+<dt>
+<h2>Recent Articles</h2>
+</dt>
+<dd>
+<ol>
+<li>
+<a href="/2014/05/19/try-facebook-testing-lib-jest/">Try facebook testing lib Jest</a>
+<span>May 19</span>
+</li>
+<li>
+<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
+<span>Mar 27</span>
+</li>
+<li>
+<a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
+<span>Mar 24</span>
+</li>
+<li>
+<a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
+<span>Mar 24</span>
+</li>
+<li>
+<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
+<span>Mar 18</span>
+</li>
+<li>
+<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
+<span>Mar 17</span>
+</li>
+<li>
+<a href="/2014/03/16/run-microsoft-window-virtual-machine-for-free/">Run microsoft window virtual machine for free</a>
+<span>Mar 16</span>
+</li>
+<li>
+<a href="/2014/03/14/record-terminal-session-using-asciinema/">Record terminal session using asciinema</a>
+<span>Mar 14</span>
+</li>
+<li>
+<a href="/2014/03/13/update-time-for-raspberry-pi/">Update time for raspberry pi</a>
+<span>Mar 13</span>
+</li>
+<li>
+<a href="/2014/03/12/delegate-in-ruby/">Delegate in ruby</a>
+<span>Mar 12</span>
+</li>
+</ol>
+</dd>
+<dt>
+<h2>Tags</h2>
+</dt>
+<dd>
+<ol>
+<li>
+<a href="/tags/opencv/">opencv</a>
+(1)
+</li>
+<li>
+<a href="/tags/android/">android</a>
+(3)
+</li>
+<li>
+<a href="/tags/rubuto/">rubuto</a>
+(1)
+</li>
+<li>
+<a href="/tags/jruby/">jruby</a>
+(2)
+</li>
+<li>
+<a href="/tags/vim/">vim</a>
+(1)
+</li>
+<li>
+<a href="/tags/guard/">guard</a>
+(1)
+</li>
+<li>
+<a href="/tags/unix/">unix</a>
+(1)
+</li>
+<li>
+<a href="/tags/pipe/">pipe</a>
+(1)
+</li>
+<li>
+<a href="/tags/tmux/">tmux</a>
+(1)
+</li>
+<li>
+<a href="/tags/ruby/">ruby</a>
+(4)
+</li>
+<li>
+<a href="/tags/delegate/">delegate</a>
+(1)
+</li>
+<li>
+<a href="/tags/raspberrypi/">raspberrypi</a>
+(2)
+</li>
+<li>
+<a href="/tags/upstart/">upstart</a>
+(1)
+</li>
+<li>
+<a href="/tags/example/">example</a>
+(2)
+</li>
+<li>
+<a href="/tags/mobile/">mobile</a>
+(2)
+</li>
+<li>
+<a href="/tags/chrome/">chrome</a>
+(2)
+</li>
+<li>
+<a href="/tags/phonegap/">phonegap</a>
+(1)
+</li>
+<li>
+<a href="/tags/r/">R</a>
+(2)
+</li>
+<li>
+<a href="/tags/web/">web</a>
+(2)
+</li>
+<li>
+<a href="/tags/bootstrap/">bootstrap</a>
+(2)
+</li>
+<li>
+<a href="/tags/sass/">sass</a>
+(1)
+</li>
+<li>
+<a href="/tags/windows/">windows</a>
+(1)
+</li>
+<li>
+<a href="/tags/virtualbox/">virtualbox</a>
+(1)
+</li>
+<li>
+<a href="/tags/linux/">linux</a>
+(1)
+</li>
+<li>
+<a href="/tags/javascript/">javascript</a>
+(1)
+</li>
+<li>
+<a href="/tags/coffeescript/">coffeescript</a>
+(1)
+</li>
+<li>
+<a href="/tags/testing/">testing</a>
+(1)
+</li>
+<li>
+<a href="/tags/statics/">statics</a>
+(1)
+</li>
+<li>
+<a href="/tags/rubymotion/">rubymotion</a>
+(2)
+</li>
+<li>
+<a href="/tags/ios/">iOS</a>
+(1)
+</li>
+<li>
+<a href="/tags/promotion/">ProMotion</a>
+(1)
+</li>
+<li>
+<a href="/tags/teacup/">teacup</a>
+(1)
+</li>
+<li>
+<a href="/tags/zeromq/">zeromq</a>
+(1)
+</li>
+<li>
+<a href="/tags/message_queue/">message_queue</a>
+(1)
+</li>
+<li>
+<a href="/tags/screencast/">screencast</a>
+(1)
+</li>
+<li>
+<a href="/tags/terminal/">terminal</a>
+(1)
+</li>
+<li>
+<a href="/tags/baas/">BaaS</a>
+(1)
+</li>
+<li>
+<a href="/tags/nodejs/">nodejs</a>
+(1)
+</li>
+<li>
+<a href="/tags/paas/">PaaS</a>
+(2)
+</li>
+<li>
+<a href="/tags/heroku/">heroku</a>
+(2)
+</li>
+<li>
+<a href="/tags/rtc/">rtc</a>
+(1)
+</li>
+<li>
+<a href="/tags/api/">api</a>
+(1)
+</li>
+<li>
+<a href="/tags/oauth/">oauth</a>
+(1)
+</li>
+<li>
+<a href="/tags/rest/">rest</a>
+(1)
+</li>
+<li>
+<a href="/tags/speedreading/">speedreading</a>
+(1)
+</li>
+<li>
+<a href="/tags/extension/">extension</a>
+(1)
+</li>
+<li>
+<a href="/tags/webrtc/">webrtc</a>
+(1)
+</li>
+<li>
+<a href="/tags/markdown/">markdown</a>
+(1)
+</li>
+<li>
+<a href="/tags/presentation/">presentation</a>
+(1)
+</li>
+<li>
+<a href="/tags/reveal-js/">reveal.js</a>
+(1)
+</li>
+<li>
+<a href="/tags/ruboto/">ruboto</a>
+(1)
+</li>
+</ol>
+</dd>
+<dt>
+<h2>By Year</h2>
+</dt>
+<dd>
+<ol>
+<li>
+<a href="/2014/">2014</a>
+(23)
+</li>
+<li>
+<a href="/2013/">2013</a>
+(2)
+</li>
+<li>
+<a href="/2012/">2012</a>
+(1)
+</li>
+</ol>
+</dd>
+</dl>
+</div>
+</div>
+<div class='row'>
+<div class='col-xs-12 hidden-lg asider'>
+<dl class='well-lg content_box'>
+<dt>
+<h2>Recent Articles</h2>
+</dt>
+<dd>
+<ol>
+<li>
+<a href="/2014/05/19/try-facebook-testing-lib-jest/">Try facebook testing lib Jest</a>
+<span>May 19</span>
+</li>
+<li>
+<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
+<span>Mar 27</span>
+</li>
+<li>
+<a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
+<span>Mar 24</span>
+</li>
+<li>
+<a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
+<span>Mar 24</span>
+</li>
+<li>
+<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
+<span>Mar 18</span>
+</li>
+<li>
+<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
+<span>Mar 17</span>
+</li>
+<li>
+<a href="/2014/03/16/run-microsoft-window-virtual-machine-for-free/">Run microsoft window virtual machine for free</a>
+<span>Mar 16</span>
+</li>
+<li>
+<a href="/2014/03/14/record-terminal-session-using-asciinema/">Record terminal session using asciinema</a>
+<span>Mar 14</span>
+</li>
+<li>
+<a href="/2014/03/13/update-time-for-raspberry-pi/">Update time for raspberry pi</a>
+<span>Mar 13</span>
+</li>
+<li>
+<a href="/2014/03/12/delegate-in-ruby/">Delegate in ruby</a>
+<span>Mar 12</span>
+</li>
+</ol>
+</dd>
+<dt>
+<h2>Tags</h2>
+</dt>
+<dd>
+<ol>
+<li>
+<a href="/tags/opencv/">opencv</a>
+(1)
+</li>
+<li>
+<a href="/tags/android/">android</a>
+(3)
+</li>
+<li>
+<a href="/tags/rubuto/">rubuto</a>
+(1)
+</li>
+<li>
+<a href="/tags/jruby/">jruby</a>
+(2)
+</li>
+<li>
+<a href="/tags/vim/">vim</a>
+(1)
+</li>
+<li>
+<a href="/tags/guard/">guard</a>
+(1)
+</li>
+<li>
+<a href="/tags/unix/">unix</a>
+(1)
+</li>
+<li>
+<a href="/tags/pipe/">pipe</a>
+(1)
+</li>
+<li>
+<a href="/tags/tmux/">tmux</a>
+(1)
+</li>
+<li>
+<a href="/tags/ruby/">ruby</a>
+(4)
+</li>
+<li>
+<a href="/tags/delegate/">delegate</a>
+(1)
+</li>
+<li>
+<a href="/tags/raspberrypi/">raspberrypi</a>
+(2)
+</li>
+<li>
+<a href="/tags/upstart/">upstart</a>
+(1)
+</li>
+<li>
+<a href="/tags/example/">example</a>
+(2)
+</li>
+<li>
+<a href="/tags/mobile/">mobile</a>
+(2)
+</li>
+<li>
+<a href="/tags/chrome/">chrome</a>
+(2)
+</li>
+<li>
+<a href="/tags/phonegap/">phonegap</a>
+(1)
+</li>
+<li>
+<a href="/tags/r/">R</a>
+(2)
+</li>
+<li>
+<a href="/tags/web/">web</a>
+(2)
+</li>
+<li>
+<a href="/tags/bootstrap/">bootstrap</a>
+(2)
+</li>
+<li>
+<a href="/tags/sass/">sass</a>
+(1)
+</li>
+<li>
+<a href="/tags/windows/">windows</a>
+(1)
+</li>
+<li>
+<a href="/tags/virtualbox/">virtualbox</a>
+(1)
+</li>
+<li>
+<a href="/tags/linux/">linux</a>
+(1)
+</li>
+<li>
+<a href="/tags/javascript/">javascript</a>
+(1)
+</li>
+<li>
+<a href="/tags/coffeescript/">coffeescript</a>
+(1)
+</li>
+<li>
+<a href="/tags/testing/">testing</a>
+(1)
+</li>
+<li>
+<a href="/tags/statics/">statics</a>
+(1)
+</li>
+<li>
+<a href="/tags/rubymotion/">rubymotion</a>
+(2)
+</li>
+<li>
+<a href="/tags/ios/">iOS</a>
+(1)
+</li>
+<li>
+<a href="/tags/promotion/">ProMotion</a>
+(1)
+</li>
+<li>
+<a href="/tags/teacup/">teacup</a>
+(1)
+</li>
+<li>
+<a href="/tags/zeromq/">zeromq</a>
+(1)
+</li>
+<li>
+<a href="/tags/message_queue/">message_queue</a>
+(1)
+</li>
+<li>
+<a href="/tags/screencast/">screencast</a>
+(1)
+</li>
+<li>
+<a href="/tags/terminal/">terminal</a>
+(1)
+</li>
+<li>
+<a href="/tags/baas/">BaaS</a>
+(1)
+</li>
+<li>
+<a href="/tags/nodejs/">nodejs</a>
+(1)
+</li>
+<li>
+<a href="/tags/paas/">PaaS</a>
+(2)
+</li>
+<li>
+<a href="/tags/heroku/">heroku</a>
+(2)
+</li>
+<li>
+<a href="/tags/rtc/">rtc</a>
+(1)
+</li>
+<li>
+<a href="/tags/api/">api</a>
+(1)
+</li>
+<li>
+<a href="/tags/oauth/">oauth</a>
+(1)
+</li>
+<li>
+<a href="/tags/rest/">rest</a>
+(1)
+</li>
+<li>
+<a href="/tags/speedreading/">speedreading</a>
+(1)
+</li>
+<li>
+<a href="/tags/extension/">extension</a>
+(1)
+</li>
+<li>
+<a href="/tags/webrtc/">webrtc</a>
+(1)
+</li>
+<li>
+<a href="/tags/markdown/">markdown</a>
+(1)
+</li>
+<li>
+<a href="/tags/presentation/">presentation</a>
+(1)
+</li>
+<li>
+<a href="/tags/reveal-js/">reveal.js</a>
+(1)
+</li>
+<li>
+<a href="/tags/ruboto/">ruboto</a>
+(1)
+</li>
+</ol>
+</dd>
+<dt>
+<h2>By Year</h2>
+</dt>
+<dd>
+<ol>
+<li>
+<a href="/2014/">2014</a>
+(23)
+</li>
+<li>
+<a href="/2013/">2013</a>
+(2)
+</li>
+<li>
+<a href="/2012/">2012</a>
+(1)
+</li>
+</ol>
+</dd>
+</dl>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
 </html>

@@ -1,152 +1,153 @@
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Delegate in ruby</title>
-    <meta content='' name='description'>
-    <meta content='width=device-width' name='viewport'>
-    <link href='/css/normalize.css' rel='stylesheet'>
-    <link href='/css/main.css' rel='stylesheet'>
-    <link href='/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='/stylesheets/background.css' rel='stylesheet'>
-    <link href='/stylesheets/article.css' rel='stylesheet'>
-    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
-    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
-    <script src='/js/bootstrap.min.js'></script>
-    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <header>
-      <nav class='navbar navbar-default' role='navigation'>
-        <div class='navbar-header'>
-          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </button>
-          <a class='navbar-brand'></a>
-        </div>
-        <div class='collapse navbar-collapse navbar-ex1-collapse'>
-          <ul class='nav navbar-nav'>
-            <li>
-              <a href='/'>Home</a>
-            </li>
-            <li>
-              <a href='/feed.xml'>Feed</a>
-            </li>
-            <li>
-              <a href='/about'>About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <section class='main'>
-      <div id='main' role='main'>
-        <div class='container'>
-          <article>
-            <div class='title'>
-              <h1 class='page-header text-center'>
-                Delegate in ruby
-              </h1>
-            </div>
-            <br>
-            <h2>Serveral ways to delegate in Ruby</h2>
-            
-            <p>There are serveral ways to delegate in Ruby:</p>
-            
-            <ol>
-            <li>SimpleDelegator</li>
-            <li>DelegateClass</li>
-            <li>Delegator</li>
-            </ol>
-            
-            <h3>SimpleDelegator</h3>
-            
-            <p>A concrete implementation of Delegator, this class provides the means to
-            delegate all supported method calls to the object passed into the constructor
-            and even to change the object being delegated to at a later time with
-            #__setobj__.</p>
-            
-            <p>When using SimpleDelegator, the delegator is passed in the initalize method of SimpleDelegator Class,</p>
-            
-            <p>Examples:</p>
-            <pre class="highlight ruby">
-            <span class="nb">require</span> <span class="s1">&#39;delegate&#39;</span>
-            
-            <span class="k">class </span><span class="nc">MyArray</span> <span class="o">&lt;</span> <span class="no">SimpleDelegator</span>
-            
-            <span class="k">end</span>
-            
-            <span class="n">myarray</span> <span class="o">=</span> <span class="no">MyArray</span><span class="nf">.new</span> <span class="o">[]</span>
-            
-            </pre>
-            <h3>DelegateClass</h3>
-            
-            <p>There are 2 steps</p>
-            
-            <ol>
-            <li>pass the DelegateTo Class in class definition</li>
-            <li>call super(obj_of_ClassToDelegateTo in the initialize method</li>
-            </ol>
-            <pre class="highlight ruby">
-            <span class="k">class </span><span class="nc">MyClass</span> <span class="o">&lt;</span> <span class="no">DelegateClass</span><span class="p">(</span><span class="no">ClassToDelegateTo</span><span class="p">)</span> <span class="c1"># Step 1</span>
-              <span class="k">def </span><span class="nf">initialize</span>
-                <span class="k">super</span><span class="p">(</span><span class="n">obj_of_ClassToDelegateTo</span><span class="p">)</span>              <span class="c1"># Step 2</span>
-              <span class="k">end</span>
-            <span class="k">end</span>
-            </pre>
-            <h3>Delegator</h3>
-            
-            <p>We can define a customized delegator like SimpleDelegator</p>
-            <pre class="highlight ruby">
-            <span class="k">class </span><span class="nc">SimpleDelegator</span> <span class="o">&lt;</span> <span class="no">Delegator</span>
-              <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-                <span class="k">super</span>                  <span class="c1"># pass obj to Delegator constructor, required</span>
-                <span class="vi">@delegate_sd_obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="c1"># store obj for future use</span>
-              <span class="k">end</span>
-            
-              <span class="k">def </span><span class="nf">__getobj__</span>
-                <span class="vi">@delegate_sd_obj</span> <span class="c1"># return object we are delegating to, required</span>
-              <span class="k">end</span>
-            
-              <span class="k">def </span><span class="nf">__setobj__</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-                <span class="vi">@delegate_sd_obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="c1"># change delegation object,</span>
-                                       <span class="c1"># a feature we&#39;re providing</span>
-              <span class="k">end</span>
-            <span class="k">end</span>
-            </pre>
-          </article>
-          <div id="disqus_thread"></div>
-                      <script type="text/javascript">
-                      //<![CDATA[
-                          (function() {
-                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
-                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                          })();
-                      //]]>
-                      </script>
-                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-                  </script>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <script type="text/javascript">
-      //<![CDATA[
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      
-        ga('create', 'UA-44086232-1', 'zyncro-china.com');
-        ga('send', 'pageview');
-      //]]>
-      </script>
-    </footer>
-  </body>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Delegate in ruby</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Delegate in ruby
+</h1>
+</div>
+<br>
+<h2>Serveral ways to delegate in Ruby</h2>
+
+<p>There are serveral ways to delegate in Ruby:</p>
+
+<ol>
+<li>SimpleDelegator</li>
+<li>DelegateClass</li>
+<li>Delegator</li>
+</ol>
+
+<h3>SimpleDelegator</h3>
+
+<p>A concrete implementation of Delegator, this class provides the means to
+delegate all supported method calls to the object passed into the constructor
+and even to change the object being delegated to at a later time with
+#__setobj__.</p>
+
+<p>When using SimpleDelegator, the delegator is passed in the initalize method of SimpleDelegator Class,</p>
+
+<p>Examples:</p>
+<pre class="highlight ruby">
+<span class="nb">require</span> <span class="s1">&#39;delegate&#39;</span>
+
+<span class="k">class </span><span class="nc">MyArray</span> <span class="o">&lt;</span> <span class="no">SimpleDelegator</span>
+
+<span class="k">end</span>
+
+<span class="n">myarray</span> <span class="o">=</span> <span class="no">MyArray</span><span class="nf">.new</span> <span class="o">[]</span>
+
+</pre>
+<h3>DelegateClass</h3>
+
+<p>There are 2 steps</p>
+
+<ol>
+<li>pass the DelegateTo Class in class definition</li>
+<li>call super(obj_of_ClassToDelegateTo in the initialize method</li>
+</ol>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">MyClass</span> <span class="o">&lt;</span> <span class="no">DelegateClass</span><span class="p">(</span><span class="no">ClassToDelegateTo</span><span class="p">)</span> <span class="c1"># Step 1</span>
+  <span class="k">def </span><span class="nf">initialize</span>
+    <span class="k">super</span><span class="p">(</span><span class="n">obj_of_ClassToDelegateTo</span><span class="p">)</span>              <span class="c1"># Step 2</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<h3>Delegator</h3>
+
+<p>We can define a customized delegator like SimpleDelegator</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">SimpleDelegator</span> <span class="o">&lt;</span> <span class="no">Delegator</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">super</span>                  <span class="c1"># pass obj to Delegator constructor, required</span>
+    <span class="vi">@delegate_sd_obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="c1"># store obj for future use</span>
+  <span class="k">end</span>
+
+  <span class="k">def </span><span class="nf">__getobj__</span>
+    <span class="vi">@delegate_sd_obj</span> <span class="c1"># return object we are delegating to, required</span>
+  <span class="k">end</span>
+
+  <span class="k">def </span><span class="nf">__setobj__</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="vi">@delegate_sd_obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="c1"># change delegation object,</span>
+                           <span class="c1"># a feature we&#39;re providing</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
 </html>
 

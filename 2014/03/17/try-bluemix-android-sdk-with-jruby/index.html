@@ -1,123 +1,124 @@
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-    <title>Try bluemix android SDK with jruby</title>
-    <meta content='' name='description'>
-    <meta content='width=device-width' name='viewport'>
-    <link href='/css/normalize.css' rel='stylesheet'>
-    <link href='/css/main.css' rel='stylesheet'>
-    <link href='/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='/stylesheets/background.css' rel='stylesheet'>
-    <link href='/stylesheets/article.css' rel='stylesheet'>
-    <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
-    <script src='/js/vendor/jquery-1.8.0.min.js'></script>
-    <script src='/js/bootstrap.min.js'></script>
-    <link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <header>
-      <nav class='navbar navbar-default' role='navigation'>
-        <div class='navbar-header'>
-          <button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-            <span class='icon-bar'></span>
-          </button>
-          <a class='navbar-brand'></a>
-        </div>
-        <div class='collapse navbar-collapse navbar-ex1-collapse'>
-          <ul class='nav navbar-nav'>
-            <li>
-              <a href='/'>Home</a>
-            </li>
-            <li>
-              <a href='/feed.xml'>Feed</a>
-            </li>
-            <li>
-              <a href='/about'>About</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <section class='main'>
-      <div id='main' role='main'>
-        <div class='container'>
-          <article>
-            <div class='title'>
-              <h1 class='page-header text-center'>
-                Try bluemix android SDK with jruby
-              </h1>
-            </div>
-            <br>
-            <h2>Install the SDK</h2>
-            
-            <h3>Create the project</h3>
-            <pre class="highlight shell">
-            ruboto gen app -t 14 --package org.ruboto.example.bluemix
-            </pre>
-            <h3>Download SDK</h3>
-            
-            <p>The Web page javascript failed to download in Chrome browser, but open the
-            console, and you can see the download link is:
-            http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip</p>
-            
-            <h3>copy all jars into libs directory</h3>
-            
-            <h3>copy the configuration.json to libs or assets dirtctory?</h3>
-            
-            <p>then add the application id into configuraton.json</p>
-            
-            <h3>import in the ruby source code</h3>
-            <pre class="highlight ruby">
-            <span class="c1">#in xx_activity.rb</span>
-            <span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMDataException</span>
-            <span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMDataObject</span>
-            <span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMObjectResult</span>
-            <span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMQuery</span>
-            <span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMQueryResult</span>
-            </pre>
-            <h3>Usage of the classes</h3>
-            <pre class="highlight ruby">
-            <span class="n">record</span> <span class="o">=</span> <span class="no">IBMDataObject</span><span class="nf">.new</span> <span class="s1">&#39;record&#39;</span>
-            </pre>
-            <h3>Upload data using Rest way</h3>
-            <pre class="highlight shell">
-             curl -v
-             <span class="s2">&quot;https://mobile.ng.bluemix.net/data/rest/v1/apps/{app_id}/uploads&quot;</span> -X POST -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s1">&#39;[{&quot;className&quot;: &quot;MyPeople&quot;,&quot;objectId&quot;:&quot;123&quot;,&quot;attributes&quot;:{&quot;name&quot;:&quot;BBB&quot;}}]&#39;&#39;
-            </span></pre>
-          </article>
-          <div id="disqus_thread"></div>
-                      <script type="text/javascript">
-                      //<![CDATA[
-                          (function() {
-                              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                              dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
-                              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                          })();
-                      //]]>
-                      </script>
-                      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-                  </script>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <script type="text/javascript">
-      //<![CDATA[
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      
-        ga('create', 'UA-44086232-1', 'zyncro-china.com');
-        ga('send', 'pageview');
-      //]]>
-      </script>
-    </footer>
-  </body>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Try bluemix android SDK with jruby</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Try bluemix android SDK with jruby
+</h1>
+</div>
+<br>
+<h2>Install the SDK</h2>
+
+<h3>Create the project</h3>
+<pre class="highlight shell">
+ruboto gen app -t 14 --package org.ruboto.example.bluemix
+</pre>
+<h3>Download SDK</h3>
+
+<p>The Web page javascript failed to download in Chrome browser, but open the
+console, and you can see the download link is:
+http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip</p>
+
+<h3>copy all jars into libs directory</h3>
+
+<h3>copy the configuration.json to libs or assets dirtctory?</h3>
+
+<p>then add the application id into configuraton.json</p>
+
+<h3>import in the ruby source code</h3>
+<pre class="highlight ruby">
+<span class="c1">#in xx_activity.rb</span>
+<span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMDataException</span>
+<span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMDataObject</span>
+<span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMObjectResult</span>
+<span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMQuery</span>
+<span class="n">java_import</span> <span class="n">com</span><span class="nf">.ibm.mobile.services.data</span><span class="o">.</span><span class="no">IBMQueryResult</span>
+</pre>
+<h3>Usage of the classes</h3>
+<pre class="highlight ruby">
+<span class="n">record</span> <span class="o">=</span> <span class="no">IBMDataObject</span><span class="nf">.new</span> <span class="s1">&#39;record&#39;</span>
+</pre>
+<h3>Upload data using Rest way</h3>
+<pre class="highlight shell">
+ curl -v
+ <span class="s2">&quot;https://mobile.ng.bluemix.net/data/rest/v1/apps/{app_id}/uploads&quot;</span> -X POST -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -d <span class="s1">&#39;[{&quot;className&quot;: &quot;MyPeople&quot;,&quot;objectId&quot;:&quot;123&quot;,&quot;attributes&quot;:{&quot;name&quot;:&quot;BBB&quot;}}]&#39;&#39;
+</span></pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
 </html>
 
