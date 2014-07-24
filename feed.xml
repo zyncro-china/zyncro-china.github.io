@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/07/24/decision-tree/"/>
     <id>http://blog.url.com/2014/07/24/decision-tree/</id>
     <published>2014-07-24T02:26:00Z</published>
-    <updated>2014-07-24T11:25:34+08:00</updated>
+    <updated>2014-07-24T11:44:10+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -48,6 +48,8 @@ tree算法不想用到所有的属性，而是想去掉那些弱因素，只保�
 &lt;p&gt;&lt;img alt="Information Gain" src="/images/xinformation-gain-formula.png.pagespeed.ic.png" /&gt;&lt;/p&gt;
 
 &lt;h2&gt;Ruby gem for decision tree: decisiontree&lt;/h2&gt;
+
+&lt;p&gt;如果想自己做decision tree，不使用其他服务，可以用decisiontree这个ruby gem。&lt;/p&gt;
 &lt;pre class="highlight ruby"&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rubygems&amp;#39;&lt;/span&gt;
 &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;decisiontree&amp;#39;&lt;/span&gt;
 
