@@ -30,6 +30,7 @@ tree算法不想用到所有的属性，而是想去掉那些弱因素，只保�
 ![Information Gain](/images/xinformation-gain-formula.png.pagespeed.ic.png)
 
 ## Ruby gem for decision tree: decisiontree
+如果想自己做decision tree，不使用其他服务，可以用decisiontree这个ruby gem。
 
 ```ruby
 require 'rubygems'
