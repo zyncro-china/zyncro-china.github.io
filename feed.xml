@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/07/24/decision-tree/"/>
     <id>http://blog.url.com/2014/07/24/decision-tree/</id>
     <published>2014-07-24T02:26:00Z</published>
-    <updated>2014-07-24T11:15:49+08:00</updated>
+    <updated>2014-07-24T11:25:34+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -22,13 +22,16 @@
 
 &lt;p&gt;今天我看到一个数据分析的服务，可以上传CSV的数据，分析后可以预测新的结果。&lt;/p&gt;
 
-&lt;p&gt;它有几个步骤
-1. 上传CSV数据,并设定每行的数据类型，如数字，字符。数据最后一列必须是结果列
-1. 建立数据集，这个过程需要几秒或几小时。需要选定需要分析的属性，最终会给出一个属性列表，显示属性的一些统计数据：缺失数据，错误和直方图
-1. 建立模型，通过数据集生成模型
-1. 为新输入预测结果
-1. 建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样比较哪种组合比较合理
-1. 评估模型或ensembles&lt;/p&gt;
+&lt;p&gt;它有几个步骤&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;上传CSV数据,并设定每行的数据类型，如数字，字符。数据最后一列必须是结果列&lt;/li&gt;
+&lt;li&gt;建立数据集，这个过程需要几秒或几小时。需要选定需要分析的属性，最终会给出一个属性列表，显示属性的一些统计数据：缺失数据，错误和直方图&lt;/li&gt;
+&lt;li&gt;建立模型，通过数据集生成模型&lt;/li&gt;
+&lt;li&gt;为新输入预测结果&lt;/li&gt;
+&lt;li&gt;建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样比较哪种组合比较合理&lt;/li&gt;
+&lt;li&gt;评估模型或ensembles&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h2&gt;背后的机器学习算法 decision tree&lt;/h2&gt;
 
