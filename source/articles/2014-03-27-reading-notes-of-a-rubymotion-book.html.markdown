@@ -37,3 +37,4 @@ The main changes to controller and view layers in relation to events
 1. view objects are inherit from UIView or NSView, and responsible for drawing
    theirselves and subviews. In the case of controls, handling user interaction
    and input, then tell the controller about it.
+
