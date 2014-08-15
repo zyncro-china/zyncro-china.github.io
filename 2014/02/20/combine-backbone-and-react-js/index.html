@@ -1,0 +1,145 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Combine Backbone and React.js</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Combine Backbone and React.js
+</h1>
+</div>
+<br>
+<h2>Get the best of both Backbone and React.js</h2>
+
+<p>Backbone is a small and simple framework for Single Page Application. But
+rendering views is hard, so let&rsquo;s try to use React.js together, and let
+React.js to finish the hard work for us.</p>
+
+<h2>React.js Framework</h2>
+
+<h3>JSX syntax</h3>
+
+<p>We can use coffeescript to make writting component easier directly in the
+coffeescript without compiling first</p>
+
+<h3>Object Definition and Intializaion</h3>
+
+<ol>
+<li>to define a component: <code>React.createClass</code></li>
+<li>use the component, and pass the props: <code>React.renderComponent</code></li>
+<li>called automatically by React before a component is rendered: <code>componentWillMount</code></li>
+<li>called before unmount component: <code>componentWillUnmount</code></li>
+</ol>
+
+<h3>Reactive state</h3>
+
+<p>render() methods are written declaratively as functions of <code>this.props</code> and
+<code>this.state.</code> The framework guarantees the UI is always consistent with the
+inputs.</p>
+
+<p>React.js will automatically update the view according to the state</p>
+
+<ol>
+<li>initialize the state: <code>getInitialState</code></li>
+<li>update the state: <code>this.setState()</code></li>
+</ol>
+
+<h3>React events</h3>
+
+<p>event handler should only returns false to avoid the default action</p>
+
+<h3>refs</h3>
+
+<p>refs are defined in the JSX, and use <code>getDOMNode()</code> to get the native DOM element</p>
+<pre class="highlight javascript"><span class="nx">text</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">refs</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">getDOMNode</span><span class="p">().</span><span class="nx">value</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
+
+</pre>
+<h2>Communication</h2>
+
+<h3>Communication from React Component to Backbone</h3>
+
+<p>pass the callback as the React Component&rsquo;s callback using <code>props</code></p>
+
+<h3>Communication from Backbone to React Component</h3>
+
+<p>use Backbone Model&rsquo;s event binding, like:</p>
+<pre class="highlight coffeescript"><span class="k">this</span><span class="p">.</span><span class="na">props</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">on</span> <span class="s">&#39;change&#39;</span><span class="p">,</span><span class="o">=&gt;</span>
+  <span class="vi">@</span><span class="na">forceUpdate</span><span class="p">()</span>
+</pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+

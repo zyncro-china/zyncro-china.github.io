@@ -1,5 +1,6 @@
+.highlight table { border-spacing: 0; }
 .highlight table td { padding: 5px; }
-.highlight table pre { margin: 0; }
+.highlight table .gutter { text-align: right; }
 .highlight {
   color: #faf6e4;
   background-color: #122b3b;
@@ -8,7 +9,7 @@
   color: #dee5e7;
   background-color: #4e5d62;
 }
-.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+.highlight .c, .highlight .cm, .highlight .c1, .highlight .cs {
   color: #6c8b9f;
   font-style: italic;
 }
@@ -25,14 +26,14 @@
   color: #fefeec;
   background-color: #cc0000;
 }
-.highlight .k, .highlight .kd, .highlight .kv {
+.highlight .k, .highlight .kd {
   color: #f6dd62;
   font-weight: bold;
 }
 .highlight .o, .highlight .ow {
   color: #4df4ff;
 }
-.highlight .p, .highlight .pi {
+.highlight .p {
   color: #4df4ff;
 }
 .highlight .gd {
@@ -111,7 +112,7 @@
   color: #ffb000;
   font-weight: bold;
 }
-.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo {
   color: #f696db;
   font-weight: bold;
 }

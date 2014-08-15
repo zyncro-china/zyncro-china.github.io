@@ -1,0 +1,154 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Try facebook testing lib Jest</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Try facebook testing lib Jest
+</h1>
+</div>
+<br>
+<h2>The new testing framework from facebook</h2>
+
+<p>Facebook released their new testing framework:
+<a href="http://facebook.github.io/jest/">Jest</a></p>
+
+<p>It seems to be very nice that can help you to mock the dependencies
+automatically:</p>
+
+<blockquote>
+<p>In order to write an effective unit test, you want to be able to isolate a unit
+of code and test only that unit – nothing else. It is fairly common and good
+practice to consider a module such a unit, and this is where Jest excels. Jest
+makes isolating a module from its dependencies extremely easy by automatically
+generating mocks for each of the module&rsquo;s depenedencies and providing those
+mocks (rather than the real dependency modules) by default.</p>
+</blockquote>
+
+<p>Jest actually inspect the file that the code under test are requiring, then
+mock every properties of the required object, and generate the mocked function.</p>
+
+<p>In this way, we don&rsquo;t have to manually generate mocks for testing. This is
+a huge benefits when writteing tests.</p>
+
+<h2>writing tests in coffeescript</h2>
+
+<p>I also like to use coffeescript these days. But everytime, it seems that I need
+to pay more efforts to make it works, especially when the project is mainly
+developed only using javascript.</p>
+
+<p>Jest have a page explained <a href="http://facebook.github.io/jest/docs/tutorial-coffeescript.html#content">how to use
+coffeescript</a></p>
+
+<p>Just added following contents:</p>
+<pre class="highlight javascript"><span class="c1">// package.json
+</span>  <span class="s2">&quot;dependencies&quot;</span><span class="err">:</span> <span class="p">{</span>
+    <span class="s2">&quot;coffee-script&quot;</span><span class="err">:</span> <span class="s2">&quot;*&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;jest&quot;</span><span class="err">:</span> <span class="p">{</span>
+    <span class="s2">&quot;scriptPreprocessor&quot;</span><span class="err">:</span> <span class="s2">&quot;preprocessor.js&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;testFileExtensions&quot;</span><span class="err">:</span> <span class="p">[</span><span class="s2">&quot;coffee&quot;</span><span class="p">,</span> <span class="s2">&quot;js&quot;</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="c1">// preprocessor.js
+</span><span class="kd">var</span> <span class="nx">coffee</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;coffee-script&#39;</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">process</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\.coffee$/</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">coffee</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;bare&#39;</span><span class="err">:</span> <span class="kc">true</span><span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">src</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre>
+<p>I have used that way and it can&rsquo;t work, it always return following result:</p>
+<pre class="highlight shell"> Found 0 matching tests...
+</pre>
+<p>After some code reading, I found the TestRunner.js in Jest may construct the RegExp incorrectly. For js and coffeescript, it generate following RegExp:</p>
+<pre class="highlight text">//__tests__/.*\.(js\|coffee)$/
+</pre>
+<p>But it should be </p>
+<pre class="highlight text">//__tests__/.*\.(js|coffee)$/
+</pre>
+<p>After testing, and submit the patch to Jest&rsquo;s github <a href="https://github.com/facebook/jest/pull/34">pullrequest</a>. Then I found that I also need to sign the CLA(Contributor License Agreement) to submit the code to facebook. And that CLA link is blocked in China. Fortunately I have a VPN. So I think there will be very little patch from China.</p>
+
+<p>Now I can continue trying Jest after spending half of the day to figure out this problem.</p>
+
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+

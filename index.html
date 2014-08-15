@@ -13,8 +13,8 @@
 <script src='/js/vendor/modernizr-2.6.1.min.js'></script>
 <script src='/js/vendor/jquery-1.8.0.min.js'></script>
 <script src='/js/bootstrap.min.js'></script>
-<link href="/stylesheets/rouge.css" rel="stylesheet" type="text/css" />
-<link href="/stylesheets/home.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <header>
@@ -85,7 +85,7 @@ the first 250 characters
 <li>建立数据集，这个过程需要几秒或几小时。需要选定需要分析的属性，最终会给出一个属性列表，显示属性的一些统计数据：缺失数据，错误和直方图</li>
 <li>建立模型，通过数据集生成模型</li>
 <li>为新输入预测结果</li>
-<li>建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样...</li>
+<li>建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样比...</li>
 </ol>
 <a href="/2014/07/24/decision-tree/">Read More...</a>
 </li>
@@ -130,9 +130,7 @@ the first 250 characters
 <li>flexible workflow(editor, command line, repl)</li>
 <li>use ruby language</li>
 <li>skip the large set of new API have to learn</li>
-</ol>
-
-<h3>Value Object</h3>
+</ol><h3>Value Object</h3>
 
 <p>There are 4 value...</p>
 <a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Read More...</a>
@@ -153,16 +151,14 @@ the first 250 characters
 <h2>Project Setup</h2>
 
 <h3>Create a new app</h3>
-<pre><code class="highlight shell">
+<pre class="highlight shell">
 promotion new membershipapp
-</code></pre>
-
+</pre>
 <h3>run tests automatically</h3>
-<pre><code class="highlight shell">
+<pre class="highlight shell">
 gem install when-files-change
 when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</span>
-</code></pre>
-
+</pre>
 <h2>write test cases</h2>
 
 <p>The Promotion...</p>
@@ -183,10 +179,10 @@ the first 250 characters
 and learned following tips</p>
 
 <h3>use each<em>with</em>object instead of initialize an empty object before the each</h3>
-<pre><code class="highlight ruby">
-<span class="n">topics_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">another_list</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
- ...</code></pre>
+<pre class="highlight ruby">
+<span class="n">topics_list</span> <span class="o">=</span> <span class="o">[]</span>
+<span class="n">another_list</span><span class="nf">.each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+ ...</pre>
 <a href="/2014/03/24/tips-learn-from-confident-ruby/">Read More...</a>
 </li>
 <li class='article'>
@@ -221,10 +217,9 @@ the first 250 characters
 <h2>Install the SDK</h2>
 
 <h3>Create the project</h3>
-<pre><code class="highlight shell">
+<pre class="highlight shell">
 ruboto gen app -t 14 --package org.ruboto.example.bluemix
-</code></pre>
-
+</pre>
 <h3>Download SDK</h3>
 
 <p>The Web page javascript failed to download in Chrome browser, but open the
@@ -260,10 +255,9 @@ the first 250 characters
 <h2>My IDE is based on the Terminal</h2>
 
 <h2>Install asciinema</h2>
-<pre><code class="highlight shell">
+<pre class="highlight shell">
 sudo pip install --upgrade asciinema
-</code></pre>
-
+</pre>
 <h2>Usage</h2>
 
 <h3>Authenticate yourself</h3>
@@ -287,10 +281,9 @@ the first 250 characters
 raspberry pi, we have to resest the time.</p>
 
 <h2>manually set the time from ntp server</h2>
-<pre><code class="highlight shell">sudo /etc/init.d/ntp stop
+<pre class="highlight shell">sudo /etc/init.d/ntp stop
 sudo ntpdate 1.cn.pool.ntp.org
-</code></pre>
-
+</pre>
 <h2>Solution 2: set the...</h2>
 <a href="/2014/03/13/update-time-for-raspberry-pi/">Read More...</a>
 </li>
@@ -870,15 +863,15 @@ sudo ntpdate 1.cn.pool.ntp.org
 </section>
 <footer>
 <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-44086232-1"]);
-  _gaq.push(["_setDomainName", "zyncro-china.com"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
 </script>
 </footer>
 </body>
