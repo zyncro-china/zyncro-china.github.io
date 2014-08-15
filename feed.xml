@@ -5,7 +5,7 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-07-24T02:26:00Z</updated>
+  <updated>2014-07-24T10:26:00+08:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
@@ -13,7 +13,7 @@
     <title>Decision Tree</title>
     <link rel="alternate" href="http://blog.url.com/2014/07/24/decision-tree/"/>
     <id>http://blog.url.com/2014/07/24/decision-tree/</id>
-    <published>2014-07-24T02:26:00Z</published>
+    <published>2014-07-24T10:26:00+08:00</published>
     <updated>2014-07-24T11:44:10+08:00</updated>
     <author>
       <name>Article Author</name>
@@ -50,36 +50,37 @@ tree算法不想用到所有的属性，而是想去掉那些弱因素，只保�
 &lt;h2&gt;Ruby gem for decision tree: decisiontree&lt;/h2&gt;
 
 &lt;p&gt;如果想自己做decision tree，不使用其他服务，可以用decisiontree这个ruby gem。&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rubygems&amp;#39;&lt;/span&gt;
-&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;decisiontree&amp;#39;&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'rubygems'&lt;/span&gt;
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'decisiontree'&lt;/span&gt;
 
-&lt;span class="n"&gt;attributes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Age&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Education&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Income&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Marital Status&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;training&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;36-55&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Masters&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Single&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;18-35&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High School&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Low&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Single&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt; 18&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High School&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Low&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Married&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;attributes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'Age'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Education'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Income'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Marital Status'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;training&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'36-55'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Masters'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'High'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Single'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'18-35'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'High School'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Low'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Single'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt; 18'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'High School'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Low'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Married'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
   &lt;span class="c1"&gt;# ... more training examples&lt;/span&gt;
-&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Instantiate the tree, and train it based on the data (set default to &amp;#39;1&amp;#39;)&lt;/span&gt;
-&lt;span class="n"&gt;dec_tree&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;DecisionTree&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;ID3Tree&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;training&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:discrete&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="nf"&gt;.train&lt;/span&gt;
+&lt;span class="c1"&gt;# Instantiate the tree, and train it based on the data (set default to '1')&lt;/span&gt;
+&lt;span class="n"&gt;dec_tree&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;DecisionTree&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;ID3Tree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;training&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:discrete&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;train&lt;/span&gt;
 
-&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt; 18&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High School&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Low&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Single&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'&amp;lt; 18'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'High School'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Low'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Single'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
-&lt;span class="n"&gt;decision&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="nf"&gt;.predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Predicted: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;decision&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; ... True decision: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="nf"&gt;.last&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;decision&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;"Predicted: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;decision&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; ... True decision: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;last&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Graph the tree, save to &amp;#39;discrete.png&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="nf"&gt;.graph&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;discrete&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# Graph the tree, save to 'discrete.png'&lt;/span&gt;
+&lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;graph&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"discrete"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;/pre&gt;</content>
+&lt;/code&gt;&lt;/pre&gt;
+</content>
   </entry>
   <entry>
     <title>Try facebook testing lib Jest</title>
     <link rel="alternate" href="http://blog.url.com/2014/05/19/try-facebook-testing-lib-jest/"/>
     <id>http://blog.url.com/2014/05/19/try-facebook-testing-lib-jest/</id>
-    <published>2014-05-19T08:56:00Z</published>
+    <published>2014-05-19T16:56:00+08:00</published>
     <updated>2014-05-19T17:24:38+08:00</updated>
     <author>
       <name>Article Author</name>
@@ -117,35 +118,39 @@ developed only using javascript.&lt;/p&gt;
 coffeescript&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Just added following contents:&lt;/p&gt;
-&lt;pre class="highlight javascript"&gt;&lt;span class="c1"&gt;// package.json
-&lt;/span&gt;  &lt;span class="s2"&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s2"&gt;&amp;quot;coffee-script&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;*&amp;quot;&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight javascript"&gt;&lt;span class="c1"&gt;// package.json&lt;/span&gt;
+  &lt;span class="s2"&gt;"dependencies"&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;"coffee-script"&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"*"&lt;/span&gt;
   &lt;span class="p"&gt;},&lt;/span&gt;
-  &lt;span class="s2"&gt;&amp;quot;jest&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="s2"&gt;&amp;quot;scriptPreprocessor&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;preprocessor.js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="s2"&gt;&amp;quot;testFileExtensions&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;coffee&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="s2"&gt;"jest"&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;"scriptPreprocessor"&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"preprocessor.js"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;"testFileExtensions"&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"coffee"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"js"&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="c1"&gt;// preprocessor.js
-&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;coffee&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;coffee-script&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// preprocessor.js&lt;/span&gt;
+&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;coffee&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'coffee-script'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
 &lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exports&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="na"&gt;process&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\.coffee$/&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;coffee&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;bare&amp;#39;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/&lt;/span&gt;&lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="sr"&gt;coffee$/&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;coffee&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'bare'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;src&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;};&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;I have used that way and it can&amp;rsquo;t work, it always return following result:&lt;/p&gt;
-&lt;pre class="highlight shell"&gt; Found 0 matching tests...
-&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="highlight shell"&gt; Found 0 matching tests...
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;After some code reading, I found the TestRunner.js in Jest may construct the RegExp incorrectly. For js and coffeescript, it generate following RegExp:&lt;/p&gt;
-&lt;pre class="highlight text"&gt;//__tests__/.*\.(js\|coffee)$/
-&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="highlight plaintext"&gt;//__tests__/.*\.(js\|coffee)$/
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;But it should be &lt;/p&gt;
-&lt;pre class="highlight text"&gt;//__tests__/.*\.(js|coffee)$/
-&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="highlight plaintext"&gt;//__tests__/.*\.(js|coffee)$/
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;After testing, and submit the patch to Jest&amp;rsquo;s github &lt;a href="https://github.com/facebook/jest/pull/34"&gt;pullrequest&lt;/a&gt;. Then I found that I also need to sign the CLA(Contributor License Agreement) to submit the code to facebook. And that CLA link is blocked in China. Fortunately I have a VPN. So I think there will be very little patch from China.&lt;/p&gt;
 
 &lt;p&gt;Now I can continue trying Jest after spending half of the day to figure out this problem.&lt;/p&gt;
@@ -155,7 +160,7 @@ coffeescript&lt;/a&gt;&lt;/p&gt;
     <title>Reading notes of a rubymotion book</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/27/reading-notes-of-a-rubymotion-book/"/>
     <id>http://blog.url.com/2014/03/27/reading-notes-of-a-rubymotion-book/</id>
-    <published>2014-03-27T06:38:00Z</published>
+    <published>2014-03-27T14:38:00+08:00</published>
     <updated>2014-05-19T16:48:52+08:00</updated>
     <author>
       <name>Article Author</name>
@@ -211,7 +216,7 @@ and input, then tell the controller about it.&lt;/li&gt;
     <title>create iOS app using Promotion</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/24/create-ios-app-using-promotion/"/>
     <id>http://blog.url.com/2014/03/24/create-ios-app-using-promotion/</id>
-    <published>2014-03-24T09:10:00Z</published>
+    <published>2014-03-24T17:10:00+08:00</published>
     <updated>2014-05-19T16:43:30+08:00</updated>
     <author>
       <name>Article Author</name>
@@ -223,32 +228,35 @@ and input, then tell the controller about it.&lt;/li&gt;
 &lt;h2&gt;Project Setup&lt;/h2&gt;
 
 &lt;h3&gt;Create a new app&lt;/h3&gt;
-&lt;pre class="highlight shell"&gt;
+&lt;pre&gt;&lt;code class="highlight shell"&gt;
 promotion new membershipapp
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h3&gt;run tests automatically&lt;/h3&gt;
-&lt;pre class="highlight shell"&gt;
+&lt;pre&gt;&lt;code class="highlight shell"&gt;
 gem install when-files-change
-when-files-change &lt;span class="s2"&gt;&amp;quot;clear &amp;amp;&amp;amp; bundle exec rake spec&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;
+when-files-change &lt;span class="s2"&gt;"clear &amp;amp;&amp;amp; bundle exec rake spec"&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h2&gt;write test cases&lt;/h2&gt;
 
 &lt;p&gt;The Promotion TDD framework will instantiate @controller and add a test @app by tests method, we need to call the Promotion::Screen.new and want to use screen instead of controller:&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;#home_screen_spec.rb&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;&lt;span class="c1"&gt;#home_screen_spec.rb&lt;/span&gt;
 
 &lt;span class="n"&gt;describe&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
   &lt;span class="n"&gt;tests&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt;
 
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;controller&lt;/span&gt;
-    &lt;span class="vi"&gt;@controller&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;controller&lt;/span&gt;
+    &lt;span class="vi"&gt;@controller&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="no"&gt;HomeScreen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;
   &lt;span class="k"&gt;end&lt;/span&gt;
   &lt;span class="k"&gt;alias&lt;/span&gt; &lt;span class="ss"&gt;:screen&lt;/span&gt; &lt;span class="ss"&gt;:controller&lt;/span&gt;
 
-  &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;is a TableScreen&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="n"&gt;screen&lt;/span&gt;&lt;span class="nf"&gt;.should.be.kind_of&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;PM&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;TableScreen&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s2"&gt;"is a TableScreen"&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;screen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;should&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;be&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;kind_of&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;PM&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;TableScreen&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h2&gt;create a basic tab screen&lt;/h2&gt;
 
 &lt;p&gt;The Tabs module is mixed into PM::Screen, to use it, just prepare all the screens, declaring their title and icon, then init screens then call open_tab_bar(*screens) in the main screen&lt;/p&gt;
@@ -266,7 +274,7 @@ when-files-change &lt;span class="s2"&gt;&amp;quot;clear &amp;amp;&amp;amp; bund
     <title>tips learn from confident ruby</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/24/tips-learn-from-confident-ruby/"/>
     <id>http://blog.url.com/2014/03/24/tips-learn-from-confident-ruby/</id>
-    <published>2014-03-24T03:21:00Z</published>
+    <published>2014-03-24T11:21:00+08:00</published>
     <updated>2014-05-19T16:20:01+08:00</updated>
     <author>
       <name>Article Author</name>
@@ -277,30 +285,34 @@ when-files-change &lt;span class="s2"&gt;&amp;quot;clear &amp;amp;&amp;amp; bund
 and learned following tips&lt;/p&gt;
 
 &lt;h3&gt;use each&lt;em&gt;with&lt;/em&gt;object instead of initialize an empty object before the each&lt;/h3&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt;
-&lt;span class="n"&gt;another_list&lt;/span&gt;&lt;span class="nf"&gt;.each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;
+&lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="n"&gt;another_list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
   &lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;should turn into&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;another_list&lt;/span&gt;&lt;span class="nf"&gt;.each_with_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;topics_list&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;
+&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;another_list&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;each_with_object&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;topics_list&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
   &lt;span class="n"&gt;topics_list&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h3&gt;don&amp;rsquo;t use collection.present? to check if collection exist and nonempty ,use Array()&lt;/h3&gt;
 
 &lt;h3&gt;skip the iteration at the top of the block&lt;/h3&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="k"&gt;next&lt;/span&gt; &lt;span class="k"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;topics&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;
+&lt;span class="k"&gt;next&lt;/span&gt; &lt;span class="k"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;topics&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h3&gt;accept user or user_id with confident&lt;/h3&gt;
-&lt;pre class="highlight ruby"&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;
 &lt;span class="n"&gt;user_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;
-&lt;span class="n"&gt;user_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="nf"&gt;.id&lt;/span&gt; &lt;span class="k"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="nf"&gt;.class&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="no"&gt;Fixnum&lt;/span&gt;
-&lt;/pre&gt;
+&lt;span class="n"&gt;user_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;id&lt;/span&gt; &lt;span class="k"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;class&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="no"&gt;Fixnum&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;To reduce the duplication, refactor to:
 &amp;ldquo;`ruby&lt;/p&gt;
 
@@ -315,12 +327,13 @@ end
 &amp;rdquo;`&lt;/p&gt;
 
 &lt;p&gt;if define the private method, then use:&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;user_id_for&lt;/span&gt;
-&lt;span class="nf"&gt;..&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight ruby"&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;user_id_for&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="nf"&gt;end&lt;/span&gt;
 &lt;span class="nb"&gt;private_class_method&lt;/span&gt; &lt;span class="ss"&gt;:user_id_for&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h3&gt;return early(using guard) instead of using if at the top of the method&lt;/h3&gt;
 
 &lt;h3&gt;rescue at the top level of the method, to avoid the indent and begin block&lt;/h3&gt;
@@ -330,7 +343,7 @@ end
     <title>Deploy R application to shinyapps.io</title>
     <link rel="alternate" href="http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/"/>
     <id>http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/</id>
-    <published>2014-03-18T01:53:00Z</published>
+    <published>2014-03-18T09:53:00+08:00</published>
     <updated>2014-05-19T16:20:01+08:00</updated>
     <author>
       <name>Article Author</name>
@@ -346,17 +359,19 @@ useful because other PaaS like Heroku not allowing install R.&lt;/p&gt;
 https://github.com/rstudio/shinyapps/blob/master/guide/guide.mdhttps://github.com/rstudio/shinyapps/blob/master/guide/guide.md&lt;/p&gt;
 
 &lt;h2&gt;run the App&lt;/h2&gt;
-&lt;pre class="highlight r"&gt;
+&lt;pre&gt;&lt;code class="highlight r"&gt;
 &lt;span class="n"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;shiny&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;runApp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h2&gt;Trouble Shooting&lt;/h2&gt;
 
 &lt;p&gt;When the first time I deploy my apps, it always returns: &lt;/p&gt;
-&lt;pre class="highlight shell"&gt;
-&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;deployApp&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;pre&gt;&lt;code class="highlight shell"&gt;
+&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;deployApp&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'.'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 Preparing to deploy application...Error: /v1/applications/ 400 - Bad Request
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;Finally I found that it is because my project directory is used as the app
 name, so change it to something else make it works.&lt;/p&gt;
 
