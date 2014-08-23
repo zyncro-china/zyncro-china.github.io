@@ -5,10 +5,116 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-07-24T02:26:00Z</updated>
+  <updated>2014-08-23T03:20:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Developing Rails App Using Docker by fig</title>
+    <link rel="alternate" href="http://blog.url.com/2014/08/23/developing-rails-app-using-docker-by-fig/"/>
+    <id>http://blog.url.com/2014/08/23/developing-rails-app-using-docker-by-fig/</id>
+    <published>2014-08-23T03:20:00Z</published>
+    <updated>2014-08-23T14:31:17+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;基于虚拟机或容器创建开发环境的优点&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;可以方便地切换不同的项目&lt;/li&gt;
+&lt;li&gt;在团队内共享项目的开发环境，避免所有人都浪费时间来设置环境&lt;/li&gt;
+&lt;li&gt;避免不同项目的设置冲突&lt;/li&gt;
+&lt;li&gt;可以使开发环境更加接近部署的环境&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Docker vs VirtualBox&lt;/h2&gt;
+
+&lt;p&gt;以前试过使用VirtualBox虚拟机来做开发环境，因为团队里同时使用Linux和Windows。
+但发现有2个问题，一是速度太慢，二是在windows下，编辑器保存文件后并不能触发
+VirtualBox里的自动化编译或刷新。&lt;/p&gt;
+
+&lt;p&gt;因此尝试使用Docker,因为现在不需要再考虑windows,而且Docker基于Linux容器，性能更好。&lt;/p&gt;
+
+&lt;h2&gt;在国内使用Docker的设置&lt;/h2&gt;
+
+&lt;p&gt;为了能在国内使用docker，而且防止VPN不稳定的问题，需要找到docker的ip，并设置hosts
+文件如下&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+&lt;span class="c"&gt;# in /etc/hosts&lt;/span&gt;
+54.205.182.244  get.docker.io
+162.242.195.77 cdn-registry-1.docker.io
+107.22.52.107 index.docker.io
+
+&lt;/pre&gt;
+&lt;p&gt;这样才可以顺利地获取docker images。&lt;/p&gt;
+
+&lt;h2&gt;配置文件&lt;/h2&gt;
+
+&lt;p&gt;需要2个配置文件。&lt;/p&gt;
+
+&lt;p&gt;Dockerfile&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;
+FROM ruby
+RUN apt-get update -qq &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y build-essential libpq-dev mongodb mongodb-dev mongodb-clients
+RUN mkdir /myapp
+WORKDIR /myapp
+ADD Gemfile /myapp/Gemfile
+RUN bundle install
+ADD . /myapp
+&lt;/pre&gt;
+&lt;p&gt;fig.yml&lt;/p&gt;
+&lt;pre class="highlight yaml"&gt;
+&lt;span class="s"&gt;db&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;mongo&lt;/span&gt;
+  &lt;span class="s"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;27017&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;web&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;.&lt;/span&gt;
+  &lt;span class="s"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bundle exec rackup -p 3000&lt;/span&gt;
+  &lt;span class="s"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s"&gt;.:/myapp&lt;/span&gt;
+  &lt;span class="s"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;3000:3000&amp;quot;&lt;/span&gt;
+  &lt;span class="s"&gt;links&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s"&gt;db&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h2&gt;设置Gemfile&lt;/h2&gt;
+
+&lt;p&gt;在Gemfile指定rails的版本&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;4.1.5&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h2&gt;下载images&lt;/h2&gt;
+
+&lt;p&gt;运行命令:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;fig run web rails new .
+
+&lt;/pre&gt;
+&lt;p&gt;会自动下载imgaes，并执行Dockerfile里的命令, 再生产新的rails app。&lt;/p&gt;
+
+&lt;p&gt;这会在目录下生产所有的文件，需要重新把文件所有者改为自己：&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;chown -R &lt;span class="sb"&gt;`&lt;/span&gt;whoami&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="k"&gt;*&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h2&gt;设置rails&lt;/h2&gt;
+
+&lt;p&gt;加入需要的gems到Gemfile，再执行&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;fig build
+&lt;/pre&gt;
+&lt;h2&gt;设置数据库&lt;/h2&gt;
+
+&lt;p&gt;打开database.yml,把host改为db_1,这就是在另一个容器的db&lt;/p&gt;
+
+&lt;h2&gt;启动&lt;/h2&gt;
+&lt;pre class="highlight shell"&gt;fig up
+&lt;/pre&gt;
+&lt;h2&gt;运行其他命令&lt;/h2&gt;
+&lt;pre class="highlight shell"&gt;fig run web rake db:create
+
+or
+
+fig run web bash
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>Decision Tree</title>
     <link rel="alternate" href="http://blog.url.com/2014/07/24/decision-tree/"/>
@@ -324,47 +430,6 @@ end
 &lt;h3&gt;return early(using guard) instead of using if at the top of the method&lt;/h3&gt;
 
 &lt;h3&gt;rescue at the top level of the method, to avoid the indent and begin block&lt;/h3&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Deploy R application to shinyapps.io</title>
-    <link rel="alternate" href="http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/"/>
-    <id>http://blog.url.com/2014/03/18/deploy-r-application-to-shinyapps-io/</id>
-    <published>2014-03-18T01:53:00Z</published>
-    <updated>2014-05-19T16:20:01+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;An R hosting Service&lt;/h2&gt;
-
-&lt;p&gt;Today I got an invitation for ShinyApps.io testing. This seems to be very
-useful because other PaaS like Heroku not allowing install R.&lt;/p&gt;
-
-&lt;h2&gt;Installation&lt;/h2&gt;
-
-&lt;p&gt;Just follow the guide from
-https://github.com/rstudio/shinyapps/blob/master/guide/guide.mdhttps://github.com/rstudio/shinyapps/blob/master/guide/guide.md&lt;/p&gt;
-
-&lt;h2&gt;run the App&lt;/h2&gt;
-&lt;pre class="highlight r"&gt;
-&lt;span class="n"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;shiny&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;runApp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h2&gt;Trouble Shooting&lt;/h2&gt;
-
-&lt;p&gt;When the first time I deploy my apps, it always returns: &lt;/p&gt;
-&lt;pre class="highlight shell"&gt;
-&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;deployApp&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-Preparing to deploy application...Error: /v1/applications/ 400 - Bad Request
-&lt;/pre&gt;
-&lt;p&gt;Finally I found that it is because my project directory is used as the app
-name, so change it to something else make it works.&lt;/p&gt;
-
-&lt;h2&gt;Multiple pages solution&lt;/h2&gt;
-
-&lt;p&gt;Shiny App only support Single Page Application workflow, but there is some
-discussion for multiple pages:
-https://groups.google.com/forum/#!searchin/shiny-discuss/multiple/shiny-discuss/GAiZ4m13EHY/yKpkqmv9QuMJ&lt;/p&gt;
 </content>
   </entry>
 </feed>

@@ -1,0 +1,184 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Developing Rails App Using Docker by fig</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Developing Rails App Using Docker by fig
+</h1>
+</div>
+<br>
+<h2>基于虚拟机或容器创建开发环境的优点</h2>
+
+<ol>
+<li>可以方便地切换不同的项目</li>
+<li>在团队内共享项目的开发环境，避免所有人都浪费时间来设置环境</li>
+<li>避免不同项目的设置冲突</li>
+<li>可以使开发环境更加接近部署的环境</li>
+</ol>
+
+<h2>Docker vs VirtualBox</h2>
+
+<p>以前试过使用VirtualBox虚拟机来做开发环境，因为团队里同时使用Linux和Windows。
+但发现有2个问题，一是速度太慢，二是在windows下，编辑器保存文件后并不能触发
+VirtualBox里的自动化编译或刷新。</p>
+
+<p>因此尝试使用Docker,因为现在不需要再考虑windows,而且Docker基于Linux容器，性能更好。</p>
+
+<h2>在国内使用Docker的设置</h2>
+
+<p>为了能在国内使用docker，而且防止VPN不稳定的问题，需要找到docker的ip，并设置hosts
+文件如下</p>
+<pre class="highlight shell">
+<span class="c"># in /etc/hosts</span>
+54.205.182.244  get.docker.io
+162.242.195.77 cdn-registry-1.docker.io
+107.22.52.107 index.docker.io
+
+</pre>
+<p>这样才可以顺利地获取docker images。</p>
+
+<h2>配置文件</h2>
+
+<p>需要2个配置文件。</p>
+
+<p>Dockerfile</p>
+<pre class="highlight shell">
+FROM ruby
+RUN apt-get update -qq <span class="o">&amp;&amp;</span> apt-get install -y build-essential libpq-dev mongodb mongodb-dev mongodb-clients
+RUN mkdir /myapp
+WORKDIR /myapp
+ADD Gemfile /myapp/Gemfile
+RUN bundle install
+ADD . /myapp
+</pre>
+<p>fig.yml</p>
+<pre class="highlight yaml">
+<span class="s">db</span><span class="p">:</span>
+  <span class="s">image</span><span class="p">:</span> <span class="s">mongo</span>
+  <span class="s">ports</span><span class="p">:</span>
+    <span class="p">-</span> <span class="s2">&quot;</span><span class="s">27017&quot;</span>
+<span class="s">web</span><span class="p">:</span>
+  <span class="s">build</span><span class="p">:</span> <span class="s">.</span>
+  <span class="s">command</span><span class="p">:</span> <span class="s">bundle exec rackup -p 3000</span>
+  <span class="s">volumes</span><span class="p">:</span>
+    <span class="p">-</span> <span class="s">.:/myapp</span>
+  <span class="s">ports</span><span class="p">:</span>
+    <span class="p">-</span> <span class="s2">&quot;</span><span class="s">3000:3000&quot;</span>
+  <span class="s">links</span><span class="p">:</span>
+    <span class="p">-</span> <span class="s">db</span>
+</pre>
+<h2>设置Gemfile</h2>
+
+<p>在Gemfile指定rails的版本</p>
+<pre class="highlight ruby"><span class="n">source</span> <span class="s1">&#39;https://rubygems.org&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;rails&#39;</span><span class="p">,</span> <span class="s1">&#39;4.1.5&#39;</span>
+</pre>
+<h2>下载images</h2>
+
+<p>运行命令:</p>
+<pre class="highlight shell">fig run web rails new .
+
+</pre>
+<p>会自动下载imgaes，并执行Dockerfile里的命令, 再生产新的rails app。</p>
+
+<p>这会在目录下生产所有的文件，需要重新把文件所有者改为自己：</p>
+<pre class="highlight shell">chown -R <span class="sb">`</span>whoami<span class="sb">`</span> <span class="k">*</span>
+</pre>
+<h2>设置rails</h2>
+
+<p>加入需要的gems到Gemfile，再执行</p>
+<pre class="highlight shell">fig build
+</pre>
+<h2>设置数据库</h2>
+
+<p>打开database.yml,把host改为db_1,这就是在另一个容器的db</p>
+
+<h2>启动</h2>
+<pre class="highlight shell">fig up
+</pre>
+<h2>运行其他命令</h2>
+<pre class="highlight shell">fig run web rake db:create
+
+or
+
+fig run web bash
+</pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+
