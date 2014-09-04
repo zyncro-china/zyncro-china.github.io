@@ -60,6 +60,7 @@ Delegate in ruby
 <li>SimpleDelegator</li>
 <li>DelegateClass</li>
 <li>Delegator</li>
+<li> forwardable module</li>
 </ol>
 
 <h3>SimpleDelegator</h3>
@@ -116,6 +117,16 @@ and even to change the object being delegated to at a later time with
                            <span class="c1"># a feature we&#39;re providing</span>
   <span class="k">end</span>
 <span class="k">end</span>
+</pre>
+<h3>Forwardable module</h3>
+<pre class="highlight ruby">
+<span class="nb">require</span> <span class="s1">&#39;forwardable&#39;</span>
+<span class="k">class </span><span class="nc">Meters</span>
+  <span class="kp">extend</span> <span class="no">Forwardable</span>
+  <span class="n">def_delegators</span> <span class="ss">:@value</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:to_int</span><span class="p">,</span> <span class="ss">:to_i</span>
+  <span class="nf">..</span><span class="o">.</span>
+<span class="k">end</span>
+
 </pre>
 </article>
 <div id="disqus_thread"></div>

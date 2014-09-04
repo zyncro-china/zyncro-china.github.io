@@ -1,0 +1,853 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>review confident ruby(collecting input)</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+review confident ruby(collecting input)
+</h1>
+</div>
+<br>
+<h2>介绍 Collecting Input</h2>
+
+<p>method需要input，当决定好method的算法所需要的input，我们需要决定如何获取input。
+有3种策略用于确保方法有可靠的collaborators来执行他们的role</p>
+
+<ol>
+<li>Coerce objects into the roles we need them to play.</li>
+<li>Reject unexpected values which cannot play the needed roles.</li>
+<li>Substitute known-good objects for unacceptable inputs.</li>
+</ol>
+
+<p>要记住只在边界做collectiing input,不要在method内部做。</p>
+
+<h2>Collecting Input的模式</h2>
+
+<ol>
+<li>Use built-in conversion protocols</li>
+<li>Conditionally call conversion methods</li>
+<li>Define your own conversion protocols</li>
+<li>Define conversions to user-defined types</li>
+<li>Use built-in conversion functions</li>
+<li>Use Array() conversion function to array-ify inputs</li>
+<li>Define conversion function</li>
+<li>Replace &ldquo;string typing&rdquo; with classes</li>
+<li>Wrap collaborators in Adapters</li>
+<li>Use transparent adapters to gradually introduce abstraction</li>
+<li>Reject unworkable values with preconditions</li>
+<li>Use #fetch to asset the presence of Hash keys</li>
+<li>Use #fetch for defaults</li>
+<li>Document assumptions with assertions</li>
+<li>Handle special cases with Guard Clause</li>
+<li>Represent special cases as objects</li>
+<li>Represent do-nothing cases as null objects</li>
+<li>Substitute a benign value for nil</li>
+<li>Use symbols as placeholder objects</li>
+<li>Bundle arguments into parameter objects</li>
+<li>Yield a parameter builder object</li>
+<li>Receive policies instead of data</li>
+</ol>
+
+<h3>Use built-in conversion protocols</h3>
+
+<p>当需要确保input是特定类型，
+使用Ruby定义好的conversion protocols, 如</p>
+<pre class="highlight ruby"><span class="c1">#to_str</span>
+<span class="c1">#to_i</span>
+<span class="c1">#to_path</span>
+<span class="c1">#to_ary</span>
+</pre>
+<p>这样可以确保类型的同时提高灵活性</p>
+
+<h4>standard conversion methods</h4>
+
+<table><thead>
+<tr>
+<th>Method</th>
+<th>Target Class</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>#to_a</td>
+<td>Array</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_ary</td>
+<td>Array</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_c</td>
+<td>Complex</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_enum</td>
+<td>Enumerator</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_h</td>
+<td>Hash</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_hash</td>
+<td>Hash</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_i</td>
+<td>Integer</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_int</td>
+<td>Integer</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_io</td>
+<td>IO</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_open</td>
+<td>IO</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_path</td>
+<td>String</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_proc</td>
+<td>Proc</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_r</td>
+<td>Rational</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_regexp</td>
+<td>Regexp</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_s</td>
+<td>String</td>
+<td>Explicit</td>
+</tr>
+<tr>
+<td>#to_str</td>
+<td>String</td>
+<td>Implicit</td>
+</tr>
+<tr>
+<td>#to_sym</td>
+<td>Symbol</td>
+<td>Implicit</td>
+</tr>
+</tbody></table>
+
+<p>Implicit 和 Explicit
+区别在于，如果定义了实际上是String的类，比如ArticleTitle,那么就应该定义Implicit #to_str,来告诉Ruby
+core class接受并转为真正的String类</p>
+<pre class="highlight ruby"><span class="s2">&quot;hello, &quot;</span> <span class="o">+</span> <span class="n">article_title</span> <span class="c1"># =&gt; &quot;hello, my title&quot;</span>
+<span class="s2">&quot;the time is now: &quot;</span> <span class="o">+</span> <span class="no">Time</span><span class="nf">.now</span> <span class="c1"># =&gt;</span>
+<span class="c1"># ~&gt; -:1:in `+&#39;: can&#39;t convert Time into String (TypeError)</span>
+<span class="c1"># ~&gt;</span>
+<span class="n">from</span> <span class="o">-</span><span class="p">:</span><span class="mi">1</span><span class="ss">:in</span> <span class="sb">`&lt;main&gt;&#39;
+
+</span></pre>
+<p>Explicit是用于获取文字的表示形式, 如to_s</p>
+
+<p>Implicit也可以作为assert来用，确保input的类型</p>
+
+<h3>Conditionally call conversion methods</h3>
+
+<p>使用respond_to?来决定input是否调用conversion method,
+既检查了input，也可扩展其他的类型</p>
+<pre class="highlight ruby">
+<span class="k">def </span><span class="nf">my_open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="nf">.to_path</span> <span class="k">if</span> <span class="n">filename</span><span class="nf">.respond_to?</span><span class="p">(</span><span class="ss">:to_path</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="nf">.to_str</span>
+<span class="c1"># ...</span>
+<span class="k">end</span>
+</pre>
+<h3>Define your own conversion protocols</h3>
+
+<p>定义自己的conversion protocol,使其他对象也可以定义这个接口来转换</p>
+<pre class="highlight ruby">
+<span class="c1"># origin and ending should both be [x,y] pairs, or should</span>
+<span class="c1"># define #to_coords to convert to an [x,y] pair</span>
+<span class="k">def </span><span class="nf">draw_line</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="nf">.to_coords</span> <span class="k">if</span> <span class="n">start</span><span class="nf">.respond_to?</span><span class="p">(</span><span class="ss">:to_coords</span><span class="p">)</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="nf">.to_ary</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+
+<span class="k">class </span><span class="nc">Point</span>
+  <span class="kp">attr_reader</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">,</span> <span class="ss">:name</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span><span class="o">=</span><span class="kp">nil</span><span class="p">)</span>
+    <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">,</span> <span class="vi">@name</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">to_coords</span>
+    <span class="o">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">37</span><span class="p">)</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="o">[</span><span class="mi">45</span><span class="p">,</span><span class="mi">89</span><span class="o">]</span>
+<span class="n">draw_line</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+</pre>
+<h3>Define conversions to user-defined types</h3>
+
+<p>当method需要自定义的类作为input，而且也希望其他类也可以implicitly converted
+到需要的类型，可以定义自己的conversion protocol来把任意对象转换为目标对象。</p>
+<pre class="highlight ruby">
+<span class="k">def </span><span class="nf">report_altitude_change</span><span class="p">(</span><span class="n">current_altitude</span><span class="p">,</span> <span class="n">previous_altitude</span><span class="p">)</span>
+<span class="n">change</span> <span class="o">=</span> <span class="n">current_altitude</span> <span class="o">-</span> <span class="n">previous_altitude</span>
+<span class="c1"># ...</span>
+<span class="k">end</span>
+
+<span class="nb">require</span> <span class="s1">&#39;forwardable&#39;</span>
+<span class="k">class </span><span class="nc">Meters</span>
+  <span class="kp">extend</span> <span class="no">Forwardable</span>
+  <span class="n">def_delegators</span> <span class="ss">:@value</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:to_int</span><span class="p">,</span> <span class="ss">:to_i</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="vi">@value</span> <span class="o">=</span> <span class="n">value</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">-</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="nb">self</span><span class="nf">.class.new</span><span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">other</span><span class="nf">.to_meters.value</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">to_meters</span>
+    <span class="nb">self</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+  <span class="kp">protected</span>
+  <span class="kp">attr_reader</span> <span class="ss">:value</span>
+<span class="k">end</span>
+
+<span class="k">class </span><span class="nc">Feet</span>
+  <span class="c1"># ...</span>
+  <span class="k">def </span><span class="nf">to_meters</span>
+    <span class="no">Meters</span><span class="nf">.new</span><span class="p">((</span><span class="n">value</span><span class="o">*</span><span class="mi">0</span><span class="o">.</span><span class="mi">348</span><span class="p">)</span><span class="nf">.round</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<p>新的单位只要定义了 protocol to_meters就可以计算得正确的结果``</p>
+
+<h3>Use built-in conversion functions</h3>
+
+<p>当需要把input对象 convet为core type, 可以使用Ruby的大写conversion函数: Integer,
+Array</p>
+
+<p>注意，Hash应使用Hash[]</p>
+
+<h3>Use Array() conversion function to array-ify inputs</h3>
+
+<p>Array()比 to_a 和 to_ary 适用更多的情况</p>
+
+<h3>Define conversion function</h3>
+
+<p>当public
+api可以接受多种形式的input，内部只想用单一的类型。可以定义一个等效(idempotent)的conversion
+function</p>
+<pre class="highlight ruby">
+<span class="k">def </span><span class="nf">Point</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+  <span class="k">case</span> <span class="n">args</span><span class="nf">.first</span>
+  <span class="k">when</span> <span class="nb">Integer</span> <span class="k">then</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+  <span class="k">when</span> <span class="nb">String</span> <span class="k">then</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="nf">.first.split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span><span class="nf">.map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_i</span><span class="p">))</span>
+  <span class="k">when</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">){</span> <span class="n">arg</span><span class="nf">.respond_to?</span><span class="p">(</span><span class="ss">:to_point</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">args</span><span class="nf">.first.to_point</span>
+  <span class="k">when</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">){</span> <span class="n">arg</span><span class="nf">.respond_to?</span><span class="p">(</span><span class="ss">:to_ary</span><span class="p">)</span> <span class="p">}</span>
+    <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="nf">.first.to_ary</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="k">raise</span> <span class="no">TypeError</span><span class="p">,</span> <span class="s2">&quot;Cannot convert </span><span class="si">#{</span><span class="n">args</span><span class="nf">.inspect</span><span class="si">}</span><span class="s2"> to Point&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="c1"># Point class now defines #to_point itself</span>
+<span class="no">Point</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">def </span><span class="nf">inspect</span>
+  <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">to_point</span>
+    <span class="nb">self</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="c1"># A Pair class which can be converted to an Array</span>
+<span class="no">Pair</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">def </span><span class="nf">to_ary</span>
+    <span class="o">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="c1"># A class which can convert itself to Point</span>
+<span class="k">class </span><span class="nc">Flag</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flag_color</span><span class="p">)</span>
+    <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">,</span> <span class="vi">@flag_color</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flag_color</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">to_point</span>
+    <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="no">Point</span><span class="p">(</span><span class="o">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="o">]</span><span class="p">)</span>
+<span class="no">Point</span><span class="p">(</span><span class="no">Pair</span><span class="nf">.new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+<span class="no">Point</span><span class="p">(</span><span class="no">Flag</span><span class="nf">.new</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="ss">:red</span><span class="p">))</span>
+<span class="c1"># =&gt; 5:7</span>
+<span class="c1"># =&gt; 23:32</span>
+<span class="c1"># =&gt; 42:24</span>
+
+</pre>
+<p>支持 to<em>ary和to</em>point两种conversion prototol</p>
+
+<p>关于 lambda -> {}, Proc的#=== 是 #call的alias</p>
+<pre class="highlight ruby">
+<span class="n">even</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="sx">% 2) </span><span class="o">==</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="n">even</span> <span class="o">===</span> <span class="mi">4</span>
+<span class="n">even</span> <span class="o">===</span> <span class="mi">9</span>
+
+</pre>
+<p>关于 module_function, 它把后面的method设为private,并且作为module的singleton
+method</p>
+
+<h3>Replace &ldquo;string typing&rdquo; with classes</h3>
+
+<p>当需要根据string值来做分支处理时有2个问题</p>
+
+<ol>
+<li>对于相同变量的重复的case statement</li>
+<li>变量很容易会引入不合法的值</li>
+</ol>
+
+<p>应该使用type system和polymorphic method 来dispatch work，而不是使用case
+when分支。这样不仅代码更健壮，可以理清对问题的理解，使得method花更少的时间用在input
+checking，更多时间用来讲述清晰的故事。</p>
+
+<p>可以使用Symbol或String作为input,转换为类:
+self.class.const<em>get(state.to</em>s.capitalize).new</p>
+
+<h3>Wrap collaborators in Adapters</h3>
+
+<p>method可以接受不同类型的collaborator,他们没有共同的interface，
+需要用adapter包住这些对象，使它们有一致的interface
+adapter的作用在于隐藏让人分心的特殊情况处理，确保特殊情况只需要处理一次</p>
+<pre class="highlight ruby"><span class="k">class </span><span class="nc">BenchmarkedLogger</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">sink</span><span class="o">=</span><span class="vg">$stdout</span><span class="p">)</span>
+    <span class="vi">@sink</span> <span class="o">=</span> <span class="n">sink</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="no">Time</span><span class="nf">.now</span>
+    <span class="k">yield</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">start_time</span> <span class="o">-</span> <span class="no">Time</span><span class="nf">.now</span>
+    <span class="vi">@sink</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="s2">&quot;[%1.3f] %s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="o">[</span><span class="n">duration</span><span class="p">,</span> <span class="n">message</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class </span><span class="nc">BenchmarkedLogger</span>
+  <span class="k">class </span><span class="nc">IrcBotSink</span>
+    <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">bot</span><span class="p">)</span>
+      <span class="vi">@bot</span> <span class="o">=</span> <span class="n">bot</span>
+    <span class="k">end</span>
+    <span class="k">def </span><span class="nf">&lt;&lt;</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+      <span class="vi">@bot</span><span class="nf">.handlers.dispatch</span><span class="p">(</span><span class="ss">:log_info</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">sink</span><span class="p">)</span>
+    <span class="vi">@sink</span> <span class="o">=</span> <span class="k">case</span> <span class="n">sink</span>
+      <span class="k">when</span> <span class="no">Cinch</span><span class="o">::</span><span class="no">Bot</span> <span class="k">then</span> <span class="no">IrcBotSink</span><span class="nf">.new</span><span class="p">(</span><span class="n">sink</span><span class="p">)</span>
+      <span class="k">else</span> <span class="n">sink</span>
+      <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="no">Time</span><span class="nf">.now</span>
+    <span class="k">yield</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">start_time</span> <span class="o">-</span> <span class="no">Time</span><span class="nf">.now</span>
+    <span class="vi">@sink</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="s2">&quot;[%1.3f] %s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="o">[</span><span class="n">duration</span><span class="p">,</span> <span class="n">message</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">require</span> <span class="s1">&#39;cinch&#39;</span>
+<span class="n">bot</span> <span class="o">=</span> <span class="no">Cinch</span><span class="o">::</span><span class="no">Bot</span><span class="nf">.new</span> <span class="k">do</span>
+  <span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+    <span class="n">c</span><span class="nf">.nick</span> <span class="o">=</span> <span class="s2">&quot;bm-logger&quot;</span>
+    <span class="n">c</span><span class="nf">.server</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;LOG_SERVER&quot;</span><span class="o">]</span>
+    <span class="n">c</span><span class="nf">.channels</span> <span class="o">=</span> <span class="o">[</span><span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;LOG_CHANNEL&quot;</span><span class="o">]]</span>
+    <span class="n">c</span><span class="nf">.verbose</span> <span class="o">=</span> <span class="kp">true</span>
+  <span class="k">end</span>
+  <span class="n">on</span> <span class="ss">:log_info</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="p">,</span> <span class="n">line</span><span class="o">|</span>
+    <span class="no">Channel</span><span class="p">(</span><span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;LOG_CHANNEL&quot;</span><span class="o">]</span><span class="p">)</span><span class="nf">.msg</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">bot_thread</span> <span class="o">=</span> <span class="no">Thread</span><span class="nf">.new</span> <span class="k">do</span>
+  <span class="n">bot</span><span class="nf">.start</span>
+<span class="k">end</span>
+
+</pre>
+<h3>Use transparent adapters to gradually introduce abstraction</h3>
+
+<p>当需要逐步替代原有对象时，可以使用DelegateClass来替换对象，再逐步改造类的定义</p>
+
+<h3>Reject unworkable values with preconditions</h3>
+
+<p>当遇到无法转换的input时应该使用precondition尽早reject</p>
+<pre class="highlight ruby"><span class="k">class </span><span class="nc">Employee</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+  <span class="kp">attr_reader</span> <span class="ss">:hire_date</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">hire_date</span><span class="p">)</span>
+    <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+    <span class="nb">self</span><span class="nf">.hire_date</span> <span class="o">=</span> <span class="n">hire_date</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">hire_date</span><span class="o">=</span><span class="p">(</span><span class="n">new_hire_date</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="no">TypeError</span><span class="p">,</span> <span class="s2">&quot;Invalid hire date&quot;</span> <span class="k">unless</span> <span class="n">new_hire_date</span><span class="nf">.is_a?</span><span class="p">(</span><span class="no">Date</span><span class="p">)</span>
+    <span class="vi">@hire_date</span> <span class="o">=</span> <span class="n">new_hire_date</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<h3>Use #fetch to asset the presence of Hash keys</h3>
+
+<h3>Use #fetch for defaults</h3>
+
+<p>使用myhash.fetch(key) {default} 而不要使用2个参数的fetch： myhash.fetch(key,
+defualt), 因为这种形式每次都执行，可能造成困扰</p>
+
+<h3>Document assumptions with assertions</h3>
+<pre class="highlight ruby"><span class="k">class </span><span class="nc">Account</span>
+  <span class="k">def </span><span class="nf">refresh_transactions</span>
+    <span class="n">transactions</span> <span class="o">=</span> <span class="n">bank</span><span class="nf">.read_transactions</span><span class="p">(</span><span class="n">account_number</span><span class="p">)</span>
+    <span class="n">transactions</span><span class="nf">.is_a?</span><span class="p">(</span><span class="nb">Array</span><span class="p">)</span> <span class="n">or</span> <span class="k">raise</span> <span class="no">TypeError</span><span class="p">,</span> <span class="s2">&quot;transactions is not an Array&quot;</span>
+    <span class="n">transactions</span><span class="nf">.each</span> <span class="k">do</span> <span class="o">|</span><span class="n">transaction</span><span class="o">|</span>
+      <span class="n">amount</span> <span class="o">=</span> <span class="n">transaction</span><span class="nf">.fetch</span><span class="p">(</span><span class="s2">&quot;amount&quot;</span><span class="p">)</span>
+      <span class="n">amount_cents</span> <span class="o">=</span> <span class="p">(</span><span class="nb">Float</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="nf">.to_i</span>
+      <span class="n">cache_transaction</span><span class="p">(</span><span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="n">amount_cents</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<ol>
+<li>在边界而不是在内部</li>
+<li>使用raise，</li>
+<li>Float()而不是to_f</li>
+<li>hash.fetch而不是hash[]</li>
+</ol>
+
+<h3>Handle special cases with Guard Clause</h3>
+<pre class="highlight ruby"><span class="k">def </span><span class="nf">log_reading</span><span class="p">(</span><span class="n">reading_or_readings</span><span class="p">))</span>
+  <span class="k">if</span> <span class="vi">@quiet</span> <span class="k">then</span> <span class="k">return</span> <span class="k">end</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+
+</pre>
+<h3>Represent special cases as objects</h3>
+
+<p>在特殊情况用对象来表示，而不是用nil，这样可以避免在所有用到的地方做nil检查</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">User</span>
+  <span class="k">def </span><span class="nf">authenticated?</span>
+    <span class="kp">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class </span><span class="nc">GuestUser</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    <span class="vi">@session</span> <span class="o">=</span> <span class="n">session</span>
+  <span class="k">end</span>
+
+  <span class="k">def </span><span class="nf">name</span>
+    <span class="s1">&#39;anonymous&#39;</span>
+  <span class="k">end</span>
+
+  <span class="k">def </span><span class="nf">authenticated?</span>
+    <span class="kp">false</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+<span class="k">def </span><span class="nf">current_user</span>
+  <span class="k">if</span> <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span>
+    <span class="no">User</span><span class="nf">.find</span><span class="p">(</span><span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="no">GuestUser</span><span class="nf">.new</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>这个模式的缺点是GuestUser必须和User的接口保持同步，可以通过shared
+test suite来确保这点</p>
+<pre class="highlight ruby"><span class="n">shared_examples_for</span> <span class="s1">&#39;a user&#39;</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:authenticated?</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:has_role?</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:visible_listings</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:last_seen_online</span><span class="o">=</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">respond_to</span><span class="p">(</span><span class="ss">:cart</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+<span class="n">describe</span> <span class="no">GuestUser</span> <span class="k">do</span>
+  <span class="n">subject</span> <span class="p">{</span> <span class="no">GuestUser</span><span class="nf">.new</span><span class="p">(</span><span class="n">stub</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">))</span> <span class="p">}</span>
+  <span class="n">it_should_behave_like</span> <span class="s1">&#39;a user&#39;</span>
+<span class="k">end</span>
+<span class="n">describe</span> <span class="no">User</span> <span class="k">do</span>
+  <span class="n">subject</span> <span class="p">{</span> <span class="no">User</span><span class="nf">.new</span> <span class="p">}</span>
+  <span class="n">it_should_behave_like</span> <span class="s1">&#39;a user&#39;</span>
+<span class="k">end</span>
+
+</pre>
+<h3>Represent do-nothing cases as null objects</h3>
+
+<p>当其中一个input是nil时，
+这表示是一个特殊情形，处理这个特殊情形的方式是什么也不做，
+这时应该把nil替换为一个Null
+Object的collaborator，它和一般的collaborator有相同的接口，但是它接受消息，不执行动作</p>
+<pre class="highlight ruby"><span class="k">class </span><span class="nc">NullObject</span> <span class="o">&lt;</span> <span class="no">BasicObject</span>
+  <span class="k">def </span><span class="nf">method_missing</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">respond_to?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="kp">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>但是，如果遇到method call chain, 或LoD时，需要做些改变</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">NullObject</span>
+  <span class="k">def </span><span class="nf">method_missing</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+    <span class="nb">self</span>
+  <span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="k">end</span>
+
+</pre>
+<p>这样做的缺点是返回一个black hole null object,因此，应该在边界处(public api 返回值时)把对象还原回nil</p>
+<pre class="highlight ruby">
+<span class="c1"># return either the argument or nil, but never a NullObject</span>
+<span class="k">def </span><span class="nf">Actual</span><span class="p">(</span><span class="n">object</span><span class="p">)</span>
+  <span class="k">case</span> <span class="n">object</span>
+  <span class="k">when</span> <span class="no">NullObject</span> <span class="k">then</span> <span class="kp">nil</span>
+  <span class="k">else</span> <span class="n">object</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="no">Actual</span><span class="p">(</span><span class="no">User</span><span class="nf">.new</span><span class="p">)</span>
+<span class="no">Actual</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+<span class="no">Actual</span><span class="p">(</span><span class="no">NullObject</span><span class="nf">.new</span><span class="p">)</span>
+<span class="c1"># =&gt; #&lt;User:0x00000002218d18&gt;</span>
+<span class="c1"># =&gt; nil</span>
+<span class="c1"># =&gt; nil</span>
+
+<span class="k">def </span><span class="nf">create_widget</span><span class="p">(</span><span class="n">attributes</span><span class="o">=</span><span class="p">{},</span> <span class="n">data_store</span><span class="o">=</span><span class="kp">nil</span><span class="p">)</span>
+  <span class="n">data_store</span> <span class="o">||=</span> <span class="no">NullObject</span><span class="nf">.new</span>
+  <span class="no">Actual</span><span class="p">(</span><span class="n">data_store</span><span class="nf">.store</span><span class="p">(</span><span class="no">Widget</span><span class="nf">.new</span><span class="p">(</span><span class="n">attributes</span><span class="p">)))</span>
+<span class="k">end</span>
+</pre>
+<p>还要让null object是falsey</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">NullObject</span> <span class="o">&lt;</span> <span class="no">BasicObject</span>
+  <span class="k">def </span><span class="nf">method_missing</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">respond_to_missing?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="kp">true</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">nil?</span>
+    <span class="kp">true</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="o">!</span>
+    <span class="kp">true</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<p>但ruby不允许定义我们自己的falsey</p>
+<pre class="highlight ruby">
+<span class="n">null</span> <span class="p">?</span> <span class="s2">&quot;truthy&quot;</span> <span class="p">:</span> <span class="s2">&quot;falsey&quot;</span> <span class="c1"># =&gt; &quot;truthy&quot;</span>
+
+</pre>
+<p>所以，关键是要记住，不需要去检查null，直接可以调用它的方法，如果它是null对象，它只会安静地什么也不做。</p>
+
+<h3>Substitute a benign value for nil</h3>
+
+<p>如果一个不重要的input没有提供, 用一个可用的替代值，不一定需要raise exception</p>
+<pre class="highlight ruby">
+<span class="k">def </span><span class="nf">render_member</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+  <span class="n">location</span> <span class="o">=</span> <span class="no">Geolocatron</span><span class="nf">.locate</span><span class="p">(</span><span class="n">member</span><span class="nf">.address</span><span class="p">)</span> <span class="o">||</span>
+  <span class="n">group</span><span class="nf">.city_location</span>
+  <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;div class=&#39;vcard&#39;&gt;&quot;</span>
+  <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;div class=&#39;fn&#39;&gt;</span><span class="si">#{</span><span class="n">member</span><span class="nf">.fname</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">member</span><span class="nf">.lname</span><span class="si">}</span><span class="s2">&lt;/div&gt;&quot;</span>
+  <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;img class=&#39;photo&#39; src=&#39;</span><span class="si">#{</span><span class="n">member</span><span class="nf">.avatar_url</span><span class="si">}</span><span class="s2">&#39;/&gt;&quot;</span>
+  <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;img class=&#39;map&#39; src=&#39;</span><span class="si">#{</span><span class="n">location</span><span class="nf">.map_url</span><span class="si">}</span><span class="s2">&#39;/&gt;&quot;</span>
+  <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span>
+<span class="k">end</span><span class="s2">&quot;&#39;&quot;</span>
+
+</pre>
+<h3>Use symbols as placeholder objects</h3>
+
+<p>根据方法的调用，可选的collaborator可能用到，也可能没用到，我们应该用symbol，而不是nil作为placeholder，这样如果出错，也更容易调试</p>
+<pre class="highlight ruby"><span class="k">def </span><span class="nf">list_widgets</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+  <span class="n">credentials</span> <span class="o">=</span> <span class="n">options</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:credentials</span><span class="p">)</span> <span class="p">{</span> <span class="ss">:credentials_not_set</span> <span class="p">}</span>
+  <span class="n">page_size</span> <span class="o">=</span> <span class="n">options</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:page_size</span><span class="p">)</span> <span class="p">{</span> <span class="mi">20</span> <span class="p">}</span>
+  <span class="n">page</span> <span class="o">=</span> <span class="n">options</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:page</span><span class="p">)</span> <span class="p">{</span> <span class="mi">1</span> <span class="p">}</span>
+  <span class="k">if</span> <span class="n">page_size</span> <span class="o">&gt;</span> <span class="mi">20</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">credentials</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">credentials</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:password</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://</span><span class="si">#{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">password</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+      <span class="s2">&quot;@www.example.com/widgets?page=</span><span class="si">#{</span><span class="n">page</span><span class="si">}</span><span class="s2">&amp;page_size=</span><span class="si">#{</span><span class="n">page_size</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">else</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://www.example.com/widgets&quot;</span> <span class="o">+</span>
+      <span class="s2">&quot;?page=</span><span class="si">#{</span><span class="n">page</span><span class="si">}</span><span class="s2">&amp;page_size=</span><span class="si">#{</span><span class="n">page_size</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+  <span class="nb">puts</span> <span class="s2">&quot;Contacting </span><span class="si">#{</span><span class="n">url</span><span class="si">}</span><span class="s2">...&quot;</span>
+<span class="k">end</span>
+
+</pre>
+<h3>Bundle arguments into parameter objects</h3>
+
+<p>如果多个method都传入相同参数列表，应该把参数合到一个新类。比如坐标数组可以用整合到point类</p>
+
+<p>完全改变方法使用继承</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">StarredPoint</span> <span class="o">&lt;</span> <span class="no">Point</span>
+  <span class="k">def </span><span class="nf">draw_on</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+  <span class="c1"># draw a star instead of a dot...</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">to_hash</span>
+    <span class="k">super</span><span class="nf">.merge</span><span class="p">(</span><span class="ss">starred: </span><span class="kp">true</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<p>部分改变可以使用decorator,用SimpleDelegator</p>
+<pre class="highlight ruby">
+<span class="nb">require</span> <span class="s1">&#39;delegate&#39;</span>
+<span class="k">class </span><span class="nc">FuzzyPoint</span> <span class="o">&lt;</span> <span class="no">SimpleDelegator</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">fuzzy_radius</span><span class="p">)</span>
+    <span class="k">super</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="vi">@fuzzy_radius</span> <span class="o">=</span> <span class="n">fuzzy_radius</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">draw_on</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+    <span class="k">super</span> <span class="c1"># draw the point</span>
+    <span class="c1"># draw a circle around the point...</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">to_hash</span>
+    <span class="k">super</span><span class="nf">.merge</span><span class="p">(</span><span class="ss">fuzzy_radius: </span><span class="vi">@fuzzy_radius</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<p>把如何画自己的逻辑都封装在不同的Point类里，因此Point的用户不需要改变就可以支持不同的point</p>
+<pre class="highlight ruby"><span class="no">Point</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">)</span> <span class="k">do</span>
+  <span class="c1"># ...</span>
+  <span class="k">def </span><span class="nf">draw_on</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+  <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="k">class </span><span class="nc">Map</span>
+  <span class="k">def </span><span class="nf">draw_point</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="n">point</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">draw_line</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)</span>
+    <span class="n">point1</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="n">point2</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="c1"># draw line connecting points...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="k">class </span><span class="nc">MapStore</span>
+  <span class="k">def </span><span class="nf">write_point</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="n">point_hash</span> <span class="o">=</span> <span class="n">point</span><span class="nf">.to_hash</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="k">end</span>
+</pre>
+<p>把point的信息(star or fuzzy)作为参数的类型, 而不是额外的参数(option),
+可以消除所有对不同point属性的条件判断</p>
+
+<h3>Yield a parameter builder object</h3>
+
+<p>在上个模式里，用户必须知道很多不同的类才能使用API，因此应该隐藏对象的构建，并yield
+parameter object 或 parameter builder object</p>
+
+<h4>yiled parameter object</h4>
+<pre class="highlight ruby">
+<span class="no">Point</span> <span class="o">&lt;</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:magnitude</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">magnitude</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">super</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">magnitude</span><span class="o">=</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="no">ArgumentError</span> <span class="k">unless</span> <span class="p">(</span><span class="mi">1</span><span class="nf">..</span><span class="mi">20</span><span class="p">)</span><span class="nf">.include?</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+    <span class="k">super</span><span class="p">(</span><span class="n">magnitude</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+
+<span class="k">class </span><span class="nc">Map</span>
+  <span class="k">def </span><span class="nf">draw_point</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="ss">:y_not_set_in_draw_point</span><span class="p">)</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">point_or_x</span><span class="nf">.is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">?</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">:</span> <span class="n">point_or_x</span>
+    <span class="k">yield</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="k">if</span> <span class="nb">block_given?</span>
+    <span class="n">point</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">draw_starred_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">point_customization</span><span class="p">)</span>
+    <span class="n">draw_point</span><span class="p">(</span><span class="no">StarredPoint</span><span class="nf">.new</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">point_customization</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="k">end</span>
+
+<span class="n">map</span><span class="nf">.draw_point</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">point</span><span class="o">|</span>
+  <span class="n">point</span><span class="nf">.magnitude</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">end</span>
+<span class="n">map</span><span class="nf">.draw_starred_point</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">27</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">point</span><span class="o">|</span>
+  <span class="n">point</span><span class="nf">.name</span> <span class="o">=</span> <span class="s2">&quot;home base&quot;</span>
+<span class="k">end</span>
+
+</pre>
+<h4>yiled parameter builder object</h4>
+<pre class="highlight ruby">
+<span class="nb">require</span> <span class="s1">&#39;delegate&#39;</span>
+<span class="k">class </span><span class="nc">PointBuilder</span> <span class="o">&lt;</span> <span class="no">SimpleDelegator</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="k">super</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">fuzzy_radius</span><span class="o">=</span><span class="p">(</span><span class="n">fuzzy_radius</span><span class="p">)</span>
+    <span class="c1"># __setobj__ is how we replace the wrapped object in a</span>
+    <span class="c1"># SimpleDelegator</span>
+    <span class="n">__setobj__</span><span class="p">(</span><span class="no">FuzzyPoint</span><span class="nf">.new</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">fuzzy_radius</span><span class="p">))</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">point</span>
+    <span class="c1"># __getobj__ is how we access the wrapped object directly in a</span>
+    <span class="c1"># SimpleDelegator</span>
+    <span class="n">__getobj__</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class </span><span class="nc">Map</span>
+  <span class="k">def </span><span class="nf">draw_point</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="ss">:y_not_set_in_draw_point</span><span class="p">)</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">point_or_x</span><span class="nf">.is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">?</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">point_or_x</span>
+    <span class="n">builder</span> <span class="o">=</span> <span class="no">PointBuilder</span><span class="nf">.new</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="k">yield</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span> <span class="k">if</span> <span class="nb">block_given?</span>
+    <span class="n">builder</span><span class="nf">.point.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">draw_starred_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">draw_point</span><span class="p">(</span><span class="no">StarredPoint</span><span class="nf">.new</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="k">end</span>
+
+<span class="n">map</span><span class="nf">.draw_starred_point</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">point</span><span class="o">|</span>
+  <span class="n">point</span><span class="nf">.name</span> <span class="o">=</span> <span class="s2">&quot;gold buried here&quot;</span>
+  <span class="n">point</span><span class="nf">.magnitude</span> <span class="o">=</span> <span class="mi">15</span>
+  <span class="n">point</span><span class="nf">.fuzzy_radius</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="k">end</span>
+
+
+<span class="n">my_point</span> <span class="o">=</span> <span class="no">MySpecialPoint</span><span class="nf">.new</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="mi">321</span><span class="p">)</span>
+<span class="n">map</span><span class="nf">.draw_point</span><span class="p">(</span><span class="n">my_point</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">point</span><span class="o">|</span>
+  <span class="n">point</span><span class="nf">.fuzzy_radius</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">end</span>
+
+</pre>
+<h3>Receive policies instead of data</h3>
+<pre class="highlight ruby">
+<span class="k">def </span><span class="nf">delete_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+  <span class="n">error_policy</span> <span class="o">=</span> <span class="n">options</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:on_error</span><span class="p">)</span> <span class="p">{</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span> <span class="k">raise</span> <span class="n">error</span> <span class="p">}</span> <span class="p">}</span>
+  <span class="n">symlink_policy</span> <span class="o">=</span> <span class="n">options</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:on_symlink</span><span class="p">)</span> <span class="p">{</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span> <span class="no">File</span><span class="nf">.delete</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+  <span class="n">files</span><span class="nf">.each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+    <span class="k">begin</span>
+      <span class="k">if</span> <span class="no">File</span><span class="nf">.symlink?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">symlink_policy</span><span class="nf">.call</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="no">File</span><span class="nf">.delete</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">error</span>
+      <span class="n">error_policy</span><span class="nf">.call</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">delete_files</span><span class="p">(</span> 
+  <span class="o">[</span><span class="s1">&#39;file1&#39;</span><span class="p">,</span> <span class="s1">&#39;file2&#39;</span><span class="o">]</span><span class="p">,</span> 
+  <span class="ss">on_error: </span><span class="o">-&gt;</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span> <span class="nb">warn</span> <span class="n">error</span><span class="nf">.message</span> <span class="p">},</span>
+  <span class="ss">on_symlink: </span><span class="o">-&gt;</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span> <span class="no">File</span><span class="nf">.delete</span><span class="p">(</span><span class="no">File</span><span class="nf">.realpath</span><span class="p">(</span><span class="n">file</span><span class="p">))</span> <span class="p">})</span>
+
+</pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+
