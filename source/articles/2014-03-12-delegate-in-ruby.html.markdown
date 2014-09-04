@@ -10,6 +10,7 @@ There are serveral ways to delegate in Ruby:
 1. SimpleDelegator
 1. DelegateClass
 1. Delegator
+1.  forwardable module
 
 ### SimpleDelegator
 
@@ -71,4 +72,16 @@ class SimpleDelegator < Delegator
                            # a feature we're providing
   end
 end
+```
+### Forwardable module
+
+```ruby
+
+require 'forwardable'
+class Meters
+  extend Forwardable
+  def_delegators :@value, :to_s, :to_int, :to_i
+  ...
+end
+
 ```

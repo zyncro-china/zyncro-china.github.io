@@ -1,7 +1,7 @@
 @import "compass";
 
 body{
-  @include background-image(linear-gradient(#ccc, #5b5b5b));
+  //@include background-image(linear-gradient(#ccc, #5b5b5b));
   background-attachment: fixed;
 }
 .content_box{

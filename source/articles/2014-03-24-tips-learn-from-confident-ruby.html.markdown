@@ -5,7 +5,7 @@ tags: ruby
 ---
 
 ## The book confident ruby
-After reading the book confident ruby, I want the screen cast with that book
+After reading the book confident ruby, I watch the screen cast with that book
 and learned following tips
 
 ### use each_with_object instead of initialize an empty object before the each
