@@ -61,10 +61,58 @@ Zyncro China Dev Blog
 <div class='col-lg-8 col-xs-12'>
 <ul class='well-lg content_box'>
 <p>
-Page 1 of 3
+Page 1 of 4
 </p>
 <ul class='pager'>
 </ul>
+<li class='article'>
+<h2>
+<a href="/2014/09/06/review-confident-ruby-handling-failure/">review confident ruby(handling failure)</a>
+<span>Sep  6</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>介绍 Handling Failure</h2>
+
+<p>自信地处理错误情况。这本书只讨论BRE(begin/rescue/end) block,因为BRE在代码里是如此醒目,
+会把注意力引离method要做的事，所以需要想办法不要让它出现在程序的主要逻辑里。</p>
+
+<h2>Handling Failure的模式</h2>
+
+<ol>
+<li>Prefer top-level rescue clause</li>
+<li>Use checked methods for risky operations</li>
+<li>Use bouncer methods</li>
+</ol><h3>Prefer top...</h3>
+<a href="/2014/09/06/review-confident-ruby-handling-failure/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
+<span>Sep  5</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>介绍 Delivering Results</h2>
+
+<p>为method的caller提供output</p>
+
+<h2>Delivering Results的模式</h2>
+
+<ol>
+<li>Write total functions</li>
+<li>Call back instead of returning</li>
+<li>Represent failure with benign value</li>
+<li>Represent failure with a special case object</li>
+<li>Return a status object</li>
+<li>Yield a status object</li>
+</ol>
+<a href="/2014/09/05/review-confident-ruby-delivering-results/">Read More...</a>
+</li>
 <li class='article'>
 <h2>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
@@ -262,48 +310,6 @@ and learned following tips</p>
 ...</pre>
 <a href="/2014/03/24/tips-learn-from-confident-ruby/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-<span>Mar 18</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>An R hosting Service</h2>
-
-<p>Today I got an invitation for ShinyApps.io testing. This seems to be very
-useful because other PaaS like Heroku not allowing install R.</p>
-
-<h2>Installation</h2>
-
-<p>Just follow the guide from
-<a href="https://github.com/rstudio/shinyapps/blob/master/guide/guide.mdhttps://github.com/rstudio/shinyapps/blob/master/guide/guide.md">https://github.com/rstudio/shinyapps/blob/master...</a></p>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-<span>Mar 17</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>Install the SDK</h2>
-
-<h3>Create the project</h3>
-<pre class="highlight shell">
-ruboto gen app -t 14 --package org.ruboto.example.bluemix
-</pre>
-<h3>Download SDK</h3>
-
-<p>The Web page javascript failed to download in Chrome browser, but open the
-console, and you can see the download link is:
-<a href="http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip">http://mbaas-catalog...</a></p>
-<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/page/2/">Next page</a></li>
 </ul>
@@ -316,6 +322,14 @@ console, and you can see the download link is:
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/06/review-confident-ruby-handling-failure/">review confident ruby(handling failure)</a>
+<span>Sep  6</span>
+</li>
+<li>
+<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
+<span>Sep  5</span>
+</li>
 <li>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
@@ -347,14 +361,6 @@ console, and you can see the download link is:
 <li>
 <a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
 <span>Mar 24</span>
-</li>
-<li>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-<span>Mar 18</span>
-</li>
-<li>
-<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-<span>Mar 17</span>
 </li>
 </ol>
 </dd>
@@ -401,7 +407,7 @@ console, and you can see the download link is:
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(6)
+(8)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -576,7 +582,7 @@ console, and you can see the download link is:
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(27)
+(29)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -600,6 +606,14 @@ console, and you can see the download link is:
 <dd>
 <ol>
 <li>
+<a href="/2014/09/06/review-confident-ruby-handling-failure/">review confident ruby(handling failure)</a>
+<span>Sep  6</span>
+</li>
+<li>
+<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
+<span>Sep  5</span>
+</li>
+<li>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
 </li>
@@ -630,14 +644,6 @@ console, and you can see the download link is:
 <li>
 <a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
 <span>Mar 24</span>
-</li>
-<li>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-<span>Mar 18</span>
-</li>
-<li>
-<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-<span>Mar 17</span>
 </li>
 </ol>
 </dd>
@@ -684,7 +690,7 @@ console, and you can see the download link is:
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(6)
+(8)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -859,7 +865,7 @@ console, and you can see the download link is:
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(27)
+(29)
 </li>
 <li>
 <a href="/2013/">2013</a>

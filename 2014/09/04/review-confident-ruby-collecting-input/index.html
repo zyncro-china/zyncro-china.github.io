@@ -351,11 +351,11 @@ function</p>
 </pre>
 <p>支持 to<em>ary和to</em>point两种conversion prototol</p>
 
-<p>关于 lambda -> {}, Proc的#=== 是 #call的alias</p>
+<p>关于 lambda -> {}, Proc的方法 #=== 是 #call 的alias,因此可以像如下使用</p>
 <pre class="highlight ruby">
 <span class="n">even</span> <span class="o">=</span> <span class="o">-&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">x</span> <span class="sx">% 2) </span><span class="o">==</span> <span class="mi">0</span> <span class="p">}</span>
-<span class="n">even</span> <span class="o">===</span> <span class="mi">4</span>
-<span class="n">even</span> <span class="o">===</span> <span class="mi">9</span>
+<span class="n">even</span> <span class="o">===</span> <span class="mi">4</span> <span class="c1"># =&gt; true</span>
+<span class="n">even</span> <span class="o">===</span> <span class="mi">9</span> <span class="c1"># =&gt; false</span>
 
 </pre>
 <p>关于 module_function, 它把后面的method设为private,并且作为module的singleton

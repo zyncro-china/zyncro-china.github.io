@@ -61,12 +61,54 @@ Zyncro China Dev Blog
 <div class='col-lg-8 col-xs-12'>
 <ul class='well-lg content_box'>
 <p>
-Page 2 of 3
+Page 2 of 4
 </p>
 <ul class='pager'>
 <li><a href="/">Previous page</a></li>
 <li><a href="/page/3/">Next page</a></li>
 </ul>
+<li class='article'>
+<h2>
+<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
+<span>Mar 18</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>An R hosting Service</h2>
+
+<p>Today I got an invitation for ShinyApps.io testing. This seems to be very
+useful because other PaaS like Heroku not allowing install R.</p>
+
+<h2>Installation</h2>
+
+<p>Just follow the guide from
+<a href="https://github.com/rstudio/shinyapps/blob/master/guide/guide.mdhttps://github.com/rstudio/shinyapps/blob/master/guide/guide.md">https://github.com/rstudio/shinyapps/blob/master...</a></p>
+<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
+<span>Mar 17</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>Install the SDK</h2>
+
+<h3>Create the project</h3>
+<pre class="highlight shell">
+ruboto gen app -t 14 --package org.ruboto.example.bluemix
+</pre>
+<h3>Download SDK</h3>
+
+<p>The Web page javascript failed to download in Chrome browser, but open the
+console, and you can see the download link is:
+<a href="http://mbaas-catalog.ng.bluemix.net/sdk/ibm-baas-sdk-android.zip">http://mbaas-catalog...</a></p>
+<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Read More...</a>
+</li>
 <li class='article'>
 <h2>
 <a href="/2014/03/16/run-microsoft-window-virtual-machine-for-free/">Run microsoft window virtual machine for free</a>
@@ -223,49 +265,6 @@ to try it in the slides/presentation.</p>
 I hope it can be hosted...</p>
 <a href="/2014/03/07/write-presentation-in-markdown-and-hosted-on-heroku/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/03/06/write-an-opencv-android-app-using-jruby/">Write an opencv android app using jruby</a>
-<span>Mar  6</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>Download opencv lib</h2>
-
-<p>Download lib from <a href="http://sourceforge.net/projects/opencvlibrary/files/opencv-android/2.4.8/">http://sourceforge.net/projects/opencvlibrary/files/opencv-android/2.4.8/</a>
-Unzip the files</p>
-
-<h2>Setup ruboto project</h2>
-
-<h3>use Ruboto CLI to create a new project</h3>
-<pre class="highlight shell">
-ruboto gen app -t 15 --package org.ruboto.example.opencv...</pre>
-<a href="/2014/03/06/write-an-opencv-android-app-using-jruby/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/05/zeromq-in-ruby/">ZeroMQ in Ruby</a>
-<span>Mar  5</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>2 ways to write concurrent program</h2>
-
-<p>In order to make use of all cpu cores and increase the capability, we need to
-write concurrent programs that can communicate with each other.</p>
-
-<p>There are 2 different communication options:</p>
-
-<ol>
-<li>inter-thread</li>
-<li>inter-process</li>
-</ol>
-<a href="/2014/03/05/zeromq-in-ruby/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/">Previous page</a></li>
 <li><a href="/page/3/">Next page</a></li>
@@ -279,6 +278,14 @@ write concurrent programs that can communicate with each other.</p>
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/06/review-confident-ruby-handling-failure/">review confident ruby(handling failure)</a>
+<span>Sep  6</span>
+</li>
+<li>
+<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
+<span>Sep  5</span>
+</li>
 <li>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
@@ -310,14 +317,6 @@ write concurrent programs that can communicate with each other.</p>
 <li>
 <a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
 <span>Mar 24</span>
-</li>
-<li>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-<span>Mar 18</span>
-</li>
-<li>
-<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-<span>Mar 17</span>
 </li>
 </ol>
 </dd>
@@ -364,7 +363,7 @@ write concurrent programs that can communicate with each other.</p>
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(6)
+(8)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -539,7 +538,7 @@ write concurrent programs that can communicate with each other.</p>
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(27)
+(29)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -563,6 +562,14 @@ write concurrent programs that can communicate with each other.</p>
 <dd>
 <ol>
 <li>
+<a href="/2014/09/06/review-confident-ruby-handling-failure/">review confident ruby(handling failure)</a>
+<span>Sep  6</span>
+</li>
+<li>
+<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
+<span>Sep  5</span>
+</li>
+<li>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
 </li>
@@ -593,14 +600,6 @@ write concurrent programs that can communicate with each other.</p>
 <li>
 <a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
 <span>Mar 24</span>
-</li>
-<li>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-<span>Mar 18</span>
-</li>
-<li>
-<a href="/2014/03/17/try-bluemix-android-sdk-with-jruby/">Try bluemix android SDK with jruby</a>
-<span>Mar 17</span>
 </li>
 </ol>
 </dd>
@@ -647,7 +646,7 @@ write concurrent programs that can communicate with each other.</p>
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(6)
+(8)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -822,7 +821,7 @@ write concurrent programs that can communicate with each other.</p>
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(27)
+(29)
 </li>
 <li>
 <a href="/2013/">2013</a>
