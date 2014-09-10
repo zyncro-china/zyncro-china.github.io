@@ -5,10 +5,29 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-09-06T06:19:00Z</updated>
+  <updated>2014-09-09T04:21:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>meet elixir</title>
+    <link rel="alternate" href="http://blog.url.com/2014/09/09/meet-elixir/"/>
+    <id>http://blog.url.com/2014/09/09/meet-elixir/</id>
+    <published>2014-09-09T04:21:00Z</published>
+    <updated>2014-09-10T09:06:18+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;Meet Elixir ScreenCast&lt;/h2&gt;
+
+&lt;p&gt;Elixir马上就要发布1.0版，估计以后的语法不会有大的改动了。&lt;/p&gt;
+
+&lt;p&gt;看Elixir的书和screencast的其中一个问题是等到你看的时候，Elixir的语法已经和制作书和screencast时的语法不一样了。&lt;/p&gt;
+
+&lt;p&gt;最近看了Meet Elixir，并把screencast里的例子更新到使用最新的Elixir版本(0.15.1)。放在
+&lt;a href="https://github.com/ruanwz/mystreamers"&gt;https://github.com/ruanwz/mystreamers&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>review confident ruby(handling failure)</title>
     <link rel="alternate" href="http://blog.url.com/2014/09/06/review-confident-ruby-handling-failure/"/>
@@ -1266,72 +1285,6 @@ ADD . /myapp
 or
 
 fig run web bash
-&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>Decision Tree</title>
-    <link rel="alternate" href="http://blog.url.com/2014/07/24/decision-tree/"/>
-    <id>http://blog.url.com/2014/07/24/decision-tree/</id>
-    <published>2014-07-24T02:26:00Z</published>
-    <updated>2014-07-24T11:44:10+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;数据分析服务: BigML&lt;/h2&gt;
-
-&lt;p&gt;今天我看到一个数据分析的服务，可以上传CSV的数据，分析后可以预测新的结果。&lt;/p&gt;
-
-&lt;p&gt;它有几个步骤&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;上传CSV数据,并设定每行的数据类型，如数字，字符。数据最后一列必须是结果列&lt;/li&gt;
-&lt;li&gt;建立数据集，这个过程需要几秒或几小时。需要选定需要分析的属性，最终会给出一个属性列表，显示属性的一些统计数据：缺失数据，错误和直方图&lt;/li&gt;
-&lt;li&gt;建立模型，通过数据集生成模型&lt;/li&gt;
-&lt;li&gt;为新输入预测结果&lt;/li&gt;
-&lt;li&gt;建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样比较哪种组合比较合理&lt;/li&gt;
-&lt;li&gt;评估模型或ensembles&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2&gt;背后的机器学习算法 decision tree&lt;/h2&gt;
-
-&lt;p&gt;decision tree是一种很直观的机器学习算法。给定一些training data,
-里面包含了一些属性，算法的目的是学习隐藏在数据里的决策函数(decision
-function),并可以用它来分类新的输入。
-decision
-tree算法不想用到所有的属性，而是想去掉那些弱因素，只保留强因素，并把强因素放在上方。&lt;/p&gt;
-
-&lt;p&gt;&lt;img alt="Decision Tree Example" src="/images/xdiscrete-tree.png.pagespeed.ic.png" /&gt;&lt;/p&gt;
-
-&lt;p&gt;每个属性的强弱可以用information gain表示，可以用公式计算。&lt;/p&gt;
-
-&lt;p&gt;&lt;img alt="Information Gain" src="/images/xinformation-gain-formula.png.pagespeed.ic.png" /&gt;&lt;/p&gt;
-
-&lt;h2&gt;Ruby gem for decision tree: decisiontree&lt;/h2&gt;
-
-&lt;p&gt;如果想自己做decision tree，不使用其他服务，可以用decisiontree这个ruby gem。&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rubygems&amp;#39;&lt;/span&gt;
-&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;decisiontree&amp;#39;&lt;/span&gt;
-
-&lt;span class="n"&gt;attributes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Age&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Education&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Income&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Marital Status&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;training&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;36-55&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Masters&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Single&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;18-35&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High School&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Low&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Single&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt; 18&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High School&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Low&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Married&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-  &lt;span class="c1"&gt;# ... more training examples&lt;/span&gt;
-&lt;span class="o"&gt;]&lt;/span&gt;
-
-&lt;span class="c1"&gt;# Instantiate the tree, and train it based on the data (set default to &amp;#39;1&amp;#39;)&lt;/span&gt;
-&lt;span class="n"&gt;dec_tree&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;DecisionTree&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;ID3Tree&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;training&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:discrete&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="nf"&gt;.train&lt;/span&gt;
-
-&lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt; 18&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;High School&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Low&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Single&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-
-&lt;span class="n"&gt;decision&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="nf"&gt;.predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Predicted: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;decision&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; ... True decision: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="nf"&gt;.last&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="c1"&gt;# Graph the tree, save to &amp;#39;discrete.png&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;dec_tree&lt;/span&gt;&lt;span class="nf"&gt;.graph&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;discrete&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
 &lt;/pre&gt;</content>
   </entry>
 </feed>
