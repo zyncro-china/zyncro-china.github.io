@@ -237,13 +237,13 @@ Point(Flag.new(42, 24, :red))
 ```
 支持 to_ary和to_point两种conversion prototol
 
-关于 lambda -> {}, Proc的#=== 是 #call的alias
+关于 lambda -> {}, Proc的方法 #=== 是 #call 的alias,因此可以像如下使用
 
 ```ruby
 
 even = ->(x) { (x % 2) == 0 }
-even === 4
-even === 9
+even === 4 # => true
+even === 9 # => false
 
 ```
 
