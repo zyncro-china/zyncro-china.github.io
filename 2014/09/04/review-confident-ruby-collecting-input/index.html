@@ -220,6 +220,8 @@ core class接受并转为真正的String类</p>
 <pre class="highlight ruby">
 <span class="k">def </span><span class="nf">my_open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="nf">.to_path</span> <span class="k">if</span> <span class="n">filename</span><span class="nf">.respond_to?</span><span class="p">(</span><span class="ss">:to_path</span><span class="p">)</span>
+<span class="c1"># 这里用to_str, 因为我们不仅是获得它的文字表示形式,</span>
+<span class="c1"># 还要检查输入是不是String或可转化为String的对象</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="nf">.to_str</span>
 <span class="c1"># ...</span>
 <span class="k">end</span>
@@ -230,6 +232,7 @@ core class接受并转为真正的String类</p>
 <pre class="highlight ruby">
 <span class="c1"># origin and ending should both be [x,y] pairs, or should</span>
 <span class="c1"># define #to_coords to convert to an [x,y] pair</span>
+<span class="c1"># 数据在函数内部都表示为[x,y],但输入时允许多种形式</span>
 <span class="k">def </span><span class="nf">draw_line</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
   <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="nf">.to_coords</span> <span class="k">if</span> <span class="n">start</span><span class="nf">.respond_to?</span><span class="p">(</span><span class="ss">:to_coords</span><span class="p">)</span>
   <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="nf">.to_ary</span>
@@ -254,7 +257,9 @@ core class接受并转为真正的String类</p>
 
 <p>当method需要自定义的类作为input，而且也希望其他类也可以implicitly converted
 到需要的类型，可以定义自己的conversion protocol来把任意对象转换为目标对象。</p>
-<pre class="highlight ruby">
+<pre class="highlight ruby"><span class="c1"># 每次计算都通过CustomizedClass.new(value),返回新对象</span>
+<span class="c1"># 使用delegator把message发给value实例变量</span>
+<span class="c1"># 每个类都定义conversion protocol</span>
 <span class="k">def </span><span class="nf">report_altitude_change</span><span class="p">(</span><span class="n">current_altitude</span><span class="p">,</span> <span class="n">previous_altitude</span><span class="p">)</span>
 <span class="n">change</span> <span class="o">=</span> <span class="n">current_altitude</span> <span class="o">-</span> <span class="n">previous_altitude</span>
 <span class="c1"># ...</span>
@@ -298,13 +303,17 @@ Array</p>
 <h3>Use Array() conversion function to array-ify inputs</h3>
 
 <p>Array()比 to_a 和 to_ary 适用更多的情况</p>
-
+<pre class="highlight ruby"><span class="c1"># 3种conversion</span>
+<span class="nb">Array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="n">value</span><span class="nf">.to_a</span>
+<span class="n">value</span><span class="nf">.to_ary</span>
+</pre>
 <h3>Define conversion function</h3>
 
 <p>当public
 api可以接受多种形式的input，内部只想用单一的类型。可以定义一个等效(idempotent)的conversion
 function</p>
-<pre class="highlight ruby">
+<pre class="highlight ruby"><span class="c1"># 函数和类可以重名</span>
 <span class="k">def </span><span class="nf">Point</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
   <span class="k">case</span> <span class="n">args</span><span class="nf">.first</span>
   <span class="k">when</span> <span class="nb">Integer</span> <span class="k">then</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
@@ -318,38 +327,42 @@ function</p>
   <span class="k">end</span>
 <span class="k">end</span>
 <span class="c1"># Point class now defines #to_point itself</span>
-<span class="no">Point</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">)</span> <span class="k">do</span>
-  <span class="k">def </span><span class="nf">inspect</span>
-  <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span>
-  <span class="k">end</span>
-  <span class="k">def </span><span class="nf">to_point</span>
-    <span class="nb">self</span>
+<span class="k">module</span> <span class="nn">Graphics</span>
+  <span class="k">module</span> <span class="nn">Conversions</span>
+    <span class="kp">module_function</span>
+    <span class="no">Point</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">)</span> <span class="k">do</span>
+      <span class="k">def </span><span class="nf">inspect</span>
+      <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="k">end</span>
+      <span class="k">def </span><span class="nf">to_point</span>
+        <span class="nb">self</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+    <span class="c1"># A Pair class which can be converted to an Array</span>
+    <span class="no">Pair</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span> <span class="k">do</span>
+      <span class="k">def </span><span class="nf">to_ary</span>
+        <span class="o">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">]</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+    <span class="c1"># A class which can convert itself to Point</span>
+    <span class="k">class </span><span class="nc">Flag</span>
+      <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flag_color</span><span class="p">)</span>
+        <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">,</span> <span class="vi">@flag_color</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flag_color</span>
+      <span class="k">end</span>
+      <span class="k">def </span><span class="nf">to_point</span>
+        <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
-<span class="c1"># A Pair class which can be converted to an Array</span>
-<span class="no">Pair</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">)</span> <span class="k">do</span>
-  <span class="k">def </span><span class="nf">to_ary</span>
-    <span class="o">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">]</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-<span class="c1"># A class which can convert itself to Point</span>
-<span class="k">class </span><span class="nc">Flag</span>
-  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flag_color</span><span class="p">)</span>
-    <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">,</span> <span class="vi">@flag_color</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flag_color</span>
-  <span class="k">end</span>
-  <span class="k">def </span><span class="nf">to_point</span>
-    <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-<span class="no">Point</span><span class="p">(</span><span class="o">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="o">]</span><span class="p">)</span>
-<span class="no">Point</span><span class="p">(</span><span class="no">Pair</span><span class="nf">.new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
-<span class="no">Point</span><span class="p">(</span><span class="no">Flag</span><span class="nf">.new</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="ss">:red</span><span class="p">))</span>
-<span class="c1"># =&gt; 5:7</span>
-<span class="c1"># =&gt; 23:32</span>
-<span class="c1"># =&gt; 42:24</span>
+<span class="kp">include</span> <span class="no">Graphics</span>
+<span class="kp">include</span> <span class="no">Graphics</span><span class="o">::</span><span class="no">Conversions</span>
+<span class="no">Point</span><span class="p">(</span><span class="o">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="o">]</span><span class="p">)</span> <span class="c1"># =&gt; 5:7</span>
+<span class="no">Point</span><span class="p">(</span><span class="no">Pair</span><span class="nf">.new</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span> <span class="c1"># =&gt; 23:32</span>
+<span class="no">Point</span><span class="p">(</span><span class="no">Flag</span><span class="nf">.new</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="ss">:red</span><span class="p">))</span> <span class="c1"># =&gt; 42:24</span>
 
 </pre>
-<p>支持 to<em>ary和to</em>point两种conversion prototol</p>
+<p>支持 to_ary和to_point两种conversion prototol</p>
 
 <p>关于 lambda -> {}, Proc的方法 #=== 是 #call 的alias,因此可以像如下使用</p>
 <pre class="highlight ruby">
@@ -363,20 +376,134 @@ method</p>
 
 <h3>Replace &ldquo;string typing&rdquo; with classes</h3>
 
-<p>当需要根据string值来做分支处理时有2个问题</p>
+<p>问题代码</p>
+<pre class="highlight ruby"><span class="k">class </span><span class="nc">TrafficLight</span>
+  <span class="c1"># Change to a new state</span>
+  <span class="k">def </span><span class="nf">change_to</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="vi">@state</span> <span class="o">=</span> <span class="n">state</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">signal</span>
+    <span class="k">case</span> <span class="vi">@state</span>
+    <span class="k">when</span> <span class="s2">&quot;stop&quot;</span> <span class="k">then</span> <span class="n">turn_on_lamp</span><span class="p">(</span><span class="ss">:red</span><span class="p">)</span>
+    <span class="k">when</span> <span class="s2">&quot;caution&quot;</span>
+      <span class="n">turn_on_lamp</span><span class="p">(</span><span class="ss">:yellow</span><span class="p">)</span>
+      <span class="n">ring_warning_bell</span>
+    <span class="k">when</span> <span class="s2">&quot;proceed&quot;</span> <span class="k">then</span> <span class="n">turn_on_lamp</span><span class="p">(</span><span class="ss">:green</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">next_state</span>
+    <span class="k">case</span> <span class="vi">@state</span>
+    <span class="k">when</span> <span class="s2">&quot;stop&quot;</span> <span class="k">then</span> <span class="s2">&quot;proceed&quot;</span>
+    <span class="k">when</span> <span class="s2">&quot;caution&quot;</span> <span class="k">then</span> <span class="s2">&quot;stop&quot;</span>
+    <span class="k">when</span> <span class="s2">&quot;proceed&quot;</span> <span class="k">then</span> <span class="s2">&quot;caution&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">turn_on_lamp</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Turning on </span><span class="si">#{</span><span class="n">color</span><span class="si">}</span><span class="s2"> lamp&quot;</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">ring_warning_bell</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Ring ring ring!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>当需要根据string值来做分支处理时存在的问题</p>
 
 <ol>
 <li>对于相同变量的重复的case statement</li>
-<li>变量很容易会引入不合法的值</li>
+<li>case没有else分支，当条件不匹配时不会报错</li>
+<li>这么多case statement不是好的代码风格</li>
 </ol>
 
 <p>应该使用type system和polymorphic method 来dispatch work，而不是使用case
 when分支。这样不仅代码更健壮，可以理清对问题的理解，使得method花更少的时间用在input
 checking，更多时间用来讲述清晰的故事。</p>
+<pre class="highlight ruby"><span class="c1">#定义一个类，使用不同对象来表示状态，并把next_state的条件判断移到实例变量@next_state</span>
+<span class="k">class </span><span class="nc">TrafficLight</span>
+  <span class="nc">State</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="ss">:next_state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">def </span><span class="nf">to_s</span>
+      <span class="nb">name</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="no">VALID_STATES</span> <span class="o">=</span> <span class="o">[</span>
+    <span class="no">STOP</span> <span class="o">=</span> <span class="no">State</span><span class="nf">.new</span><span class="p">(</span><span class="s2">&quot;stop&quot;</span><span class="p">,</span> <span class="s2">&quot;proceed&quot;</span><span class="p">),</span>
+    <span class="no">CAUTION</span> <span class="o">=</span> <span class="no">State</span><span class="nf">.new</span><span class="p">(</span><span class="s2">&quot;caution&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">),</span>
+    <span class="no">PROCEED</span> <span class="o">=</span> <span class="no">State</span><span class="nf">.new</span><span class="p">(</span><span class="s2">&quot;proceed&quot;</span><span class="p">,</span> <span class="s2">&quot;caution&quot;</span><span class="p">)</span>
+  <span class="o">]</span>
+  <span class="c1"># ...</span>
+  <span class="k">def </span><span class="nf">next_state</span>
+    <span class="vi">@state</span><span class="nf">.next_state</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>但是 “caution” case无法移到实例变量，所以转为使用subclass来表示不同状态</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">TrafficLight</span>
+  <span class="k">class </span><span class="nc">State</span>
+    <span class="k">def </span><span class="nf">to_s</span>
+      <span class="nb">name</span>
+    <span class="k">end</span>
+    <span class="k">def </span><span class="nf">name</span>
+      <span class="nb">self</span><span class="nf">.class.name.split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)</span><span class="nf">.last.downcase</span>
+    <span class="k">end</span>
+    <span class="k">def </span><span class="nf">signal</span><span class="p">(</span><span class="n">traffic_light</span><span class="p">)</span>
+      <span class="n">traffic_light</span><span class="nf">.turn_on_lamp</span><span class="p">(</span><span class="n">color</span><span class="nf">.to_sym</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">class </span><span class="nc">Stop</span> <span class="o">&lt;</span> <span class="no">State</span>
+    <span class="k">def </span><span class="nf">color</span><span class="p">;</span> <span class="s1">&#39;red&#39;</span><span class="p">;</span> <span class="k">end</span>
+    <span class="k">def </span><span class="nf">next_state</span><span class="p">;</span> <span class="no">Proceed</span><span class="nf">.new</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">class </span><span class="nc">Caution</span> <span class="o">&lt;</span> <span class="no">State</span>
+    <span class="k">def </span><span class="nf">color</span><span class="p">;</span> <span class="s1">&#39;yellow&#39;</span><span class="p">;</span> <span class="k">end</span>
+    <span class="k">def </span><span class="nf">next_state</span><span class="p">;</span> <span class="no">Stop</span><span class="nf">.new</span><span class="p">;</span> <span class="k">end</span>
+    <span class="k">def </span><span class="nf">signal</span><span class="p">(</span><span class="n">traffic_light</span><span class="p">)</span>
+      <span class="k">super</span>
+      <span class="n">traffic_light</span><span class="nf">.ring_warning_bell</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">class </span><span class="nc">Proceed</span> <span class="o">&lt;</span> <span class="no">State</span>
+    <span class="k">def </span><span class="nf">color</span><span class="p">;</span> <span class="s1">&#39;green&#39;</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">def </span><span class="nf">next_state</span><span class="p">;</span> <span class="no">Caution</span><span class="nf">.new</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">end</span>
 
+  <span class="k">def </span><span class="nf">next_state</span>
+    <span class="vi">@state</span><span class="nf">.next_state</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">signal</span>
+    <span class="vi">@state</span><span class="nf">.signal</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>为了避免下面繁琐的表示形式</p>
+<pre class="highlight ruby">  <span class="n">light</span> <span class="o">=</span> <span class="no">TrafficLight</span><span class="nf">.new</span>
+  <span class="n">light</span><span class="nf">.change_to</span><span class="p">(</span><span class="no">TrafficLight</span><span class="o">::</span><span class="no">Caution</span><span class="nf">.new</span><span class="p">)</span>
+  <span class="n">light</span><span class="nf">.signal</span>
+</pre>
 <p>可以使用Symbol或String作为input,转换为类:
 self.class.const<em>get(state.to</em>s.capitalize).new</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">TrafficLight</span>
+  <span class="k">def </span><span class="nf">change_to</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="vi">@state</span> <span class="o">=</span> <span class="no">State</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+  <span class="kp">private</span>
+  <span class="k">def </span><span class="nf">State</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">state</span>
+    <span class="k">when</span> <span class="no">State</span> <span class="k">then</span> <span class="n">state</span>
+    <span class="k">else</span> <span class="nb">self</span><span class="nf">.class.const_get</span><span class="p">(</span><span class="n">state</span><span class="nf">.to_s.capitalize</span><span class="p">)</span><span class="nf">.new</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 
+<span class="n">light</span> <span class="o">=</span> <span class="no">TrafficLight</span><span class="nf">.new</span>
+<span class="n">light</span><span class="nf">.change_to</span><span class="p">(</span><span class="ss">:caution</span><span class="p">)</span>
+<span class="n">light</span><span class="nf">.signal</span>
+<span class="nb">puts</span> <span class="s2">&quot;Next state is: </span><span class="si">#{</span><span class="n">light</span><span class="nf">.next_state</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="no">Turning</span> <span class="n">on</span> <span class="n">yellow</span> <span class="n">lamp</span>
+<span class="no">Ring</span> <span class="n">ring</span> <span class="n">ring!</span>
+<span class="no">Next</span> <span class="n">state</span> <span class="ss">is: </span><span class="n">stop</span>
+</pre>
 <h3>Wrap collaborators in Adapters</h3>
 
 <p>method可以接受不同类型的collaborator,他们没有共同的interface，
@@ -394,7 +521,9 @@ adapter的作用在于隐藏让人分心的特殊情况处理，确保特殊情�
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="k">class </span><span class="nc">BenchmarkedLogger</span>
+</pre>
+<p>要兼容IRC的情况, 定义wrapper类，并添加&lt;&lt;方法:</p>
+<pre class="highlight ruby"><span class="k">class </span><span class="nc">BenchmarkedLogger</span>
   <span class="k">class </span><span class="nc">IrcBotSink</span>
     <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">bot</span><span class="p">)</span>
       <span class="vi">@bot</span> <span class="o">=</span> <span class="n">bot</span>
@@ -477,7 +606,7 @@ defualt), 因为这种形式每次都执行，可能造成困扰</p>
 </pre>
 <ol>
 <li>在边界而不是在内部</li>
-<li>使用raise，</li>
+<li>使用raise来验证假设</li>
 <li>Float()而不是to_f</li>
 <li>hash.fetch而不是hash[]</li>
 </ol>
@@ -617,7 +746,7 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 <pre class="highlight ruby">
 <span class="k">def </span><span class="nf">render_member</span><span class="p">(</span><span class="n">member</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
   <span class="n">location</span> <span class="o">=</span> <span class="no">Geolocatron</span><span class="nf">.locate</span><span class="p">(</span><span class="n">member</span><span class="nf">.address</span><span class="p">)</span> <span class="o">||</span>
-  <span class="n">group</span><span class="nf">.city_location</span>
+  <span class="n">group</span><span class="nf">.city_location</span> <span class="c1"># good benign value</span>
   <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
   <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;div class=&#39;vcard&#39;&gt;&quot;</span>
   <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; &lt;div class=&#39;fn&#39;&gt;</span><span class="si">#{</span><span class="n">member</span><span class="nf">.fname</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">member</span><span class="nf">.lname</span><span class="si">}</span><span class="s2">&lt;/div&gt;&quot;</span>
@@ -651,7 +780,27 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 
 <p>如果多个method都传入相同参数列表，应该把参数合到一个新类。比如坐标数组可以用整合到point类</p>
 
-<p>完全改变方法使用继承</p>
+<p>Double Dispatch pattern使Point画出它自己。</p>
+<pre class="highlight ruby"><span class="no">Point</span> <span class="o">=</span> <span class="no">Struct</span><span class="nf">.new</span><span class="p">(</span><span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span><span class="p">)</span> <span class="k">do</span>
+  <span class="c1"># ...</span>
+  <span class="k">def </span><span class="nf">draw_on</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="k">class </span><span class="nc">Map</span>
+  <span class="k">def </span><span class="nf">draw_point</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="n">point</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def </span><span class="nf">draw_line</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)</span>
+    <span class="n">point1</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="n">point2</span><span class="nf">.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="c1"># draw line connecting points...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>不要把新类型的信息(如stared)作为参数(例如option)传入，而是定义新的类</p>
+
+<p>StarredPoint只改一点，所以使用继承</p>
 <pre class="highlight ruby">
 <span class="k">class </span><span class="nc">StarredPoint</span> <span class="o">&lt;</span> <span class="no">Point</span>
   <span class="k">def </span><span class="nf">draw_on</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
@@ -663,7 +812,7 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 <span class="k">end</span>
 
 </pre>
-<p>部分改变可以使用decorator,用SimpleDelegator</p>
+<p>FuzzyPoint可以用Decorator模式，用SimpleDelegator把大部分method代理到原对象，再override draw_on</p>
 <pre class="highlight ruby">
 <span class="nb">require</span> <span class="s1">&#39;delegate&#39;</span>
 <span class="k">class </span><span class="nc">FuzzyPoint</span> <span class="o">&lt;</span> <span class="no">SimpleDelegator</span>
@@ -768,8 +917,7 @@ parameter object 或 parameter builder object</p>
 
 <span class="k">class </span><span class="nc">Map</span>
   <span class="k">def </span><span class="nf">draw_point</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="ss">:y_not_set_in_draw_point</span><span class="p">)</span>
-    <span class="n">point</span> <span class="o">=</span> <span class="n">point_or_x</span><span class="nf">.is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">?</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">:</span>
-    <span class="n">point_or_x</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">point_or_x</span><span class="nf">.is_a?</span><span class="p">(</span><span class="nb">Integer</span><span class="p">)</span> <span class="p">?</span> <span class="no">Point</span><span class="nf">.new</span><span class="p">(</span><span class="n">point_or_x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">:</span> <span class="n">point_or_x</span>
     <span class="n">builder</span> <span class="o">=</span> <span class="no">PointBuilder</span><span class="nf">.new</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
     <span class="k">yield</span><span class="p">(</span><span class="n">builder</span><span class="p">)</span> <span class="k">if</span> <span class="nb">block_given?</span>
     <span class="n">builder</span><span class="nf">.point.draw_on</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
