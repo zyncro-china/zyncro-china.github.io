@@ -863,8 +863,7 @@ end
 
 class Map
   def draw_point(point_or_x, y=:y_not_set_in_draw_point)
-    point = point_or_x.is_a?(Integer) ? Point.new(point_or_x, y) :
-    point_or_x
+    point = point_or_x.is_a?(Integer) ? Point.new(point_or_x, y) : point_or_x
     builder = PointBuilder.new(point)
     yield(builder) if block_given?
     builder.point.draw_on(self)
