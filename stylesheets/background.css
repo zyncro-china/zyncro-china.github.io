@@ -1,8 +1,9 @@
 /* line 3, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/background.css.scss */
 body {
+  background-color: #ccc;
   background-attachment: fixed; }
 
-/* line 7, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/background.css.scss */
+/* line 8, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/background.css.scss */
 .content_box {
   background: #fff;
   -webkit-box-shadow: #494949 2px 2px 2px;
