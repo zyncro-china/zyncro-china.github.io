@@ -52,14 +52,14 @@ and update their account info.
 
 |Message|Receiver Role|
 | ------------- | ------------- |
-|#parse_legacy_purchase_records|legacy_data_parser|
+|#parse\_legacy\_purchase\_records|legacy\_data\_parser|
 |#each|purchase_list|
-|#email_address,|#product_id|purchase_record|
+|#email\_address,#product\_id|purchase_record|
 |#get_customer|customer_list|
 |#get_product|product_inventory|
-|#add_purchased_product|customer|
-|#notify_of_files_available|customer|
-|#log_successful_import|data_importer|
+|#add\_purchased\_product|customer|
+|#notify\_of\_files\_available|customer|
+|#log\_successful\_import|data_importer|
 
 #### 关于duck type
 不要在method中再根据type写分支逻辑，而是首先找出我们需要什么样的message和role，然后确保我们在程序里只允许使用准备好的duck

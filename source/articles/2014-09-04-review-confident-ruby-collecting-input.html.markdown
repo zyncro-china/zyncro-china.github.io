@@ -101,10 +101,13 @@ Implicit也可以作为assert来用，确保input的类型
 
 def my_open(filename)
 filename = filename.to_path if filename.respond_to?(:to_path)
+# 这里用to_str, 因为我们不仅是获得它的文字表示形式,
+# 还要检查输入是不是String或可转化为String的对象
 filename = filename.to_str
 # ...
 end
 ```
+
 ### Define your own conversion protocols
 
 定义自己的conversion protocol,使其他对象也可以定义这个接口来转换
@@ -113,6 +116,7 @@ end
 
 # origin and ending should both be [x,y] pairs, or should
 # define #to_coords to convert to an [x,y] pair
+# 数据在函数内部都表示为[x,y],但输入时允许多种形式
 def draw_line(start, endpoint)
   start = start.to_coords if start.respond_to?(:to_coords)
   start = start.to_ary
@@ -139,7 +143,9 @@ draw_line(start, endpoint)
 到需要的类型，可以定义自己的conversion protocol来把任意对象转换为目标对象。
 
 ```ruby
-
+# 每次计算都通过CustomizedClass.new(value),返回新对象
+# 使用delegator把message发给value实例变量
+# 每个类都定义conversion protocol
 def report_altitude_change(current_altitude, previous_altitude)
 change = current_altitude - previous_altitude
 # ...
@@ -183,6 +189,13 @@ Array
 
 ### Use Array() conversion function to array-ify inputs
 Array()比 to\_a 和 to\_ary 适用更多的情况
+
+```ruby
+# 3种conversion
+Array(value)
+value.to_a
+value.to_ary
+```
 ### Define conversion function
 
 当public
@@ -190,7 +203,7 @@ api可以接受多种形式的input，内部只想用单一的类型。可以定
 function
 
 ```ruby
-
+# 函数和类可以重名
 def Point(*args)
   case args.first
   when Integer then Point.new(*args)
@@ -204,38 +217,42 @@ def Point(*args)
   end
 end
 # Point class now defines #to_point itself
-Point = Struct.new(:x, :y) do
-  def inspect
-  "#{x}:#{y}"
-  end
-  def to_point
-    self
+module Graphics
+  module Conversions
+    module_function
+    Point = Struct.new(:x, :y) do
+      def inspect
+      "#{x}:#{y}"
+      end
+      def to_point
+        self
+      end
+    end
+    # A Pair class which can be converted to an Array
+    Pair = Struct.new(:a, :b) do
+      def to_ary
+        [a, b]
+      end
+    end
+    # A class which can convert itself to Point
+    class Flag
+      def initialize(x, y, flag_color)
+        @x, @y, @flag_color = x, y, flag_color
+      end
+      def to_point
+        Point.new(@x, @y)
+      end
+    end
   end
 end
-# A Pair class which can be converted to an Array
-Pair = Struct.new(:a, :b) do
-  def to_ary
-    [a, b]
-  end
-end
-# A class which can convert itself to Point
-class Flag
-  def initialize(x, y, flag_color)
-    @x, @y, @flag_color = x, y, flag_color
-  end
-  def to_point
-    Point.new(@x, @y)
-  end
-end
-Point([5,7])
-Point(Pair.new(23, 32))
-Point(Flag.new(42, 24, :red))
-# => 5:7
-# => 23:32
-# => 42:24
+include Graphics
+include Graphics::Conversions
+Point([5,7]) # => 5:7
+Point(Pair.new(23, 32)) # => 23:32
+Point(Flag.new(42, 24, :red)) # => 42:24
 
 ```
-支持 to_ary和to_point两种conversion prototol
+支持 to\_ary和to\_point两种conversion prototol
 
 关于 lambda -> {}, Proc的方法 #=== 是 #call 的alias,因此可以像如下使用
 
@@ -251,18 +268,146 @@ even === 9 # => false
 method
 
 ### Replace "string typing" with classes
+问题代码
 
-当需要根据string值来做分支处理时有2个问题
+```ruby
+class TrafficLight
+  # Change to a new state
+  def change_to(state)
+    @state = state
+  end
+  def signal
+    case @state
+    when "stop" then turn_on_lamp(:red)
+    when "caution"
+      turn_on_lamp(:yellow)
+      ring_warning_bell
+    when "proceed" then turn_on_lamp(:green)
+    end
+  end
+  def next_state
+    case @state
+    when "stop" then "proceed"
+    when "caution" then "stop"
+    when "proceed" then "caution"
+    end
+  end
+  def turn_on_lamp(color)
+    puts "Turning on #{color} lamp"
+  end
+  def ring_warning_bell
+    puts "Ring ring ring!"
+  end
+end
+```
+
+
+当需要根据string值来做分支处理时存在的问题
 
 1. 对于相同变量的重复的case statement
-2. 变量很容易会引入不合法的值
+1. case没有else分支，当条件不匹配时不会报错
+1. 这么多case statement不是好的代码风格
 
 应该使用type system和polymorphic method 来dispatch work，而不是使用case
 when分支。这样不仅代码更健壮，可以理清对问题的理解，使得method花更少的时间用在input
 checking，更多时间用来讲述清晰的故事。
 
+```ruby
+#定义一个类，使用不同对象来表示状态，并把next_state的条件判断移到实例变量@next_state
+class TrafficLight
+  State = Struct.new(:name, :next_state) do
+    def to_s
+      name
+    end
+  end
+  VALID_STATES = [
+    STOP = State.new("stop", "proceed"),
+    CAUTION = State.new("caution", "stop"),
+    PROCEED = State.new("proceed", "caution")
+  ]
+  # ...
+  def next_state
+    @state.next_state
+  end
+end
+```
+
+但是 “caution” case无法移到实例变量，所以转为使用subclass来表示不同状态
+
+```ruby
+
+class TrafficLight
+  class State
+    def to_s
+      name
+    end
+    def name
+      self.class.name.split('::').last.downcase
+    end
+    def signal(traffic_light)
+      traffic_light.turn_on_lamp(color.to_sym)
+    end
+  end
+  class Stop < State
+    def color; 'red'; end
+    def next_state; Proceed.new; end
+  end
+  class Caution < State
+    def color; 'yellow'; end
+    def next_state; Stop.new; end
+    def signal(traffic_light)
+      super
+      traffic_light.ring_warning_bell
+    end
+  end
+  class Proceed < State
+    def color; 'green'; end
+  def next_state; Caution.new; end
+  end
+
+  def next_state
+    @state.next_state
+  end
+  def signal
+    @state.signal(self)
+  end
+end
+```
+为了避免下面繁琐的表示形式
+
+```ruby
+  light = TrafficLight.new
+  light.change_to(TrafficLight::Caution.new)
+  light.signal
+```
+
 可以使用Symbol或String作为input,转换为类:
 self.class.const_get(state.to_s.capitalize).new
+
+```ruby
+
+class TrafficLight
+  def change_to(state)
+    @state = State(state)
+  end
+  # ...
+  private
+  def State(state)
+    case state
+    when State then state
+    else self.class.const_get(state.to_s.capitalize).new
+    end
+  end
+end
+
+light = TrafficLight.new
+light.change_to(:caution)
+light.signal
+puts "Next state is: #{light.next_state}"
+Turning on yellow lamp
+Ring ring ring!
+Next state is: stop
+```
 ### Wrap collaborators in Adapters
 method可以接受不同类型的collaborator,他们没有共同的interface，
 需要用adapter包住这些对象，使它们有一致的interface
@@ -281,6 +426,10 @@ class BenchmarkedLogger
   end
 end
 
+```
+要兼容IRC的情况, 定义wrapper类，并添加<<方法:
+
+```ruby
 class BenchmarkedLogger
   class IrcBotSink
     def initialize(bot)
@@ -364,7 +513,7 @@ end
 
 ```
 1. 在边界而不是在内部
-1. 使用raise，
+1. 使用raise来验证假设
 1. Float()而不是to\_f
 1. hash.fetch而不是hash[]
 
@@ -525,7 +674,7 @@ null ? "truthy" : "falsey" # => "truthy"
 
 def render_member(member, group)
   location = Geolocatron.locate(member.address) ||
-  group.city_location
+  group.city_location # good benign value
   html = ""
   html << "<div class='vcard'>"
   html << " <div class='fn'>#{member.fname} #{member.lname}</div>"
@@ -562,7 +711,29 @@ end
 
 如果多个method都传入相同参数列表，应该把参数合到一个新类。比如坐标数组可以用整合到point类
 
-完全改变方法使用继承
+Double Dispatch pattern使Point画出它自己。
+
+```ruby
+Point = Struct.new(:x, :y) do
+  # ...
+  def draw_on(map)
+    # ...
+  end
+end
+class Map
+  def draw_point(point)
+    point.draw_on(self)
+  end
+  def draw_line(point1, point2)
+    point1.draw_on(self)
+    point2.draw_on(self)
+    # draw line connecting points...
+  end
+end
+```
+不要把新类型的信息(如stared)作为参数(例如option)传入，而是定义新的类
+
+StarredPoint只改一点，所以使用继承
 
 ```ruby
 
@@ -577,7 +748,7 @@ end
 
 ```
 
-部分改变可以使用decorator,用SimpleDelegator
+FuzzyPoint可以用Decorator模式，用SimpleDelegator把大部分method代理到原对象，再override draw\_on
 
 ```ruby
 
