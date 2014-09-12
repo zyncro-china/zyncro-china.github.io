@@ -5,10 +5,191 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-09-09T04:21:00Z</updated>
+  <updated>2014-09-12T01:45:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>encoding message</title>
+    <link rel="alternate" href="http://blog.url.com/2014/09/12/encoding-message/"/>
+    <id>http://blog.url.com/2014/09/12/encoding-message/</id>
+    <published>2014-09-12T01:45:00Z</published>
+    <updated>2014-09-12T10:41:39+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;关于practicingruby&lt;/h2&gt;
+
+&lt;p&gt;practicingruby是Gregory
+Brown定期撰写的关于ruby编程的文章。很有深度，欢迎大家订阅。&lt;/p&gt;
+
+&lt;h2&gt;The anatomy of information in software systems&lt;/h2&gt;
+
+&lt;p&gt;9月份的文章是关于如何把消息编码。内容如下的IRC消息，应该如何解释&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="no"&gt;PRIVMSG&lt;/span&gt; &lt;span class="c1"&gt;#practicing ruby testing :Seasons greetings to you all!\r\n&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;在ruby里可以表示为&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;PRIVMSG&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;#practicing ruby testing&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Seasons greetings to you all!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;序列化为字符串&lt;/h3&gt;
+
+&lt;p&gt;使用&lt;a href="https://github.com/msgpack/msgpack/blob/master/spec.md"&gt;Msgpack&lt;/a&gt;序列化上面的消息,得到的HEX是&lt;/p&gt;
+&lt;pre class="highlight text"&gt;
+93 a7 50 52 49 56 4d 53 47 b8 23 70 72 61 63 74 69 63 69 6e 67 2d 72 75 62 
+79 2d 74 65 73 74 69 6e 67 bd 53 65 61 73 6f 6e 73 20 67 72 65 65 74 69 6e 
+67 73 20 74 6f 20 79 6f 75 20 61 6c 6c 21
+
+&lt;/pre&gt;
+&lt;p&gt;In Ruby:&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\x93\xA7&lt;/span&gt;&lt;span class="s2"&gt;PRIVMSG&lt;/span&gt;&lt;span class="se"&gt;\xB8&lt;/span&gt;&lt;span class="s2"&gt;#practicing-ruby-testing&lt;/span&gt;&lt;span class="se"&gt;\xBD&lt;/span&gt;&lt;span class="s2"&gt;Seasons greetings to you all!&amp;quot;&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;分解它的结构得到：&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Image" src="http://i.imgur.com/YAh5olr.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;其中93, A7, B8, BD有特定含义, 实际上A0到BF表示的是0到31 byte的string&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mh"&gt;0xA7&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mh"&gt;0xA0&lt;/span&gt;
+&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;PRIVMSG&amp;quot;&lt;/span&gt;&lt;span class="nf"&gt;.size&lt;/span&gt;
+&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mh"&gt;0xB8&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mh"&gt;0xA0&lt;/span&gt;
+&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;24&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;#practicing-ruby-testing&amp;quot;&lt;/span&gt;&lt;span class="nf"&gt;.size&lt;/span&gt;
+&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;24&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mh"&gt;0xBD&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mh"&gt;0xA0&lt;/span&gt;
+&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;29&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Seasons greetings to you all!&amp;quot;&lt;/span&gt;&lt;span class="nf"&gt;.size&lt;/span&gt;
+&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;29&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;结构化&lt;/h3&gt;
+
+&lt;p&gt;不仅是得到字符串数组，我们还要明确每个部分的意义，可以用MessagePack&amp;rsquo;s
+application-specific type&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="image" src="http://i.imgur.com/s3Rjgzz.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;分解后得到的是&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="image" src="http://i.imgur.com/AubaxCk.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;ruby decode 代码&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="n"&gt;data_types&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;CommandName&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Parameter&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;MessageBody&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;MessagePackDecoder&lt;/span&gt;&lt;span class="nf"&gt;.unpack&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;raw_bytes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data_types&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#  [ CommandName &amp;lt;&amp;quot;PRIVMSG&amp;quot;&amp;gt;, &lt;/span&gt;
+&lt;span class="c1"&gt;#    Parameter   &amp;lt;&amp;quot;#practicing-ruby-testing&amp;quot;&amp;gt;, &lt;/span&gt;
+&lt;span class="c1"&gt;#    MessageBody &amp;lt;&amp;quot;Season greetings to you all!&amp;quot;&amp;gt; ]&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;handler decode的例子代码&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;Parameter&lt;/span&gt;
+  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;byte_array&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="vi"&gt;@text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;byte_array&lt;/span&gt;&lt;span class="nf"&gt;.pack&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="no"&gt;ArgumentError&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vi"&gt;@text&lt;/span&gt;&lt;span class="nf"&gt;.include?&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="kp"&gt;attr_reader&lt;/span&gt; &lt;span class="ss"&gt;:text&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;使用语法规则定义结构&lt;/h3&gt;
+
+&lt;p&gt;上面的方法虽然让计算机容易理解消息的结构，但让人去理解就困难了。&lt;/p&gt;
+
+&lt;p&gt;如果使用Augmented Backus–Naur Form语法规则，可以表示如下&lt;/p&gt;
+&lt;pre class="highlight text"&gt;
+message    =  command [ params ] crlf
+command    =  1*letter / 3digit
+params     =  *14( SPACE middle ) [ SPACE &amp;quot;:&amp;quot; trailing ]
+           =/ 14( SPACE middle ) [ SPACE [ &amp;quot;:&amp;quot; ] trailing ]
+
+nospcrlfcl =  %x01-09 / %x0B-0C / %x0E-1F / %x21-39 / %x3B-FF
+                ; any octet except NUL, CR, LF, &amp;quot; &amp;quot; and &amp;quot;:&amp;quot;
+
+middle     =  nospcrlfcl *( &amp;quot;:&amp;quot; / nospcrlfcl )
+trailing   =  *( &amp;quot;:&amp;quot; / &amp;quot; &amp;quot; / nospcrlfcl )
+
+SPACE      =  %x20        ; space character
+crlf       =  %x0D %x0A   ; &amp;quot;carriage return&amp;quot; &amp;quot;linefeed&amp;quot;
+letter     =  %x41-5A / %x61-7A       ; A-Z / a-z
+digit      =  %x30-39                 ; 0-9
+
+&lt;/pre&gt;
+&lt;p&gt;在ruby，我们用&lt;a href="https://github.com/mjackson/citrus"&gt;citrus&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;grammar&lt;/span&gt; &lt;span class="no"&gt;IRC&lt;/span&gt;
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="n"&gt;params?&lt;/span&gt; &lt;span class="n"&gt;endline&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:command&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;capture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:command&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;.value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="ss"&gt;:params&lt;/span&gt;  &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;capture&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:params&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;.value&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;
+    &lt;span class="n"&gt;letters&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;three_digit_code&lt;/span&gt; 
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt; &lt;span class="n"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;?&lt;/span&gt; &lt;span class="n"&gt;trailing&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="sc"&gt;?)&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+      &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt; &lt;span class="n"&gt;middle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;trailing&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="sc"&gt;?)&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;captures&lt;/span&gt;&lt;span class="nf"&gt;.fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:middle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;captures&lt;/span&gt;&lt;span class="nf"&gt;.fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:trailing&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;middle&lt;/span&gt;
+    &lt;span class="n"&gt;non_special&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;non_special&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;trailing&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;non_special&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;space&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;letters&lt;/span&gt;
+    &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zA&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Z&lt;/span&gt;&lt;span class="o"&gt;]+&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;three_digit_code&lt;/span&gt;
+    &lt;span class="sr"&gt;/\d{3}/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;to_str&lt;/span&gt;&lt;span class="nf"&gt;.to_i&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;non_special&lt;/span&gt;
+    &lt;span class="o"&gt;[^&lt;/span&gt;&lt;span class="p"&gt;\&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:\&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;\&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;space&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot; &amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="n"&gt;endline&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\r\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;citrus&amp;#39;&lt;/span&gt;
+&lt;span class="no"&gt;Citrus&lt;/span&gt;&lt;span class="nf"&gt;.load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;irc&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;PRIVMSG #practicing-ruby-testing :Seasons greetings to you all!&lt;/span&gt;&lt;span class="se"&gt;\r\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;IRC&lt;/span&gt;&lt;span class="nf"&gt;.parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;.value&lt;/span&gt;
+
+&lt;span class="nb"&gt;p&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:command&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; 
+&lt;span class="c1"&gt;#=&amp;gt; &amp;quot;PRIVMSG&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;p&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:params&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;#=&amp;gt; [&amp;quot;#practicing-ruby-testing&amp;quot;, &amp;quot;Seasons greetings to you all!&amp;quot;]&lt;/span&gt;
+
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>meet elixir</title>
     <link rel="alternate" href="http://blog.url.com/2014/09/09/meet-elixir/"/>
@@ -1328,111 +1509,5 @@ and update their account info.&lt;/li&gt;
 
 &lt;p&gt;不要在method中再根据type写分支逻辑，而是首先找出我们需要什么样的message和role，然后确保我们在程序里只允许使用准备好的duck&lt;/p&gt;
 </content>
-  </entry>
-  <entry>
-    <title>Developing Rails App Using Docker by fig</title>
-    <link rel="alternate" href="http://blog.url.com/2014/08/23/developing-rails-app-using-docker-by-fig/"/>
-    <id>http://blog.url.com/2014/08/23/developing-rails-app-using-docker-by-fig/</id>
-    <published>2014-08-23T03:20:00Z</published>
-    <updated>2014-08-23T14:31:17+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;基于虚拟机或容器创建开发环境的优点&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;可以方便地切换不同的项目&lt;/li&gt;
-&lt;li&gt;在团队内共享项目的开发环境，避免所有人都浪费时间来设置环境&lt;/li&gt;
-&lt;li&gt;避免不同项目的设置冲突&lt;/li&gt;
-&lt;li&gt;可以使开发环境更加接近部署的环境&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2&gt;Docker vs VirtualBox&lt;/h2&gt;
-
-&lt;p&gt;以前试过使用VirtualBox虚拟机来做开发环境，因为团队里同时使用Linux和Windows。
-但发现有2个问题，一是速度太慢，二是在windows下，编辑器保存文件后并不能触发
-VirtualBox里的自动化编译或刷新。&lt;/p&gt;
-
-&lt;p&gt;因此尝试使用Docker,因为现在不需要再考虑windows,而且Docker基于Linux容器，性能更好。&lt;/p&gt;
-
-&lt;h2&gt;在国内使用Docker的设置&lt;/h2&gt;
-
-&lt;p&gt;为了能在国内使用docker，而且防止VPN不稳定的问题，需要找到docker的ip，并设置hosts
-文件如下&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;
-&lt;span class="c"&gt;# in /etc/hosts&lt;/span&gt;
-54.205.182.244  get.docker.io
-162.242.195.77 cdn-registry-1.docker.io
-107.22.52.107 index.docker.io
-
-&lt;/pre&gt;
-&lt;p&gt;这样才可以顺利地获取docker images。&lt;/p&gt;
-
-&lt;h2&gt;配置文件&lt;/h2&gt;
-
-&lt;p&gt;需要2个配置文件。&lt;/p&gt;
-
-&lt;p&gt;Dockerfile&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;
-FROM ruby
-RUN apt-get update -qq &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get install -y build-essential libpq-dev mongodb mongodb-dev mongodb-clients
-RUN mkdir /myapp
-WORKDIR /myapp
-ADD Gemfile /myapp/Gemfile
-RUN bundle install
-ADD . /myapp
-&lt;/pre&gt;
-&lt;p&gt;fig.yml&lt;/p&gt;
-&lt;pre class="highlight yaml"&gt;
-&lt;span class="s"&gt;db&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="s"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;mongo&lt;/span&gt;
-  &lt;span class="s"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;27017&amp;quot;&lt;/span&gt;
-&lt;span class="s"&gt;web&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="s"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;.&lt;/span&gt;
-  &lt;span class="s"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;bundle exec rackup -p 3000&lt;/span&gt;
-  &lt;span class="s"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s"&gt;.:/myapp&lt;/span&gt;
-  &lt;span class="s"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;3000:3000&amp;quot;&lt;/span&gt;
-  &lt;span class="s"&gt;links&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="s"&gt;db&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h2&gt;设置Gemfile&lt;/h2&gt;
-
-&lt;p&gt;在Gemfile指定rails的版本&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;4.1.5&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h2&gt;下载images&lt;/h2&gt;
-
-&lt;p&gt;运行命令:&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;fig run web rails new .
-
-&lt;/pre&gt;
-&lt;p&gt;会自动下载imgaes，并执行Dockerfile里的命令, 再生产新的rails app。&lt;/p&gt;
-
-&lt;p&gt;这会在目录下生产所有的文件，需要重新把文件所有者改为自己：&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;chown -R &lt;span class="sb"&gt;`&lt;/span&gt;whoami&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="k"&gt;*&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h2&gt;设置rails&lt;/h2&gt;
-
-&lt;p&gt;加入需要的gems到Gemfile，再执行&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;fig build
-&lt;/pre&gt;
-&lt;h2&gt;设置数据库&lt;/h2&gt;
-
-&lt;p&gt;打开database.yml,把host改为db_1,这就是在另一个容器的db&lt;/p&gt;
-
-&lt;h2&gt;启动&lt;/h2&gt;
-&lt;pre class="highlight shell"&gt;fig up
-&lt;/pre&gt;
-&lt;h2&gt;运行其他命令&lt;/h2&gt;
-&lt;pre class="highlight shell"&gt;fig run web rake db:create
-
-or
-
-fig run web bash
-&lt;/pre&gt;</content>
   </entry>
 </feed>

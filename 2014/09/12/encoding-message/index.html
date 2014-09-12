@@ -1,0 +1,259 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>encoding message</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+encoding message
+</h1>
+</div>
+<br>
+<h2>关于practicingruby</h2>
+
+<p>practicingruby是Gregory
+Brown定期撰写的关于ruby编程的文章。很有深度，欢迎大家订阅。</p>
+
+<h2>The anatomy of information in software systems</h2>
+
+<p>9月份的文章是关于如何把消息编码。内容如下的IRC消息，应该如何解释</p>
+<pre class="highlight ruby">
+<span class="no">PRIVMSG</span> <span class="c1">#practicing ruby testing :Seasons greetings to you all!\r\n</span>
+</pre>
+<p>在ruby里可以表示为</p>
+<pre class="highlight ruby">
+<span class="o">[</span><span class="s2">&quot;PRIVMSG&quot;</span><span class="p">,</span> <span class="s2">&quot;#practicing ruby testing&quot;</span><span class="p">,</span> <span class="s2">&quot;Seasons greetings to you all!&quot;</span><span class="o">]</span>
+</pre>
+<h3>序列化为字符串</h3>
+
+<p>使用<a href="https://github.com/msgpack/msgpack/blob/master/spec.md">Msgpack</a>序列化上面的消息,得到的HEX是</p>
+<pre class="highlight text">
+93 a7 50 52 49 56 4d 53 47 b8 23 70 72 61 63 74 69 63 69 6e 67 2d 72 75 62 
+79 2d 74 65 73 74 69 6e 67 bd 53 65 61 73 6f 6e 73 20 67 72 65 65 74 69 6e 
+67 73 20 74 6f 20 79 6f 75 20 61 6c 6c 21
+
+</pre>
+<p>In Ruby:</p>
+<pre class="highlight ruby">
+<span class="s2">&quot;</span><span class="se">\x93\xA7</span><span class="s2">PRIVMSG</span><span class="se">\xB8</span><span class="s2">#practicing-ruby-testing</span><span class="se">\xBD</span><span class="s2">Seasons greetings to you all!&quot;</span>
+
+</pre>
+<p>分解它的结构得到：</p>
+
+<p><img alt="Image" src="http://i.imgur.com/YAh5olr.png" /></p>
+
+<p>其中93, A7, B8, BD有特定含义, 实际上A0到BF表示的是0到31 byte的string</p>
+<pre class="highlight ruby">
+<span class="o">&gt;&gt;</span> <span class="mh">0xA7</span><span class="o">-</span><span class="mh">0xA0</span>
+<span class="o">=&gt;</span> <span class="mi">7</span>
+<span class="o">&gt;&gt;</span> <span class="s2">&quot;PRIVMSG&quot;</span><span class="nf">.size</span>
+<span class="o">=&gt;</span> <span class="mi">7</span>
+
+<span class="o">&gt;&gt;</span> <span class="mh">0xB8</span><span class="o">-</span><span class="mh">0xA0</span>
+<span class="o">=&gt;</span> <span class="mi">24</span>
+<span class="o">&gt;&gt;</span> <span class="s2">&quot;#practicing-ruby-testing&quot;</span><span class="nf">.size</span>
+<span class="o">=&gt;</span> <span class="mi">24</span>
+
+<span class="o">&gt;&gt;</span> <span class="mh">0xBD</span><span class="o">-</span><span class="mh">0xA0</span>
+<span class="o">=&gt;</span> <span class="mi">29</span>
+<span class="o">&gt;&gt;</span> <span class="s2">&quot;Seasons greetings to you all!&quot;</span><span class="nf">.size</span>
+<span class="o">=&gt;</span> <span class="mi">29</span>
+
+</pre>
+<h3>结构化</h3>
+
+<p>不仅是得到字符串数组，我们还要明确每个部分的意义，可以用MessagePack&rsquo;s
+application-specific type</p>
+
+<p><img alt="image" src="http://i.imgur.com/s3Rjgzz.png" /></p>
+
+<p>分解后得到的是</p>
+
+<p><img alt="image" src="http://i.imgur.com/AubaxCk.png" /></p>
+
+<p>ruby decode 代码</p>
+<pre class="highlight ruby">
+<span class="n">data_types</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span> <span class="o">=&gt;</span> <span class="no">CommandName</span><span class="p">,</span> <span class="mi">2</span> <span class="o">=&gt;</span> <span class="no">Parameter</span><span class="p">,</span> <span class="mi">3</span> <span class="o">=&gt;</span> <span class="no">MessageBody</span> <span class="p">}</span>
+
+<span class="n">command</span> <span class="o">=</span> <span class="no">MessagePackDecoder</span><span class="nf">.unpack</span><span class="p">(</span><span class="n">raw_bytes</span><span class="p">,</span> <span class="n">data_types</span><span class="p">)</span>
+<span class="c1">#  [ CommandName &lt;&quot;PRIVMSG&quot;&gt;, </span>
+<span class="c1">#    Parameter   &lt;&quot;#practicing-ruby-testing&quot;&gt;, </span>
+<span class="c1">#    MessageBody &lt;&quot;Season greetings to you all!&quot;&gt; ]</span>
+
+</pre>
+<p>handler decode的例子代码</p>
+<pre class="highlight ruby">
+<span class="k">class </span><span class="nc">Parameter</span>
+  <span class="k">def </span><span class="nf">initialize</span><span class="p">(</span><span class="n">byte_array</span><span class="p">)</span>
+    <span class="vi">@text</span> <span class="o">=</span> <span class="n">byte_array</span><span class="nf">.pack</span><span class="p">(</span><span class="s2">&quot;C*&quot;</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="no">ArgumentError</span> <span class="k">if</span> <span class="vi">@text</span><span class="nf">.include?</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:text</span>
+<span class="k">end</span>
+</pre>
+<h3>使用语法规则定义结构</h3>
+
+<p>上面的方法虽然让计算机容易理解消息的结构，但让人去理解就困难了。</p>
+
+<p>如果使用Augmented Backus–Naur Form语法规则，可以表示如下</p>
+<pre class="highlight text">
+message    =  command [ params ] crlf
+command    =  1*letter / 3digit
+params     =  *14( SPACE middle ) [ SPACE &quot;:&quot; trailing ]
+           =/ 14( SPACE middle ) [ SPACE [ &quot;:&quot; ] trailing ]
+
+nospcrlfcl =  %x01-09 / %x0B-0C / %x0E-1F / %x21-39 / %x3B-FF
+                ; any octet except NUL, CR, LF, &quot; &quot; and &quot;:&quot;
+
+middle     =  nospcrlfcl *( &quot;:&quot; / nospcrlfcl )
+trailing   =  *( &quot;:&quot; / &quot; &quot; / nospcrlfcl )
+
+SPACE      =  %x20        ; space character
+crlf       =  %x0D %x0A   ; &quot;carriage return&quot; &quot;linefeed&quot;
+letter     =  %x41-5A / %x61-7A       ; A-Z / a-z
+digit      =  %x30-39                 ; 0-9
+
+</pre>
+<p>在ruby，我们用<a href="https://github.com/mjackson/citrus">citrus</a></p>
+<pre class="highlight ruby"><span class="n">grammar</span> <span class="no">IRC</span>
+  <span class="n">rule</span> <span class="n">message</span>
+    <span class="p">(</span><span class="n">command</span> <span class="n">params?</span> <span class="n">endline</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">{</span> <span class="ss">:command</span> <span class="o">=&gt;</span> <span class="n">capture</span><span class="p">(</span><span class="ss">:command</span><span class="p">)</span><span class="nf">.value</span><span class="p">,</span>
+        <span class="ss">:params</span>  <span class="o">=&gt;</span> <span class="n">capture</span><span class="p">(</span><span class="ss">:params</span><span class="p">)</span><span class="nf">.value</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">command</span>
+    <span class="n">letters</span> <span class="o">|</span> <span class="n">three_digit_code</span> 
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">params</span>
+    <span class="p">(</span> <span class="p">((</span><span class="n">space</span> <span class="n">middle</span><span class="p">)</span><span class="mi">14</span><span class="o">*</span><span class="mi">14</span> <span class="p">(</span><span class="n">space</span> <span class="s2">&quot;:&quot;</span><span class="p">?</span> <span class="n">trailing</span><span class="p">)</span><span class="sc">?)</span> <span class="o">|</span>
+      <span class="p">((</span><span class="n">space</span> <span class="n">middle</span><span class="p">)</span><span class="o">*</span><span class="mi">14</span> <span class="p">(</span><span class="n">space</span> <span class="s2">&quot;:&quot;</span> <span class="n">trailing</span><span class="p">)</span><span class="sc">?)</span> <span class="p">)</span> <span class="p">{</span>
+      <span class="n">captures</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:middle</span><span class="p">,</span> <span class="o">[]</span><span class="p">)</span> <span class="o">+</span> <span class="n">captures</span><span class="nf">.fetch</span><span class="p">(</span><span class="ss">:trailing</span><span class="p">,</span> <span class="o">[]</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">middle</span>
+    <span class="n">non_special</span> <span class="p">(</span><span class="n">non_special</span> <span class="o">|</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span><span class="o">*</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">trailing</span>
+    <span class="p">(</span><span class="n">non_special</span> <span class="o">|</span> <span class="n">space</span> <span class="o">|</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span><span class="o">+</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">letters</span>
+    <span class="o">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z</span><span class="o">]+</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">three_digit_code</span>
+    <span class="sr">/\d{3}/</span> <span class="p">{</span> <span class="n">to_str</span><span class="nf">.to_i</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">non_special</span>
+    <span class="o">[^</span><span class="p">\</span><span class="mi">0</span><span class="p">:\</span><span class="n">r</span><span class="p">\</span><span class="n">n</span> <span class="o">]</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">space</span>
+    <span class="s2">&quot; &quot;</span>
+  <span class="k">end</span>
+
+  <span class="n">rule</span> <span class="n">endline</span>
+    <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+
+<span class="nb">require</span> <span class="s1">&#39;citrus&#39;</span>
+<span class="no">Citrus</span><span class="nf">.load</span><span class="p">(</span><span class="s1">&#39;irc&#39;</span><span class="p">)</span>
+
+<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;PRIVMSG #practicing-ruby-testing :Seasons greetings to you all!</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="no">IRC</span><span class="nf">.parse</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="nf">.value</span>
+
+<span class="nb">p</span> <span class="n">data</span><span class="o">[</span><span class="ss">:command</span><span class="o">]</span> 
+<span class="c1">#=&gt; &quot;PRIVMSG&quot;</span>
+
+<span class="nb">p</span> <span class="n">data</span><span class="o">[</span><span class="ss">:params</span><span class="o">]</span>
+<span class="c1">#=&gt; [&quot;#practicing-ruby-testing&quot;, &quot;Seasons greetings to you all!&quot;]</span>
+
+</pre>
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+

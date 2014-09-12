@@ -67,6 +67,31 @@ Page 1 of 4
 </ul>
 <li class='article'>
 <h2>
+<a href="/2014/09/12/encoding-message/">encoding message</a>
+<span>Sep 12</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>关于practicingruby</h2>
+
+<p>practicingruby是Gregory
+Brown定期撰写的关于ruby编程的文章。很有深度，欢迎大家订阅。</p>
+
+<h2>The anatomy of information in software systems</h2>
+
+<p>9月份的文章是关于如何把消息编码。内容如下的IRC消息，应该如何解释</p>
+<pre class="highlight ruby">
+<span class="no">PRIVMSG</span> <span class="c1">#practicing ruby testing :Seasons greetings to you all!\r\n</span>
+</pre>
+<p>在ruby里可以表示为</p>
+<pre class="highlight ruby">
+<span class="o">[</span><span class="s2">"PRIVMSG...</span></pre>
+<a href="/2014/09/12/encoding-message/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
 <a href="/2014/09/09/meet-elixir/">meet elixir</a>
 <span>Sep  9</span>
 </h2>
@@ -280,35 +305,6 @@ the first 250 characters
 <p>There are 4 value...</p>
 <a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
-<span>Mar 24</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>The Goal</h2>
-
-<p>Create an iOS app as quickly as we can.</p>
-
-<h2>Project Setup</h2>
-
-<h3>Create a new app</h3>
-<pre class="highlight shell">
-promotion new membershipapp
-</pre>
-<h3>run tests automatically</h3>
-<pre class="highlight shell">
-gem install when-files-change
-when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</span>
-</pre>
-<h2>write test cases</h2>
-
-<p>The Promotion...</p>
-<a href="/2014/03/24/create-ios-app-using-promotion/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/page/2/">Next page</a></li>
 </ul>
@@ -321,6 +317,10 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/12/encoding-message/">encoding message</a>
+<span>Sep 12</span>
+</li>
 <li>
 <a href="/2014/09/09/meet-elixir/">meet elixir</a>
 <span>Sep  9</span>
@@ -356,10 +356,6 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 <li>
 <a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
 <span>Mar 27</span>
-</li>
-<li>
-<a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
-<span>Mar 24</span>
 </li>
 </ol>
 </dd>
@@ -406,7 +402,7 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(8)
+(9)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -501,6 +497,10 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 (1)
 </li>
 <li>
+<a href="/tags/practicingruby/">practicingruby</a>
+(1)
+</li>
+<li>
 <a href="/tags/zeromq/">zeromq</a>
 (1)
 </li>
@@ -585,7 +585,7 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(30)
+(31)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -609,6 +609,10 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 <dd>
 <ol>
 <li>
+<a href="/2014/09/12/encoding-message/">encoding message</a>
+<span>Sep 12</span>
+</li>
+<li>
 <a href="/2014/09/09/meet-elixir/">meet elixir</a>
 <span>Sep  9</span>
 </li>
@@ -643,10 +647,6 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 <li>
 <a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
 <span>Mar 27</span>
-</li>
-<li>
-<a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
-<span>Mar 24</span>
 </li>
 </ol>
 </dd>
@@ -693,7 +693,7 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(8)
+(9)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -788,6 +788,10 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 (1)
 </li>
 <li>
+<a href="/tags/practicingruby/">practicingruby</a>
+(1)
+</li>
+<li>
 <a href="/tags/zeromq/">zeromq</a>
 (1)
 </li>
@@ -872,7 +876,7 @@ when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</spa
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(30)
+(31)
 </li>
 <li>
 <a href="/2013/">2013</a>
