@@ -14,18 +14,18 @@
     <link rel="alternate" href="http://blog.url.com/2014/09/12/encoding-message/"/>
     <id>http://blog.url.com/2014/09/12/encoding-message/</id>
     <published>2014-09-12T01:45:00Z</published>
-    <updated>2014-09-12T10:41:39+08:00</updated>
+    <updated>2014-09-12T10:48:31+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
     <content type="html">&lt;h2&gt;关于practicingruby&lt;/h2&gt;
 
-&lt;p&gt;practicingruby是Gregory
-Brown定期撰写的关于ruby编程的文章。很有深度，欢迎大家订阅。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://practicingruby.com/"&gt;practicingruby&lt;/a&gt;是Gregory
+Brown定期撰写的关于ruby编程的文章。很有深度，欢迎大家&lt;a href="http://elmcitycraftworks.org/post/68914636401/annual-subscriptions-for-practicing-ruby"&gt;订阅&lt;/a&gt;。&lt;/p&gt;
 
 &lt;h2&gt;The anatomy of information in software systems&lt;/h2&gt;
 
-&lt;p&gt;9月份的文章是关于如何把消息编码。内容如下的IRC消息，应该如何解释&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://practicingruby.com/articles/information-anatomy?u=326cc9d930"&gt;9月份的文章&lt;/a&gt;是关于如何把消息编码。内容如下的IRC消息，应该如何解释&lt;/p&gt;
 &lt;pre class="highlight ruby"&gt;
 &lt;span class="no"&gt;PRIVMSG&lt;/span&gt; &lt;span class="c1"&gt;#practicing ruby testing :Seasons greetings to you all!\r\n&lt;/span&gt;
 &lt;/pre&gt;
