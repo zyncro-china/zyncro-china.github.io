@@ -67,6 +67,69 @@ Page 1 of 4
 </ul>
 <li class='article'>
 <h2>
+<a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
+<span>Sep 16</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>在编辑器里做代码对齐</h2>
+
+<p>为了提高阅读性，
+应尽量使其美观，对齐是其中一种方式。ruby中的symbol使用广泛，为了对其他们，需要使用一个vim插件Tabular</p>
+
+<h2>symbol in ruby1.8</h2>
+
+<p>使用下面key mapping，可以对其ruby1.8的symbol</p>
+<pre class="highlight viml">
+vmap <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">a</span><span class="p">&gt;</span> <span class="p">:</span>Tabularize <span class="sr">/:/</span>r1c0l0<span class="p">&lt;</span>CR<span class="p">&gt;:</span>Tabularize <span class="sr">/=&gt;/</span>l1c1l0<span class="p">&lt;</span>CR<span class="p">&gt;</span>
+</pre><pre class="highlight ruby">
+<span class="c1">#before alignment</span>
+<span class="n">mymethod</span> <span class="n">arg1</span><span class="p">,</span> <span class="ss">:a</span> <span class="o">=&gt;</span> <span class="mi">1</span></pre>
+<a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/09/13/prawnpdf/">prawnpdf</a>
+<span>Sep 13</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>Prawn</h2>
+
+<p>Prawn是用于生成pdf的ruby库。了解它的使用方法它的最快途径是看它的manual</p>
+
+<h2>Manual的内容</h2>
+
+<ol>
+<li>Basic concepts</li>
+<li>Graphics</li>
+<li>Text</li>
+<li>Bounding box</li>
+<li>Layout</li>
+<li>Table</li>
+<li>Images</li>
+<li>Documents and page options</li>
+<li>Outline</li>
+<li>Repeatable content</li>
+<li>Security</li>
+</ol><h3>Basic Concepts</h3>
+
+<p>这部分包括</p>
+
+<ol>
+<li>Creation</li>
+<li>Origin</li>
+<li>Cursor</li>
+<li>Other cursor...</li>
+</ol>
+<a href="/2014/09/13/prawnpdf/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
 <a href="/2014/09/12/encoding-message/">encoding message</a>
 <span>Sep 12</span>
 </h2>
@@ -259,52 +322,6 @@ the first 250 characters
 </ol>
 <a href="/2014/07/24/decision-tree/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/05/19/try-facebook-testing-lib-jest/">Try facebook testing lib Jest</a>
-<span>May 19</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>The new testing framework from facebook</h2>
-
-<p>Facebook released their new testing framework:
-<a href="http://facebook.github.io/jest/">Jest</a></p>
-
-<p>It seems to be very nice that can help you to mock the dependencies
-automatically:</p>
-
-<blockquote>
-<p>In order to write an effective unit test, you want to be able to isolate...</p>
-</blockquote>
-<a href="/2014/05/19/try-facebook-testing-lib-jest/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
-<span>Mar 27</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h3>Use NSLog instead of puts</h3>
-
-<p>Because puts wouldn’t output to device logs</p>
-
-<h3>RubyMotion provide help for 3 things</h3>
-
-<ol>
-<li>flexible workflow(editor, command line, repl)</li>
-<li>use ruby language</li>
-<li>skip the large set of new API have to learn</li>
-</ol><h3>Value Object</h3>
-
-<p>There are 4 value...</p>
-<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/page/2/">Next page</a></li>
 </ul>
@@ -317,6 +334,14 @@ the first 250 characters
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
+<span>Sep 16</span>
+</li>
+<li>
+<a href="/2014/09/13/prawnpdf/">prawnpdf</a>
+<span>Sep 13</span>
+</li>
 <li>
 <a href="/2014/09/12/encoding-message/">encoding message</a>
 <span>Sep 12</span>
@@ -349,14 +374,6 @@ the first 250 characters
 <a href="/2014/07/24/decision-tree/">Decision Tree</a>
 <span>Jul 24</span>
 </li>
-<li>
-<a href="/2014/05/19/try-facebook-testing-lib-jest/">Try facebook testing lib Jest</a>
-<span>May 19</span>
-</li>
-<li>
-<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
-<span>Mar 27</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -382,7 +399,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/vim/">vim</a>
-(1)
+(2)
 </li>
 <li>
 <a href="/tags/guard/">guard</a>
@@ -402,7 +419,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(9)
+(10)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -585,7 +602,7 @@ the first 250 characters
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(31)
+(33)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -609,6 +626,14 @@ the first 250 characters
 <dd>
 <ol>
 <li>
+<a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
+<span>Sep 16</span>
+</li>
+<li>
+<a href="/2014/09/13/prawnpdf/">prawnpdf</a>
+<span>Sep 13</span>
+</li>
+<li>
 <a href="/2014/09/12/encoding-message/">encoding message</a>
 <span>Sep 12</span>
 </li>
@@ -640,14 +665,6 @@ the first 250 characters
 <a href="/2014/07/24/decision-tree/">Decision Tree</a>
 <span>Jul 24</span>
 </li>
-<li>
-<a href="/2014/05/19/try-facebook-testing-lib-jest/">Try facebook testing lib Jest</a>
-<span>May 19</span>
-</li>
-<li>
-<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
-<span>Mar 27</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -673,7 +690,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/vim/">vim</a>
-(1)
+(2)
 </li>
 <li>
 <a href="/tags/guard/">guard</a>
@@ -693,7 +710,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(9)
+(10)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -876,7 +893,7 @@ the first 250 characters
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(31)
+(33)
 </li>
 <li>
 <a href="/2013/">2013</a>
