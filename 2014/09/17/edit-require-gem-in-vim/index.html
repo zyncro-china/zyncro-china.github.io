@@ -2,7 +2,7 @@
 <head>
 <meta charset='utf-8'>
 <meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
-<title>Zyncro Dev Blog</title>
+<title>edit require gem in vim</title>
 <meta content='' name='description'>
 <meta content='width=device-width' name='viewport'>
 <link href='/css/normalize.css' rel='stylesheet'>
@@ -45,58 +45,41 @@
 <section class='main'>
 <div id='main' role='main'>
 <div class='container'>
-<div class='content_box well-lg'>
-<h1>
-Archive for
-2014
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+edit require gem in vim
 </h1>
-<p>
-Page 1 of 4
-</p>
-<ul>
-<li>
-<a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
-<span>Sep 17</span>
-</li>
-<li>
-<a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
-<span>Sep 16</span>
-</li>
-<li>
-<a href="/2014/09/13/prawnpdf/">prawnpdf</a>
-<span>Sep 13</span>
-</li>
-<li>
-<a href="/2014/09/12/encoding-message/">encoding message</a>
-<span>Sep 12</span>
-</li>
-<li>
-<a href="/2014/09/09/meet-elixir/">meet elixir</a>
-<span>Sep  9</span>
-</li>
-<li>
-<a href="/2014/09/06/review-confident-ruby-handling-failure/">review confident ruby(handling failure)</a>
-<span>Sep  6</span>
-</li>
-<li>
-<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
-<span>Sep  5</span>
-</li>
-<li>
-<a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
-<span>Sep  4</span>
-</li>
-<li>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</li>
-<li>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</li>
-</ul>
-<p><a href="/2014/page/2/">Next page</a></p>
 </div>
+<br>
+<h2>如何快速看某个rubygem的代码</h2>
+
+<p>在console下，可以安装gem-browse,用命令gem open
+sinatra,就会进入编辑器看这个gem的代码。</p>
+
+<h2>在vim看require的gem</h2>
+
+<p>可以利用gem-browse，用以下的mapping进入光标下require gem的代码</p>
+<pre class="highlight viml">
+nnoremap <span class="k">gr</span> <span class="p">:</span>execute <span class="s2">&quot;:tabedit &quot;</span> <span class="p">.</span> system<span class="p">(</span><span class="s2">&quot;gem open -e echo &quot;</span> <span class="p">.</span> expand<span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">))&lt;</span>CR<span class="p">&gt;</span> 
+
+</pre>
+<p>但是要注意gem的版本可能和Gemfile里的不同，但是如果只是需要大概了解这个gem的功能，这个mapping还是很有用的。</p>
+
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
 
 </div>
 </div>
@@ -116,3 +99,4 @@ Page 1 of 4
 </footer>
 </body>
 </html>
+

@@ -67,6 +67,30 @@ Page 1 of 4
 </ul>
 <li class='article'>
 <h2>
+<a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
+<span>Sep 17</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>如何快速看某个rubygem的代码</h2>
+
+<p>在console下，可以安装gem-browse,用命令gem open
+sinatra,就会进入编辑器看这个gem的代码。</p>
+
+<h2>在vim看require的gem</h2>
+
+<p>可以利用gem-browse，用以下的mapping进入光标下require gem的代码</p>
+<pre class="highlight viml">
+nnoremap <span class="k">gr</span> <span class="p">:</span>execute <span class="s2">":tabedit "</span> <span class="p">.</span> system<span class="p">(</span><span class="s2">"gem open -e echo "</span> <span class="p">.</span> expand<span class="p">(</span><span class="s2">"&lt;cword&gt;"</span><span class="p">))&lt;</span>CR<span class="p">&gt;</span> 
+
+</pre>
+<p>但是要注意gem的...</p>
+<a href="/2014/09/17/edit-require-gem-in-vim/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
 <a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
 <span>Sep 16</span>
 </h2>
@@ -81,7 +105,7 @@ the first 250 characters
 
 <h2>symbol in ruby1.8</h2>
 
-<p>使用下面key mapping，可以对其ruby1.8的symbol</p>
+<p>使用下面key mapping，可以对齐ruby1.8的symbol</p>
 <pre class="highlight viml">
 vmap <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">a</span><span class="p">&gt;</span> <span class="p">:</span>Tabularize <span class="sr">/:/</span>r1c0l0<span class="p">&lt;</span>CR<span class="p">&gt;:</span>Tabularize <span class="sr">/=&gt;/</span>l1c1l0<span class="p">&lt;</span>CR<span class="p">&gt;</span>
 </pre><pre class="highlight ruby">
@@ -298,30 +322,6 @@ VirtualBox里的自动化编译或刷新。</p>
 <p>因此尝试使用Docker,因为现在不需...</p>
 <a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/07/24/decision-tree/">Decision Tree</a>
-<span>Jul 24</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>数据分析服务: BigML</h2>
-
-<p>今天我看到一个数据分析的服务，可以上传CSV的数据，分析后可以预测新的结果。</p>
-
-<p>它有几个步骤</p>
-
-<ol>
-<li>上传CSV数据,并设定每行的数据类型，如数字，字符。数据最后一列必须是结果列</li>
-<li>建立数据集，这个过程需要几秒或几小时。需要选定需要分析的属性，最终会给出一个属性列表，显示属性的一些统计数据：缺失数据，错误和直方图</li>
-<li>建立模型，通过数据集生成模型</li>
-<li>为新输入预测结果</li>
-<li>建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样比...</li>
-</ol>
-<a href="/2014/07/24/decision-tree/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/page/2/">Next page</a></li>
 </ul>
@@ -334,6 +334,10 @@ the first 250 characters
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
+<span>Sep 17</span>
+</li>
 <li>
 <a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
 <span>Sep 16</span>
@@ -370,10 +374,6 @@ the first 250 characters
 <a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
 <span>Aug 23</span>
 </li>
-<li>
-<a href="/2014/07/24/decision-tree/">Decision Tree</a>
-<span>Jul 24</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -399,7 +399,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/vim/">vim</a>
-(2)
+(3)
 </li>
 <li>
 <a href="/tags/guard/">guard</a>
@@ -419,7 +419,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(10)
+(11)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -602,7 +602,7 @@ the first 250 characters
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(33)
+(34)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -626,6 +626,10 @@ the first 250 characters
 <dd>
 <ol>
 <li>
+<a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
+<span>Sep 17</span>
+</li>
+<li>
 <a href="/2014/09/16/alignment-for-ruby-symbol-in-vim/">alignment for ruby symbol in vim</a>
 <span>Sep 16</span>
 </li>
@@ -661,10 +665,6 @@ the first 250 characters
 <a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
 <span>Aug 23</span>
 </li>
-<li>
-<a href="/2014/07/24/decision-tree/">Decision Tree</a>
-<span>Jul 24</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -690,7 +690,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/vim/">vim</a>
-(2)
+(3)
 </li>
 <li>
 <a href="/tags/guard/">guard</a>
@@ -710,7 +710,7 @@ the first 250 characters
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(10)
+(11)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -893,7 +893,7 @@ the first 250 characters
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(33)
+(34)
 </li>
 <li>
 <a href="/2013/">2013</a>
