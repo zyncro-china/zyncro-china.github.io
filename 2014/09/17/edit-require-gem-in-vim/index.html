@@ -64,8 +64,11 @@ sinatra,就会进入编辑器看这个gem的代码。</p>
 nnoremap <span class="k">gr</span> <span class="p">:</span>execute <span class="s2">&quot;:tabedit &quot;</span> <span class="p">.</span> system<span class="p">(</span><span class="s2">&quot;gem open -e echo &quot;</span> <span class="p">.</span> expand<span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">))&lt;</span>CR<span class="p">&gt;</span> 
 
 </pre>
-<p>但是要注意gem的版本可能和Gemfile里的不同，但是如果只是需要大概了解这个gem的功能，这个mapping还是很有用的。</p>
+<p>如果需要和Gemfile里的版本相同，需要改用bundle show命令。</p>
+<pre class="highlight viml">
+nnoremap <span class="k">gr</span> <span class="p">:</span>execute <span class="s2">&quot;:tabedit &quot;</span> <span class="p">.</span> system<span class="p">(</span><span class="s2">&quot;bundle show &quot;</span> <span class="p">.</span> expand<span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">))&lt;</span>CR<span class="p">&gt;</span> 
 
+</pre>
 </article>
 <div id="disqus_thread"></div>
             <script type="text/javascript">

@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/09/17/edit-require-gem-in-vim/"/>
     <id>http://blog.url.com/2014/09/17/edit-require-gem-in-vim/</id>
     <published>2014-09-17T02:09:00Z</published>
-    <updated>2014-09-17T10:39:10+08:00</updated>
+    <updated>2014-09-17T11:02:10+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -30,8 +30,11 @@ sinatra,就会进入编辑器看这个gem的代码。&lt;/p&gt;
 nnoremap &lt;span class="k"&gt;gr&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;execute &lt;span class="s2"&gt;&amp;quot;:tabedit &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; system&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;gem open -e echo &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
 
 &lt;/pre&gt;
-&lt;p&gt;但是要注意gem的版本可能和Gemfile里的不同，但是如果只是需要大概了解这个gem的功能，这个mapping还是很有用的。&lt;/p&gt;
-</content>
+&lt;p&gt;如果需要和Gemfile里的版本相同，需要改用bundle show命令。&lt;/p&gt;
+&lt;pre class="highlight viml"&gt;
+nnoremap &lt;span class="k"&gt;gr&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;execute &lt;span class="s2"&gt;&amp;quot;:tabedit &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; system&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;bundle show &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
+
+&lt;/pre&gt;</content>
   </entry>
   <entry>
     <title>alignment for ruby symbol in vim</title>
