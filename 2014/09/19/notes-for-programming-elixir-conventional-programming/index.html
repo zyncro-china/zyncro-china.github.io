@@ -62,11 +62,11 @@ notes for programming elixir conventional programming
 <li><a href="#modules_and_named_functions">Modules and Named Functions</a></li>
 <li><a href="#lists_and_recursion">Lists and Recursion</a></li>
 <li><a href="#maps_hashdicts_keyword_and_sets">Maps, HashDicts, Keyword, and Sets</a></li>
-<li>[What are types]</li>
-<li>[Processing Collections&ndash;Enums and Stream]</li>
-<li>[String and Binaries]</li>
-<li>[Control Flow]</li>
-<li>[Organizing a Project]</li>
+<li><a href="#what_are_types">What are types</a></li>
+<li><a href="#processing_collections_enums_and_stream">Processing Collections&ndash;Enums and Stream</a></li>
+<li><a href="#string_and_binaries">String and Binaries</a></li>
+<li><a href="#control_flow">Control Flow</a></li>
+<li><a href="#organizing_a_project">Organizing a Project</a></li>
 </ol>
 
 <p><a name="pattern_matching"></a></p>
@@ -322,7 +322,7 @@ underscore</p>
   <span class="k">end</span>
 <span class="k">end</span>
 </pre>
-<h3>|&gt; pipe operator会把左边的expression作为右边函数的地一个参数</h3>
+<h3>|&gt; pipe operator会把左边的expression作为右边函数的第一个参数</h3>
 
 <h3>Modules</h3>
 
@@ -355,7 +355,7 @@ protocols, 和其他modules</p>
 
 <h4>require</h4>
 
-<p>如果需要使用定义在macro，就要使用require</p>
+<p>如果需要使用定义在module的macro，就要使用require</p>
 
 <h3>Module Attributes</h3>
 <pre class="highlight elixir">
@@ -404,12 +404,345 @@ protocols, 和其他modules</p>
 <li>复杂的List Patterns</li>
 <li>List Module</li>
 </ol>
+<pre class="highlight elixir">  <span class="k">def</span> <span class="n">len</span> <span class="p">([])</span> <span class="k">do
+    </span><span class="m">0</span>
+  <span class="k">end</span>
 
+  <span class="k">def</span> <span class="n">len</span><span class="p">([</span><span class="n">h</span><span class="o">|</span><span class="n">t</span><span class="p">])</span> <span class="k">do
+    </span><span class="m">1</span> <span class="o">+</span> <span class="n">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">square</span><span class="p">([])</span> <span class="k">do
+    </span><span class="p">[]</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">square</span><span class="p">([</span><span class="n">h</span><span class="o">|</span><span class="n">t</span><span class="p">])</span> <span class="k">do
+    </span><span class="p">[</span><span class="n">h</span><span class="o">*</span><span class="n">h</span> <span class="o">|</span> <span class="n">square</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">add1</span><span class="p">([])</span> <span class="k">do
+    </span><span class="p">[]</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">add1</span><span class="p">([</span><span class="n">h</span><span class="o">|</span><span class="n">t</span><span class="p">])</span> <span class="k">do
+    </span><span class="p">[</span><span class="n">h</span><span class="o">+</span><span class="m">1</span><span class="o">|</span><span class="n">add1</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">map</span><span class="p">([],</span> <span class="n">fun</span><span class="p">)</span> <span class="k">do
+    </span><span class="p">[]</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">map</span><span class="p">([</span><span class="n">h</span><span class="o">|</span><span class="n">t</span><span class="p">],</span> <span class="n">fun</span><span class="p">)</span> <span class="k">do
+    </span><span class="p">[</span><span class="n">fun</span><span class="o">.</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="o">|</span><span class="n">map</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fun</span><span class="p">)]</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">sum</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">_sum</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="m">0</span><span class="p">)</span>
+  <span class="k">defp</span> <span class="n">_sum</span><span class="p">([],</span><span class="n">s</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">s</span>
+  <span class="k">end</span>
+  <span class="k">defp</span> <span class="n">_sum</span><span class="p">([</span><span class="n">h</span><span class="o">|</span><span class="n">t</span><span class="p">],</span><span class="n">s</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">_sum</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">s</span><span class="o">+</span><span class="n">h</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">reduce</span><span class="p">([],</span> <span class="n">init_val</span><span class="p">,</span> <span class="n">fun</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">init_val</span>
+  <span class="k">def</span> <span class="n">reduce</span><span class="p">([</span><span class="n">h</span><span class="o">|</span><span class="n">t</span><span class="p">],</span> <span class="n">init_val</span><span class="p">,</span> <span class="n">fun</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">reduce</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="p">(</span><span class="n">init_val</span><span class="p">,</span><span class="n">h</span><span class="p">),</span> <span class="n">fun</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">for_location</span><span class="p">([],</span> <span class="n">target_loc</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="p">[]</span>
+  <span class="k">def</span> <span class="n">for_location</span><span class="p">([</span> <span class="n">head</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="p">,</span> <span class="n">target_loc</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="p">]</span> <span class="o">|</span> <span class="n">tail</span><span class="p">],</span> <span class="n">target_loc</span><span class="p">)</span> <span class="k">do
+    </span><span class="p">[</span> <span class="n">head</span> <span class="o">|</span> <span class="n">for_location</span><span class="p">(</span><span class="n">tail</span><span class="p">,</span> <span class="n">target_loc</span><span class="p">)</span> <span class="p">]</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">for_location</span><span class="p">([</span> <span class="n">_</span> <span class="o">|</span> <span class="n">tail</span><span class="p">],</span> <span class="n">target_loc</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">for_location</span><span class="p">(</span><span class="n">tail</span><span class="p">,</span> <span class="n">target_loc</span><span class="p">)</span>
+
+<span class="k">end</span>
+
+<span class="c1"># 头部不必只有一个元素</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="p">[</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span> <span class="o">|</span> <span class="p">[</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span> <span class="p">]]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">]</span>
+
+</pre>
+<p>List Module</p>
+<pre class="highlight elixir"><span class="c1">#</span>
+<span class="c1"># Concatenate lists</span>
+<span class="c1">#</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">]</span> <span class="o">++</span> <span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">]</span>
+<span class="c1">#</span>
+<span class="c1"># Flatten</span>
+<span class="c1">#</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">flatten</span><span class="p">([[[</span><span class="m">1</span><span class="p">],</span> <span class="m">2</span><span class="p">],</span> <span class="p">[[[</span><span class="m">3</span><span class="p">]]]])</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">]</span>
+<span class="c1">#</span>
+<span class="c1"># Folding (like reduce, but can choose direction)</span>
+<span class="c1">#</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">foldl</span><span class="p">([</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">],</span> <span class="sd">&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">fn</span> <span class="n">value</span><span class="p">,</span> <span class="n">acc</span> <span class="o">-&gt;</span> <span class="sd">&quot;</span><span class="si">#{</span><span class="n">value</span><span class="si">}</span><span class="s2">(</span><span class="si">#{</span><span class="n">acc</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">end</span><span class="p">)</span>
+<span class="sd">&quot;</span><span class="s2">3(2(1()))&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">foldr</span><span class="p">([</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">],</span> <span class="sd">&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="k">fn</span> <span class="n">value</span><span class="p">,</span> <span class="n">acc</span> <span class="o">-&gt;</span> <span class="sd">&quot;</span><span class="si">#{</span><span class="n">value</span><span class="si">}</span><span class="s2">(</span><span class="si">#{</span><span class="n">acc</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">end</span><span class="p">)</span>
+<span class="sd">&quot;</span><span class="s2">1(2(3()))&quot;</span>
+<span class="c1">#</span>
+<span class="c1"># Merging lists and splitting them apart</span>
+<span class="c1">#</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="no">List</span><span class="o">.</span><span class="n">zip</span><span class="p">([[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">],</span> <span class="p">[</span><span class="ss">:a</span><span class="p">,</span><span class="ss">:b</span><span class="p">,</span><span class="ss">:c</span><span class="p">],</span> <span class="p">[</span><span class="sd">&quot;</span><span class="s2">cat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">dog&quot;</span><span class="p">]])</span>
+<span class="p">[{</span><span class="m">1</span><span class="p">,</span> <span class="ss">:a</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">cat&quot;</span><span class="p">},</span> <span class="p">{</span><span class="m">2</span><span class="p">,</span> <span class="ss">:b</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">dog&quot;</span><span class="p">}]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">unzip</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="p">[[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">],</span> <span class="p">[</span><span class="ss">:a</span><span class="p">,</span> <span class="ss">:b</span><span class="p">],</span> <span class="p">[</span><span class="sd">&quot;</span><span class="s2">cat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">dog&quot;</span><span class="p">]]</span>
+<span class="c1">#</span>
+<span class="c1"># Accessing tuples within lists</span>
+<span class="c1">#</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">kw</span> <span class="o">=</span> <span class="p">[{</span><span class="ss">:name</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:likes</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Programming&quot;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:where</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dallas&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">}]</span>
+<span class="p">[{</span><span class="ss">:name</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:likes</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Programming&quot;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:where</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dallas&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">}]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">keyfind</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dallas&quot;</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="p">{</span><span class="ss">:where</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dallas&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">keyfind</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<span class="p">{</span><span class="ss">:where</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dallas&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">keyfind</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+<span class="no">nil</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">keyfind</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">No city called TX&quot;</span><span class="p">)</span>
+<span class="sd">&quot;</span><span class="s2">No city called TX&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">kw</span> <span class="o">=</span> <span class="no">List</span><span class="o">.</span><span class="n">keydelete</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">TX&quot;</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+<span class="p">[</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">likes:</span> <span class="sd">&quot;</span><span class="s2">Programming&quot;</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">kw</span> <span class="o">=</span> <span class="no">List</span><span class="o">.</span><span class="n">keyreplace</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">{</span><span class="ss">:first_name</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">})</span>
+<span class="p">[</span><span class="ss">first_name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">likes:</span> <span class="sd">&quot;</span><span class="s2">Programming&quot;</span><span class="p">]</span>
+
+</pre>
 <p><a name="maps_hashdicts_keyword_and_sets"></a></p>
 
 <h2>Maps, HashDicts, Keyword, and Sets</h2>
 
+<p>Dictionary是一种把key和value关联起来的数据类型</p>
+
+<h3>如何在Map，HashDict和Keyword之间选</h3>
+
+<ol>
+<li>如果有重复key： Keyword</li>
+<li>如果需要有序： Keyword</li>
+<li>pattern matching： map</li>
+<li>数据大于几百条： HashDict</li>
+</ol>
+
+<h3>Dict</h3>
+
+<p>Map和HashDict实现了Dict的behaviour，Keyword实现了大部分，应该用Dict module的method，这样不管底层是用map还是HashDict，都会带来更多的灵活性。</p>
+
 <h3>Dictionaries</h3>
+<pre class="highlight text">
+defmodule Sum do
+  def values(dict) do
+    dict |&gt; Dict.values |&gt; Enum.sum
+  end
+end
+# Sum a HashDict
+hd = [ one: 1, two: 2, three: 3 ] |&gt; Enum.into HashDict.new
+IO.puts Sum.values(hd) # =&gt; 6
+# Sum a Map
+map = %{ four: 4, five: 5, six: 6 }
+IO.puts Sum.values(map) # =&gt; 15
+
+# Dict API examples
+iex&gt; kw_list = [name: &quot;Dave&quot;, likes: &quot;Programming&quot;, where: &quot;Dallas&quot;]
+[name: &quot;Dave&quot;, likes: &quot;Programming&quot;, where: &quot;Dallas&quot;]
+iex&gt; hashdict = Enum.into kw_list, HashDict.new
+#HashDict&lt;[name: &quot;Dave&quot;, where: &quot;Dallas&quot;, likes: &quot;Programming&quot;]&gt;
+iex&gt; map = Enum.into kw_list, Map.new
+%{likes: &quot;Programming&quot;, name: &quot;Dave&quot;, where: &quot;Dallas&quot;}
+iex&gt; kw_list[:name]
+&quot;Dave&quot;
+iex&gt; hashdict[:likes]
+&quot;Programming&quot;
+iex&gt; map[:where]
+&quot;Dallas&quot;
+iex&gt; hashdict = Dict.drop(hashdict, [:where, :likes])
+#HashDict&lt;[name: &quot;Dave&quot;]&gt;
+iex&gt; hashdict = Dict.put(hashdict, :also_likes, &quot;Ruby&quot;)
+#HashDict&lt;[name: &quot;Dave&quot;, also_likes: &quot;Ruby&quot;]&gt;
+iex&gt; combo = Dict.merge(map, hashdict)
+%{also_likes: &quot;Ruby&quot;, likes: &quot;Programming&quot;, name: &quot;Dave&quot;, where: &quot;Dallas&quot;}
+
+# 用Keyword module读duplicated keyword
+iex(51)&gt; kw_list = [name: &quot;Dave&quot;, likes: &quot;Programming&quot;, likes: &quot;Elixir&quot;]
+[name: &quot;Dave&quot;, likes: &quot;Programming&quot;, likes: &quot;Elixir&quot;]
+iex(53)&gt; kw_list[:likes]
+&quot;Programming&quot;
+iex(54)&gt; Dict.get(kw_list, :likes)
+&quot;Programming&quot;
+iex(55)&gt; Keyword.get_values(kw_list, :likes)
+[&quot;Programming&quot;, &quot;Elixir&quot;]
+</pre>
+<h4>Pattern Matching and updating map</h4>
+
+<p>对于map，经常会问下面的问题</p>
+
+<ol>
+<li>is there an entry with the key :name ?</li>
+<li>are there entries for the keys :name and :height ?</li>
+<li>does the entry with key :name have the value &ldquo;Dave&rdquo; ?</li>
+</ol>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">person</span> <span class="o">=</span> <span class="err">%</span><span class="p">{</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">height:</span> <span class="m">1.88</span> <span class="p">}</span>
+<span class="err">%</span><span class="p">{</span><span class="ss">height:</span> <span class="m">1.88</span><span class="p">,</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">%</span><span class="p">{</span> <span class="ss">name:</span> <span class="n">a_name</span> <span class="p">}</span> <span class="o">=</span> <span class="n">person</span>
+<span class="err">%</span><span class="p">{</span><span class="ss">height:</span> <span class="m">1.88</span><span class="p">,</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">a_name</span>
+<span class="sd">&quot;</span><span class="s2">Dave&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">%</span><span class="p">{</span> <span class="ss">name:</span> <span class="n">_</span><span class="p">,</span> <span class="ss">height:</span> <span class="n">_</span> <span class="p">}</span> <span class="o">=</span> <span class="n">person</span>
+<span class="err">%</span><span class="p">{</span><span class="ss">height:</span> <span class="m">1.88</span><span class="p">,</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">%</span><span class="p">{</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span> <span class="p">}</span> <span class="o">=</span> <span class="n">person</span>
+<span class="err">%</span><span class="p">{</span><span class="ss">height:</span> <span class="m">1.88</span><span class="p">,</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">}</span>
+
+</pre><pre class="highlight elixir"><span class="c1">#利用在map里的解构,简化pattern matching</span>
+
+<span class="n">for</span> <span class="n">person</span> <span class="o">=</span> <span class="err">%</span><span class="p">{</span> <span class="ss">height:</span> <span class="n">height</span> <span class="p">}</span> <span class="o">&lt;-</span> <span class="n">people</span><span class="p">,</span>
+  <span class="n">height</span> <span class="o">&gt;</span> <span class="m">1.5</span><span class="p">,</span>
+  <span class="k">do</span><span class="p">:</span> <span class="no">IO</span><span class="o">.</span><span class="n">inspect</span> <span class="n">person</span>
+
+</pre>
+<p>Limitation: 只能在值做pattern matching, 不能在key做pattern matching</p>
+
+<h3>update map</h3>
+<pre class="highlight elixir">
+<span class="n">new_map</span> <span class="o">=</span> <span class="err">%</span><span class="p">{</span> <span class="n">old_map</span> <span class="o">|</span> <span class="n">key</span> <span class="o">=&gt;</span> <span class="n">value</span><span class="p">,</span> <span class="o">...</span> <span class="p">}</span>
+
+</pre>
+<h3>Maps and Structs</h3>
+
+<p>当使用 %{}时，elixir知道这是一个map，但不知道更多的结构信息，因此引入Struct</p>
+
+<p>可以创建一种map，但是有固定的fields，缺省值，pattern matching可以用content或者type</p>
+
+<p>Struct是一个module，封装了限制形式的map，module的名字也是map类型的名字</p>
+<pre class="highlight elixir">
+<span class="k">defmodule</span> <span class="no">Subscriber</span> <span class="k">do
+  </span><span class="n">defstruct</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">false</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span>
+<span class="k">end</span>
+
+<span class="err">$</span> <span class="n">iex</span> <span class="n">defstruct</span><span class="o">.</span><span class="n">exs</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">s1</span> <span class="o">=</span> <span class="err">%</span><span class="no">Subscriber</span><span class="p">{}</span>
+<span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">false</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">s2</span> <span class="o">=</span> <span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span> <span class="p">}</span>
+<span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">false</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">s3</span> <span class="o">=</span> <span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Mary&quot;</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">true</span> <span class="p">}</span>
+<span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Mary&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">true</span><span class="p">}</span>
+
+<span class="c1">#可以用.或pattern matching来访问field</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">s3</span><span class="o">.</span><span class="n">name</span>
+<span class="sd">&quot;</span><span class="s2">Mary&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span><span class="ss">name:</span> <span class="n">a_name</span><span class="p">}</span> <span class="o">=</span> <span class="n">s3</span>
+<span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Mary&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">true</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">a_name</span>
+<span class="sd">&quot;</span><span class="s2">Mary&quot;</span>
+
+<span class="c1">#update</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">s4</span> <span class="o">=</span> <span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span> <span class="n">s3</span> <span class="o">|</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Marie&quot;</span><span class="p">}</span>
+<span class="err">%</span><span class="no">Subscriber</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Marie&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">true</span><span class="p">}</span>
+</pre>
+<p>用module封装Struct的目的是可以定义struct特定的行为</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Attendee</span> <span class="k">do
+  </span><span class="n">defstruct</span> <span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">false</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span>
+  <span class="k">def</span> <span class="n">may_attend_after_party</span><span class="p">(</span><span class="n">attendee</span> <span class="o">=</span> <span class="err">%</span><span class="no">Attendee</span><span class="p">{})</span> <span class="k">do
+    </span><span class="n">attendee</span><span class="o">.</span><span class="n">paid</span> <span class="o">&amp;&amp;</span> <span class="n">attendee</span><span class="o">.</span><span class="n">over_18</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">print_vip_badge</span><span class="p">(</span><span class="err">%</span><span class="no">Attendee</span><span class="p">{</span><span class="ss">name:</span> <span class="n">name</span><span class="p">})</span> <span class="ow">when</span> <span class="n">name</span> <span class="o">!=</span> <span class="sd">&quot;</span><span class="s2">&quot;</span> <span class="k">do
+    </span><span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">Very cheap badge for </span><span class="si">#{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">print_vip_badge</span><span class="p">(</span><span class="err">%</span><span class="no">Attendee</span><span class="p">{})</span> <span class="k">do
+    raise</span> <span class="sd">&quot;</span><span class="s2">missing name for badge&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="err">$</span> <span class="n">iex</span> <span class="n">defstruct1</span><span class="o">.</span><span class="n">exs</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">a1</span> <span class="o">=</span> <span class="err">%</span><span class="no">Attendee</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">}</span>
+<span class="err">%</span><span class="no">Attendee</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">false</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Attendee</span><span class="o">.</span><span class="n">may_attend_after_party</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="no">false</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">a2</span> <span class="o">=</span> <span class="err">%</span><span class="no">Attendee</span><span class="p">{</span><span class="n">a1</span> <span class="o">|</span> <span class="ss">paid:</span> <span class="no">true</span><span class="p">}</span>
+<span class="err">%</span><span class="no">Attendee</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">true</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Attendee</span><span class="o">.</span><span class="n">may_attend_after_party</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="no">true</span>
+<span class="n">iex</span><span class="p">(</span><span class="m">22</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Attendee</span><span class="o">.</span><span class="n">print_vip_badge</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="no">Very</span> <span class="n">cheap</span> <span class="n">badge</span> <span class="n">for</span> <span class="no">Dave</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="p">(</span><span class="m">23</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">a3</span> <span class="o">=</span> <span class="err">%</span><span class="no">Attendee</span><span class="p">{}</span>
+<span class="err">%</span><span class="no">Attendee</span><span class="p">{</span><span class="ss">name:</span> <span class="sd">&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ss">over_18:</span> <span class="no">true</span><span class="p">,</span> <span class="ss">paid:</span> <span class="no">false</span><span class="p">}</span>
+<span class="n">iex</span><span class="p">(</span><span class="m">26</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Attendee</span><span class="o">.</span><span class="n">print_vip_badge</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+<span class="o">**</span> <span class="p">(</span><span class="no">RuntimeError</span><span class="p">)</span> <span class="n">missing</span> <span class="n">name</span> <span class="n">for</span> <span class="n">badge</span>
+<span class="n">defstruct1</span><span class="o">.</span><span class="ss">exs:</span><span class="m">13</span><span class="p">:</span> <span class="no">Attendee</span><span class="o">.</span><span class="n">print_vip_badge</span><span class="o">/</span><span class="m">1</span>
+</pre>
+<h3>Sets</h3>
+
+<p>目前只有一种实现：HashSet</p>
+<pre class="highlight elixir">
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">set1</span> <span class="o">=</span> <span class="no">Enum</span><span class="o">.</span><span class="n">into</span> <span class="m">1</span><span class="o">..</span><span class="m">5</span><span class="p">,</span> <span class="no">HashSet</span><span class="o">.</span><span class="n">new</span>
+<span class="c1">#HashSet&lt;[1, 2, 3, 4, 5]&gt;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Set</span><span class="o">.</span><span class="n">member?</span> <span class="n">set1</span><span class="p">,</span> <span class="m">3</span>
+<span class="no">true</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">set2</span> <span class="o">=</span> <span class="no">Enum</span><span class="o">.</span><span class="n">into</span> <span class="m">3</span><span class="o">..</span><span class="m">8</span><span class="p">,</span> <span class="no">HashSet</span><span class="o">.</span><span class="n">new</span>
+<span class="c1">#HashSet&lt;[3, 4, 5, 6, 7, 8]&gt;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Set</span><span class="o">.</span><span class="n">union</span> <span class="n">set1</span><span class="p">,</span> <span class="n">set2</span>
+<span class="c1">#HashSet&lt;[7, 6, 4, 1, 8, 2, 3, 5]&gt;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Set</span><span class="o">.</span><span class="n">difference</span> <span class="n">set1</span><span class="p">,</span> <span class="n">set2</span>
+<span class="c1">#HashSet&lt;[1, 2]&gt;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Set</span><span class="o">.</span><span class="n">difference</span> <span class="n">set2</span><span class="p">,</span> <span class="n">set1</span>
+<span class="c1">#HashSet&lt;[6, 7, 8]&gt;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Set</span><span class="o">.</span><span class="n">intersection</span> <span class="n">set1</span><span class="p">,</span> <span class="n">set2</span>
+<span class="c1">#HashSet&lt;[3, 4, 5]&gt;</span>
+
+</pre>
+<p><a name="what_are_types"></a></p>
+
+<h2>What are types</h2>
+
+<p>Elixir中的数据，既是有primitive type，又有List，Keyword这些抽象module，这可以看作是一种duck type,类似于动态面向对象语言。</p>
+<pre class="highlight elixir">
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">options</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="ss">:width</span><span class="p">,</span> <span class="m">72</span><span class="p">},</span> <span class="p">{</span><span class="ss">:style</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">light&quot;</span><span class="p">},</span> <span class="p">{</span><span class="ss">:style</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">print&quot;</span><span class="p">}</span> <span class="p">]</span>
+<span class="p">[</span><span class="ss">width:</span> <span class="m">72</span><span class="p">,</span> <span class="ss">style:</span> <span class="sd">&quot;</span><span class="s2">light&quot;</span><span class="p">,</span> <span class="ss">style:</span> <span class="sd">&quot;</span><span class="s2">print&quot;</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">List</span><span class="o">.</span><span class="n">last</span> <span class="n">options</span>
+<span class="p">{</span><span class="ss">:style</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">print&quot;</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Keyword</span><span class="o">.</span><span class="n">get_values</span> <span class="n">options</span><span class="p">,</span> <span class="ss">:style</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">light&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">print&quot;</span><span class="p">]</span>
+
+</pre>
+<p><a name="processing_collections_enums_and_stream"></a></p>
+
+<h2>Processing Collections&ndash;Enums and Stream</h2>
+
+<p>Elixir中提供2个关于iteration的module</p>
+
+<ol>
+<li>Enum: Processing collections</li>
+<li>Stream: Lazy enumerables</li>
+</ol>
+
+<h3>Enum</h3>
+
+<h3>Stream</h3>
+
+<ol>
+<li>Stream.cycle</li>
+<li>Stream.repeatly</li>
+<li>Stream.iterate</li>
+<li>Stream.unfold</li>
+<li>Stream.resource</li>
+</ol>
+
+<h3>Collectable protocol</h3>
+
+<p>Collectable protocol和Enumermable相反，通过插入元素来创建collection</p>
+
+<p>Collectable的API是底层使用的较多，用户通常通过Enum.into和comprehension来使用。</p>
+
+<h3>Comprehension</h3>
+
+<p><a name="string_and_binaries"></a></p>
+
+<h2>String and Binaries</h2>
+
+<p><a name="control_flow"></a></p>
+
+<h2>Control Flow</h2>
+
+<p><a name="organizing_a_project"></a></p>
+
+<h2>Organizing a Project</h2>
 
 </article>
 <div id="disqus_thread"></div>

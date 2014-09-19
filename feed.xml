@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/09/19/notes-for-programming-elixir-conventional-programming/"/>
     <id>http://blog.url.com/2014/09/19/notes-for-programming-elixir-conventional-programming/</id>
     <published>2014-09-19T01:17:00Z</published>
-    <updated>2014-09-19T20:54:50+08:00</updated>
+    <updated>2014-09-20T02:06:02+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -28,11 +28,11 @@
 &lt;li&gt;&lt;a href="#modules_and_named_functions"&gt;Modules and Named Functions&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#lists_and_recursion"&gt;Lists and Recursion&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#maps_hashdicts_keyword_and_sets"&gt;Maps, HashDicts, Keyword, and Sets&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[What are types]&lt;/li&gt;
-&lt;li&gt;[Processing Collections&amp;ndash;Enums and Stream]&lt;/li&gt;
-&lt;li&gt;[String and Binaries]&lt;/li&gt;
-&lt;li&gt;[Control Flow]&lt;/li&gt;
-&lt;li&gt;[Organizing a Project]&lt;/li&gt;
+&lt;li&gt;&lt;a href="#what_are_types"&gt;What are types&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#processing_collections_enums_and_stream"&gt;Processing Collections&amp;ndash;Enums and Stream&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#string_and_binaries"&gt;String and Binaries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#control_flow"&gt;Control Flow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#organizing_a_project"&gt;Organizing a Project&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;&lt;a name="pattern_matching"&gt;&lt;/a&gt;&lt;/p&gt;
@@ -288,7 +288,7 @@ underscore&lt;/p&gt;
   &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;
-&lt;h3&gt;|&amp;gt; pipe operator会把左边的expression作为右边函数的地一个参数&lt;/h3&gt;
+&lt;h3&gt;|&amp;gt; pipe operator会把左边的expression作为右边函数的第一个参数&lt;/h3&gt;
 
 &lt;h3&gt;Modules&lt;/h3&gt;
 
@@ -321,7 +321,7 @@ protocols, 和其他modules&lt;/p&gt;
 
 &lt;h4&gt;require&lt;/h4&gt;
 
-&lt;p&gt;如果需要使用定义在macro，就要使用require&lt;/p&gt;
+&lt;p&gt;如果需要使用定义在module的macro，就要使用require&lt;/p&gt;
 
 &lt;h3&gt;Module Attributes&lt;/h3&gt;
 &lt;pre class="highlight elixir"&gt;
@@ -370,12 +370,345 @@ protocols, 和其他modules&lt;/p&gt;
 &lt;li&gt;复杂的List Patterns&lt;/li&gt;
 &lt;li&gt;List Module&lt;/li&gt;
 &lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;len&lt;/span&gt; &lt;span class="p"&gt;([])&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
 
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;add1&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;add1&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;add1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;([],&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;_sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;defp&lt;/span&gt; &lt;span class="n"&gt;_sum&lt;/span&gt;&lt;span class="p"&gt;([],&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;defp&lt;/span&gt; &lt;span class="n"&gt;_sum&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;_sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;([],&lt;/span&gt; &lt;span class="n"&gt;init_val&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;init_val&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;init_val&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;init_val&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;fun&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;for_location&lt;/span&gt;&lt;span class="p"&gt;([],&lt;/span&gt; &lt;span class="n"&gt;target_loc&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;for_location&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target_loc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;target_loc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;for_location&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target_loc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;for_location&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;target_loc&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;for_location&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;target_loc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 头部不必只有一个元素&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt; &lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;List Module&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Concatenate lists&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Flatten&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flatten&lt;/span&gt;&lt;span class="p"&gt;([[[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[[[&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]]]])&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Folding (like reduce, but can choose direction)&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;foldl&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;acc&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;(&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;acc&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;3(2(1()))&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;foldr&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;acc&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;(&lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;acc&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;)&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;1(2(3()))&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Merging lists and splitting them apart&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;([[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="ss"&gt;:b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="ss"&gt;:c&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;cat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;dog&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+&lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;cat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;dog&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unzip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:b&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;cat&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;dog&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Accessing tuples within lists&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;kw&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="ss"&gt;:name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:likes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Programming&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:where&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}]&lt;/span&gt;
+&lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="ss"&gt;:name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:likes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Programming&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:where&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keyfind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:where&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keyfind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:where&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keyfind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="no"&gt;nil&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keyfind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;No city called TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;No city called TX&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;kw&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keydelete&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;likes:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Programming&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;kw&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keyreplace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;kw&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:first_name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;first_name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;likes:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Programming&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;/pre&gt;
 &lt;p&gt;&lt;a name="maps_hashdicts_keyword_and_sets"&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2&gt;Maps, HashDicts, Keyword, and Sets&lt;/h2&gt;
 
+&lt;p&gt;Dictionary是一种把key和value关联起来的数据类型&lt;/p&gt;
+
+&lt;h3&gt;如何在Map，HashDict和Keyword之间选&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;如果有重复key： Keyword&lt;/li&gt;
+&lt;li&gt;如果需要有序： Keyword&lt;/li&gt;
+&lt;li&gt;pattern matching： map&lt;/li&gt;
+&lt;li&gt;数据大于几百条： HashDict&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Dict&lt;/h3&gt;
+
+&lt;p&gt;Map和HashDict实现了Dict的behaviour，Keyword实现了大部分，应该用Dict module的method，这样不管底层是用map还是HashDict，都会带来更多的灵活性。&lt;/p&gt;
+
 &lt;h3&gt;Dictionaries&lt;/h3&gt;
+&lt;pre class="highlight text"&gt;
+defmodule Sum do
+  def values(dict) do
+    dict |&amp;gt; Dict.values |&amp;gt; Enum.sum
+  end
+end
+# Sum a HashDict
+hd = [ one: 1, two: 2, three: 3 ] |&amp;gt; Enum.into HashDict.new
+IO.puts Sum.values(hd) # =&amp;gt; 6
+# Sum a Map
+map = %{ four: 4, five: 5, six: 6 }
+IO.puts Sum.values(map) # =&amp;gt; 15
+
+# Dict API examples
+iex&amp;gt; kw_list = [name: &amp;quot;Dave&amp;quot;, likes: &amp;quot;Programming&amp;quot;, where: &amp;quot;Dallas&amp;quot;]
+[name: &amp;quot;Dave&amp;quot;, likes: &amp;quot;Programming&amp;quot;, where: &amp;quot;Dallas&amp;quot;]
+iex&amp;gt; hashdict = Enum.into kw_list, HashDict.new
+#HashDict&amp;lt;[name: &amp;quot;Dave&amp;quot;, where: &amp;quot;Dallas&amp;quot;, likes: &amp;quot;Programming&amp;quot;]&amp;gt;
+iex&amp;gt; map = Enum.into kw_list, Map.new
+%{likes: &amp;quot;Programming&amp;quot;, name: &amp;quot;Dave&amp;quot;, where: &amp;quot;Dallas&amp;quot;}
+iex&amp;gt; kw_list[:name]
+&amp;quot;Dave&amp;quot;
+iex&amp;gt; hashdict[:likes]
+&amp;quot;Programming&amp;quot;
+iex&amp;gt; map[:where]
+&amp;quot;Dallas&amp;quot;
+iex&amp;gt; hashdict = Dict.drop(hashdict, [:where, :likes])
+#HashDict&amp;lt;[name: &amp;quot;Dave&amp;quot;]&amp;gt;
+iex&amp;gt; hashdict = Dict.put(hashdict, :also_likes, &amp;quot;Ruby&amp;quot;)
+#HashDict&amp;lt;[name: &amp;quot;Dave&amp;quot;, also_likes: &amp;quot;Ruby&amp;quot;]&amp;gt;
+iex&amp;gt; combo = Dict.merge(map, hashdict)
+%{also_likes: &amp;quot;Ruby&amp;quot;, likes: &amp;quot;Programming&amp;quot;, name: &amp;quot;Dave&amp;quot;, where: &amp;quot;Dallas&amp;quot;}
+
+# 用Keyword module读duplicated keyword
+iex(51)&amp;gt; kw_list = [name: &amp;quot;Dave&amp;quot;, likes: &amp;quot;Programming&amp;quot;, likes: &amp;quot;Elixir&amp;quot;]
+[name: &amp;quot;Dave&amp;quot;, likes: &amp;quot;Programming&amp;quot;, likes: &amp;quot;Elixir&amp;quot;]
+iex(53)&amp;gt; kw_list[:likes]
+&amp;quot;Programming&amp;quot;
+iex(54)&amp;gt; Dict.get(kw_list, :likes)
+&amp;quot;Programming&amp;quot;
+iex(55)&amp;gt; Keyword.get_values(kw_list, :likes)
+[&amp;quot;Programming&amp;quot;, &amp;quot;Elixir&amp;quot;]
+&lt;/pre&gt;
+&lt;h4&gt;Pattern Matching and updating map&lt;/h4&gt;
+
+&lt;p&gt;对于map，经常会问下面的问题&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;is there an entry with the key :name ?&lt;/li&gt;
+&lt;li&gt;are there entries for the keys :name and :height ?&lt;/li&gt;
+&lt;li&gt;does the entry with key :name have the value &amp;ldquo;Dave&amp;rdquo; ?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="m"&gt;1.88&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="m"&gt;1.88&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="n"&gt;a_name&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="m"&gt;1.88&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a_name&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="m"&gt;1.88&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="m"&gt;1.88&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;/pre&gt;&lt;pre class="highlight elixir"&gt;&lt;span class="c1"&gt;#利用在map里的解构,简化pattern matching&lt;/span&gt;
+
+&lt;span class="n"&gt;for&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;height:&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="n"&gt;people&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inspect&lt;/span&gt; &lt;span class="n"&gt;person&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;Limitation: 只能在值做pattern matching, 不能在key做pattern matching&lt;/p&gt;
+
+&lt;h3&gt;update map&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;new_map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;old_map&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;Maps and Structs&lt;/h3&gt;
+
+&lt;p&gt;当使用 %{}时，elixir知道这是一个map，但不知道更多的结构信息，因此引入Struct&lt;/p&gt;
+
+&lt;p&gt;可以创建一种map，但是有固定的fields，缺省值，pattern matching可以用content或者type&lt;/p&gt;
+
+&lt;p&gt;Struct是一个module，封装了限制形式的map，module的名字也是map类型的名字&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Subscriber&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="n"&gt;defstruct&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="n"&gt;defstruct&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exs&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;s2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;s3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Mary&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Mary&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;#可以用.或pattern matching来访问field&lt;/span&gt;
+
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;s3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Mary&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="n"&gt;a_name&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;s3&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Mary&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a_name&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Mary&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;#update&lt;/span&gt;
+
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;s4&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;s3&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Marie&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Subscriber&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Marie&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;用module封装Struct的目的是可以定义struct特定的行为&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Attendee&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="n"&gt;defstruct&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;may_attend_after_party&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;attendee&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{})&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;paid&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;over_18&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;print_vip_badge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="ow"&gt;when&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Very cheap badge for &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;print_vip_badge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{})&lt;/span&gt; &lt;span class="k"&gt;do
+    raise&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;missing name for badge&amp;quot;&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="n"&gt;defstruct1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exs&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;may_attend_after_party&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="no"&gt;false&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;a1&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;may_attend_after_party&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;22&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print_vip_badge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="no"&gt;Very&lt;/span&gt; &lt;span class="n"&gt;cheap&lt;/span&gt; &lt;span class="n"&gt;badge&lt;/span&gt; &lt;span class="n"&gt;for&lt;/span&gt; &lt;span class="no"&gt;Dave&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;over_18:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;paid:&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print_vip_badge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;RuntimeError&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;missing&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;for&lt;/span&gt; &lt;span class="n"&gt;badge&lt;/span&gt;
+&lt;span class="n"&gt;defstruct1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="ss"&gt;exs:&lt;/span&gt;&lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="no"&gt;Attendee&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print_vip_badge&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;Sets&lt;/h3&gt;
+
+&lt;p&gt;目前只有一种实现：HashSet&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;set1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Enum&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;into&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;..&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;HashSet&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;
+&lt;span class="c1"&gt;#HashSet&amp;lt;[1, 2, 3, 4, 5]&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;member?&lt;/span&gt; &lt;span class="n"&gt;set1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;set2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Enum&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;into&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="o"&gt;..&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;HashSet&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;
+&lt;span class="c1"&gt;#HashSet&amp;lt;[3, 4, 5, 6, 7, 8]&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;union&lt;/span&gt; &lt;span class="n"&gt;set1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;set2&lt;/span&gt;
+&lt;span class="c1"&gt;#HashSet&amp;lt;[7, 6, 4, 1, 8, 2, 3, 5]&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;difference&lt;/span&gt; &lt;span class="n"&gt;set1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;set2&lt;/span&gt;
+&lt;span class="c1"&gt;#HashSet&amp;lt;[1, 2]&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;difference&lt;/span&gt; &lt;span class="n"&gt;set2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;set1&lt;/span&gt;
+&lt;span class="c1"&gt;#HashSet&amp;lt;[6, 7, 8]&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Set&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;intersection&lt;/span&gt; &lt;span class="n"&gt;set1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;set2&lt;/span&gt;
+&lt;span class="c1"&gt;#HashSet&amp;lt;[3, 4, 5]&amp;gt;&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;&lt;a name="what_are_types"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;What are types&lt;/h2&gt;
+
+&lt;p&gt;Elixir中的数据，既是有primitive type，又有List，Keyword这些抽象module，这可以看作是一种duck type,类似于动态面向对象语言。&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;72&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:style&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;light&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:style&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;print&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;width:&lt;/span&gt; &lt;span class="m"&gt;72&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;style:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;light&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;style:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;print&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;last&lt;/span&gt; &lt;span class="n"&gt;options&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:style&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;print&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Keyword&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_values&lt;/span&gt; &lt;span class="n"&gt;options&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:style&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;light&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;print&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;&lt;a name="processing_collections_enums_and_stream"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Processing Collections&amp;ndash;Enums and Stream&lt;/h2&gt;
+
+&lt;p&gt;Elixir中提供2个关于iteration的module&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Enum: Processing collections&lt;/li&gt;
+&lt;li&gt;Stream: Lazy enumerables&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Enum&lt;/h3&gt;
+
+&lt;h3&gt;Stream&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Stream.cycle&lt;/li&gt;
+&lt;li&gt;Stream.repeatly&lt;/li&gt;
+&lt;li&gt;Stream.iterate&lt;/li&gt;
+&lt;li&gt;Stream.unfold&lt;/li&gt;
+&lt;li&gt;Stream.resource&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Collectable protocol&lt;/h3&gt;
+
+&lt;p&gt;Collectable protocol和Enumermable相反，通过插入元素来创建collection&lt;/p&gt;
+
+&lt;p&gt;Collectable的API是底层使用的较多，用户通常通过Enum.into和comprehension来使用。&lt;/p&gt;
+
+&lt;h3&gt;Comprehension&lt;/h3&gt;
+
+&lt;p&gt;&lt;a name="string_and_binaries"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;String and Binaries&lt;/h2&gt;
+
+&lt;p&gt;&lt;a name="control_flow"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Control Flow&lt;/h2&gt;
+
+&lt;p&gt;&lt;a name="organizing_a_project"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Organizing a Project&lt;/h2&gt;
 </content>
   </entry>
   <entry>
