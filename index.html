@@ -67,6 +67,57 @@ Page 1 of 4
 </ul>
 <li class='article'>
 <h2>
+<a href="/2014/09/19/notes-for-programming-elixir-conventional-programming/">notes for programming elixir conventional programming</a>
+<span>Sep 19</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>part I conventional programming的内容</h2>
+
+<ol>
+<li><a href="#pattern_matching">pattern matching</a></li>
+<li><a href="#immutability">Immutability</a></li>
+<li><a href="#elixir_basic">Elixir Basic</a></li>
+<li><a href="#anonymous_functions">Anonymous Functions</a></li>
+<li><a href="#modules_and_named_functions">Modules and Named Functions</a></li>
+<li><a href="#lists_and_recursion">Lists and Recursion</a></li>
+<li><a href="#maps_hashdicts_keyword_and_sets">Maps, HashDicts, Keyword, and Sets</a></li>
+<li>[What are types]</li>
+<li>[Processing Collections–Enums and Stream]</li>
+<li>[String...</li>
+</ol>
+<a href="/2014/09/19/notes-for-programming-elixir-conventional-programming/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/09/18/rubymotion-for-android/">rubymotion for android</a>
+<span>Sep 18</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>rubymotion for android</h2>
+
+<p>等了很久的rubymotion for android终于可以用了。按照官方网站升级:</p>
+
+<ol>
+<li>update rubymotion</li>
+<li>install android sdk</li>
+<li>install android ndk</li>
+<li>uncompress sdk and ndk</li>
+<li>set environment variable</li>
+<li>motion create –template=android AndroidHello</li>
+<li>rake device
+最后一步出现错误：</li>
+</ol><pre class="highlight shell">
+ERROR...</pre>
+<a href="/2014/09/18/rubymotion-for-android/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
 <a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
 <span>Sep 17</span>
 </h2>
@@ -236,12 +287,12 @@ the first 250 characters
 <h2>Delivering Results的模式</h2>
 
 <ol>
-<li>Write total functions</li>
-<li>Call back instead of returning</li>
-<li>Represent failure with benign value</li>
-<li>Represent failure with a special case object</li>
-<li>Return a status object</li>
-<li>Yield a status object</li>
+<li><a href="#write_total_functions">Write total functions</a></li>
+<li><a href="#call_back_instead_of_returning">Call back instead of returning</a></li>
+<li><a href="#represent_failure_with_benign_value">Represent failure with benign value</a></li>
+<li><a href="#represent_failure_with_a_special_case_object">Represent failure with a special case object</a></li>
+<li><a href="#return_a_status_object">Return a status object</a></li>
+<li><a href="#yield_a_status_object">Yield a status object</a></li>
 </ol>
 <a href="/2014/09/05/review-confident-ruby-delivering-results/">Read More...</a>
 </li>
@@ -266,62 +317,6 @@ the first 250 characters
 </ol>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>再读confident ruby(performing work部分)</h2>
-
-<p>再读confident ruby，记下以下要点。</p>
-
-<h2>每个函数应包含4部分</h2>
-
-<ol>
-<li>collecting input</li>
-<li>performing work</li>
-<li>delivering result</li>
-<li>handling failures</li>
-</ol><h2>performing work的模式</h2>
-
-<p>这个部分只有一个pattern</p>
-
-<h3>sending a strong message</h3>
-
-<p>要发消息给trused object,需要3个条件</p>
-
-<ol><li>识别要完成工作所需要发送的...</li></ol>
-<a href="/2014/09/03/review-confident-ruby/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>基于虚拟机或容器创建开发环境的优点</h2>
-
-<ol>
-<li>可以方便地切换不同的项目</li>
-<li>在团队内共享项目的开发环境，避免所有人都浪费时间来设置环境</li>
-<li>避免不同项目的设置冲突</li>
-<li>可以使开发环境更加接近部署的环境</li>
-</ol><h2>Docker vs VirtualBox</h2>
-
-<p>以前试过使用VirtualBox虚拟机来做开发环境，因为团队里同时使用Linux和Windows。
-但发现有2个问题，一是速度太慢，二是在windows下，编辑器保存文件后并不能触发
-VirtualBox里的自动化编译或刷新。</p>
-
-<p>因此尝试使用Docker,因为现在不需...</p>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/page/2/">Next page</a></li>
 </ul>
@@ -334,6 +329,14 @@ VirtualBox里的自动化编译或刷新。</p>
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/19/notes-for-programming-elixir-conventional-programming/">notes for programming elixir conventional programming</a>
+<span>Sep 19</span>
+</li>
+<li>
+<a href="/2014/09/18/rubymotion-for-android/">rubymotion for android</a>
+<span>Sep 18</span>
+</li>
 <li>
 <a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
 <span>Sep 17</span>
@@ -366,14 +369,6 @@ VirtualBox里的自动化编译或刷新。</p>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
 </li>
-<li>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</li>
-<li>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -387,7 +382,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/android/">android</a>
-(3)
+(4)
 </li>
 <li>
 <a href="/tags/rubuto/">rubuto</a>
@@ -419,7 +414,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(11)
+(12)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -435,7 +430,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/elixir/">elixir</a>
-(1)
+(2)
 </li>
 <li>
 <a href="/tags/example/">example</a>
@@ -499,7 +494,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/rubymotion/">rubymotion</a>
-(2)
+(3)
 </li>
 <li>
 <a href="/tags/ios/">iOS</a>
@@ -593,6 +588,10 @@ VirtualBox里的自动化编译或刷新。</p>
 <a href="/tags/ruboto/">ruboto</a>
 (1)
 </li>
+<li>
+<a href="/tags/mobild/">mobild</a>
+(1)
+</li>
 </ol>
 </dd>
 <dt>
@@ -602,7 +601,7 @@ VirtualBox里的自动化编译或刷新。</p>
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(34)
+(36)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -626,6 +625,14 @@ VirtualBox里的自动化编译或刷新。</p>
 <dd>
 <ol>
 <li>
+<a href="/2014/09/19/notes-for-programming-elixir-conventional-programming/">notes for programming elixir conventional programming</a>
+<span>Sep 19</span>
+</li>
+<li>
+<a href="/2014/09/18/rubymotion-for-android/">rubymotion for android</a>
+<span>Sep 18</span>
+</li>
+<li>
 <a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
 <span>Sep 17</span>
 </li>
@@ -657,14 +664,6 @@ VirtualBox里的自动化编译或刷新。</p>
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
 </li>
-<li>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</li>
-<li>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -678,7 +677,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/android/">android</a>
-(3)
+(4)
 </li>
 <li>
 <a href="/tags/rubuto/">rubuto</a>
@@ -710,7 +709,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(11)
+(12)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -726,7 +725,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/elixir/">elixir</a>
-(1)
+(2)
 </li>
 <li>
 <a href="/tags/example/">example</a>
@@ -790,7 +789,7 @@ VirtualBox里的自动化编译或刷新。</p>
 </li>
 <li>
 <a href="/tags/rubymotion/">rubymotion</a>
-(2)
+(3)
 </li>
 <li>
 <a href="/tags/ios/">iOS</a>
@@ -884,6 +883,10 @@ VirtualBox里的自动化编译或刷新。</p>
 <a href="/tags/ruboto/">ruboto</a>
 (1)
 </li>
+<li>
+<a href="/tags/mobild/">mobild</a>
+(1)
+</li>
 </ol>
 </dd>
 <dt>
@@ -893,7 +896,7 @@ VirtualBox里的自动化编译或刷新。</p>
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(34)
+(36)
 </li>
 <li>
 <a href="/2013/">2013</a>

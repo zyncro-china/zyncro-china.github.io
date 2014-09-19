@@ -68,29 +68,31 @@ review confident ruby(collecting input)
 <h2>Collecting Input的模式</h2>
 
 <ol>
-<li>Use built-in conversion protocols</li>
-<li>Conditionally call conversion methods</li>
-<li>Define your own conversion protocols</li>
-<li>Define conversions to user-defined types</li>
-<li>Use built-in conversion functions</li>
-<li>Use Array() conversion function to array-ify inputs</li>
-<li>Define conversion function</li>
-<li>Replace &ldquo;string typing&rdquo; with classes</li>
-<li>Wrap collaborators in Adapters</li>
-<li>Use transparent adapters to gradually introduce abstraction</li>
-<li>Reject unworkable values with preconditions</li>
-<li>Use #fetch to asset the presence of Hash keys</li>
-<li>Use #fetch for defaults</li>
-<li>Document assumptions with assertions</li>
-<li>Handle special cases with Guard Clause</li>
-<li>Represent special cases as objects</li>
-<li>Represent do-nothing cases as null objects</li>
-<li>Substitute a benign value for nil</li>
-<li>Use symbols as placeholder objects</li>
-<li>Bundle arguments into parameter objects</li>
-<li>Yield a parameter builder object</li>
-<li>Receive policies instead of data</li>
+<li><a href="#use_built_in_conversion_protocols">Use built-in conversion protocols</a></li>
+<li><a href="#conditionally_call_conversion_methods">Conditionally call conversion methods</a></li>
+<li><a href="#define_your_own_conversion_protocols">Define your own conversion protocols</a></li>
+<li><a href="#define_conversions_to_user_defined_types">Define conversions to user defined types</a></li>
+<li><a href="#use_builtin_conversion_functions">Use builtin conversion functions</a></li>
+<li><a href="#use_array_conversion_function_to_arrayify_inputs">Use Array() conversion function to arrayify inputs</a></li>
+<li><a href="#define_conversion_function">Define conversion function</a></li>
+<li><a href="#replace_string_typing_with_classes">Replace &ldquo;string typing&rdquo; with classes</a></li>
+<li><a href="#wrap_collaborators_in_adapters">Wrap collaborators in Adapters</a></li>
+<li><a href="#use_transparent_adapters_to_gradually_introduce_abstraction">Use transparent adapters to gradually introduce abstraction</a></li>
+<li><a href="#reject_unworkable_values_with_preconditions">Reject unworkable values with preconditions</a></li>
+<li><a href="#use_fetch_to_asset_the_presence_of_hash_keys">Use #fetch to asset the presence of Hash keys</a></li>
+<li><a href="#use_fetch_for_defaults">Use #fetch for defaults</a></li>
+<li><a href="#document_assumptions_with_assertions">Document assumptions with assertions</a></li>
+<li><a href="#handle_special_cases_with_guard_clause">Handle special cases with Guard Clause</a></li>
+<li><a href="#represent_special_cases_as_objects">Represent special cases as objects</a></li>
+<li><a href="#represent_do_nothing_cases_as_null_objects">Represent do-nothing cases as null objects</a></li>
+<li><a href="#substitute_a_benign_value_for_nil">Substitute a benign value for nil</a></li>
+<li><a href="#use_symbols_as_placeholder_objects">Use symbols as placeholder objects</a></li>
+<li><a href="#bundle_arguments_into_parameter_objects">Bundle arguments into parameter objects</a></li>
+<li><a href="#yield_a_parameter_builder_object">Yield a parameter builder object</a></li>
+<li><a href="#receive_policies_instead_of_data">Receive policies instead of data</a></li>
 </ol>
+
+<p><a name="use_built_in_conversion_protocols"></a></p>
 
 <h3>Use built-in conversion protocols</h3>
 
@@ -213,6 +215,8 @@ core class接受并转为真正的String类</p>
 
 <p>Implicit也可以作为assert来用，确保input的类型</p>
 
+<p><a name="#conditionally_call_conversion_methods"></a></p>
+
 <h3>Conditionally call conversion methods</h3>
 
 <p>使用respond_to?来决定input是否调用conversion method,
@@ -226,6 +230,8 @@ core class接受并转为真正的String类</p>
 <span class="c1"># ...</span>
 <span class="k">end</span>
 </pre>
+<p><a name="define_your_own_conversion_protocols"></a></p>
+
 <h3>Define your own conversion protocols</h3>
 
 <p>定义自己的conversion protocol,使其他对象也可以定义这个接口来转换</p>
@@ -253,6 +259,8 @@ core class接受并转为真正的String类</p>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="o">[</span><span class="mi">45</span><span class="p">,</span><span class="mi">89</span><span class="o">]</span>
 <span class="n">draw_line</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
 </pre>
+<p><a name="define_conversions_to_user_defined_types"></a></p>
+
 <h3>Define conversions to user-defined types</h3>
 
 <p>当method需要自定义的类作为input，而且也希望其他类也可以implicitly converted
@@ -300,6 +308,8 @@ Array</p>
 
 <p>注意，Hash应使用Hash[]</p>
 
+<p><a name="use_array_conversion_function_to_arrayify_inputs"></a></p>
+
 <h3>Use Array() conversion function to array-ify inputs</h3>
 
 <p>Array()比 to_a 和 to_ary 适用更多的情况</p>
@@ -308,6 +318,8 @@ Array</p>
 <span class="n">value</span><span class="nf">.to_a</span>
 <span class="n">value</span><span class="nf">.to_ary</span>
 </pre>
+<p><a name="define_conversion_function"></a></p>
+
 <h3>Define conversion function</h3>
 
 <p>当public
@@ -373,6 +385,8 @@ function</p>
 </pre>
 <p>关于 module_function, 它把后面的method设为private,并且作为module的singleton
 method</p>
+
+<p><a name="replace_string_typing_with_classes"></a></p>
 
 <h3>Replace &ldquo;string typing&rdquo; with classes</h3>
 
@@ -504,6 +518,8 @@ self.class.const<em>get(state.to</em>s.capitalize).new</p>
 <span class="no">Ring</span> <span class="n">ring</span> <span class="n">ring!</span>
 <span class="no">Next</span> <span class="n">state</span> <span class="ss">is: </span><span class="n">stop</span>
 </pre>
+<p><a name="wrap_collaborators_in_adapters"></a></p>
+
 <h3>Wrap collaborators in Adapters</h3>
 
 <p>method可以接受不同类型的collaborator,他们没有共同的interface，
@@ -563,9 +579,13 @@ adapter的作用在于隐藏让人分心的特殊情况处理，确保特殊情�
 <span class="k">end</span>
 
 </pre>
+<p><a name="use_transparent_adapters_to_gradually_introduce_abstraction"></a></p>
+
 <h3>Use transparent adapters to gradually introduce abstraction</h3>
 
 <p>当需要逐步替代原有对象时，可以使用DelegateClass来替换对象，再逐步改造类的定义</p>
+
+<p><a name="reject_unworkable_values_with_preconditions"></a></p>
 
 <h3>Reject unworkable values with preconditions</h3>
 
@@ -583,12 +603,18 @@ adapter的作用在于隐藏让人分心的特殊情况处理，确保特殊情�
   <span class="k">end</span>
 <span class="k">end</span>
 </pre>
+<p><a name="use_fetch_to_asset_the_presence_of_hash_keys"></a></p>
+
 <h3>Use #fetch to asset the presence of Hash keys</h3>
+
+<p><a name="use_fetch_for_defaults"></a></p>
 
 <h3>Use #fetch for defaults</h3>
 
 <p>使用myhash.fetch(key) {default} 而不要使用2个参数的fetch： myhash.fetch(key,
 defualt), 因为这种形式每次都执行，可能造成困扰</p>
+
+<p><a name="document_assumptions_with_assertions"></a></p>
 
 <h3>Document assumptions with assertions</h3>
 <pre class="highlight ruby"><span class="k">class </span><span class="nc">Account</span>
@@ -611,6 +637,8 @@ defualt), 因为这种形式每次都执行，可能造成困扰</p>
 <li>hash.fetch而不是hash[]</li>
 </ol>
 
+<p><a name="handle_special_cases_with_guard_clause"></a></p>
+
 <h3>Handle special cases with Guard Clause</h3>
 <pre class="highlight ruby"><span class="k">def </span><span class="nf">log_reading</span><span class="p">(</span><span class="n">reading_or_readings</span><span class="p">))</span>
   <span class="k">if</span> <span class="vi">@quiet</span> <span class="k">then</span> <span class="k">return</span> <span class="k">end</span>
@@ -618,6 +646,8 @@ defualt), 因为这种形式每次都执行，可能造成困扰</p>
 <span class="k">end</span>
 
 </pre>
+<p><a name="represent_special_cases_as_objects"></a></p>
+
 <h3>Represent special cases as objects</h3>
 
 <p>在特殊情况用对象来表示，而不是用nil，这样可以避免在所有用到的地方做nil检查</p>
@@ -671,6 +701,8 @@ test suite来确保这点</p>
 <span class="k">end</span>
 
 </pre>
+<p><a name="represent_do_nothing_cases_as_null_objects"></a></p>
+
 <h3>Represent do-nothing cases as null objects</h3>
 
 <p>当其中一个input是nil时，
@@ -740,6 +772,8 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 </pre>
 <p>所以，关键是要记住，不需要去检查null，直接可以调用它的方法，如果它是null对象，它只会安静地什么也不做。</p>
 
+<p><a name="substitute_a_benign_value_for_nil"></a></p>
+
 <h3>Substitute a benign value for nil</h3>
 
 <p>如果一个不重要的input没有提供, 用一个可用的替代值，不一定需要raise exception</p>
@@ -756,6 +790,8 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 <span class="k">end</span><span class="s2">&quot;&#39;&quot;</span>
 
 </pre>
+<p><a name="use_symbols_as_placeholder_objects"></a></p>
+
 <h3>Use symbols as placeholder objects</h3>
 
 <p>根据方法的调用，可选的collaborator可能用到，也可能没用到，我们应该用symbol，而不是nil作为placeholder，这样如果出错，也更容易调试</p>
@@ -776,6 +812,8 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 <span class="k">end</span>
 
 </pre>
+<p><a name="bundle_arguments_into_parameter_objects"></a></p>
+
 <h3>Bundle arguments into parameter objects</h3>
 
 <p>如果多个method都传入相同参数列表，应该把参数合到一个新类。比如坐标数组可以用整合到point类</p>
@@ -857,6 +895,8 @@ Object的collaborator，它和一般的collaborator有相同的接口，但是�
 </pre>
 <p>把point的信息(star or fuzzy)作为参数的类型, 而不是额外的参数(option),
 可以消除所有对不同point属性的条件判断</p>
+
+<p><a name="yield_a_parameter_builder_object"></a></p>
 
 <h3>Yield a parameter builder object</h3>
 
@@ -941,6 +981,8 @@ parameter object 或 parameter builder object</p>
 <span class="k">end</span>
 
 </pre>
+<p><a name="receive_policies_instead_of_data"></a></p>
+
 <h3>Receive policies instead of data</h3>
 <pre class="highlight ruby">
 <span class="k">def </span><span class="nf">delete_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>

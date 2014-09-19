@@ -59,14 +59,16 @@ review confident ruby(delivering results)
 <h2>Delivering Results的模式</h2>
 
 <ol>
-<li>Write total functions</li>
-<li>Call back instead of returning</li>
-<li>Represent failure with benign value</li>
-<li>Represent failure with a special case object</li>
-<li>Return a status object</li>
-<li>Yield a status object</li>
-<li>Signal early termination with throw</li>
+<li><a href="#write_total_functions">Write total functions</a></li>
+<li><a href="#call_back_instead_of_returning">Call back instead of returning</a></li>
+<li><a href="#represent_failure_with_benign_value">Represent failure with benign value</a></li>
+<li><a href="#represent_failure_with_a_special_case_object">Represent failure with a special case object</a></li>
+<li><a href="#return_a_status_object">Return a status object</a></li>
+<li><a href="#yield_a_status_object">Yield a status object</a></li>
+<li><a href="#signal_early_termination_with_throw">Signal early termination with throw</a></li>
 </ol>
+
+<p><a name="write_total_functions"></a></p>
 
 <h3>Write total functions</h3>
 
@@ -85,6 +87,8 @@ review confident ruby(delivering results)
 <span class="n">find_words</span><span class="p">(</span><span class="s1">&#39;xyzzy&#39;</span><span class="p">)</span>
 <span class="c1"># =&gt; [&quot;xyzzy&quot;]</span>
 </pre>
+<p><a name="call_back_instead_of_returning"></a></p>
+
 <h3>Call back instead of returning</h3>
 <pre class="highlight ruby"><span class="k">def </span><span class="nf">import_purchase</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">user_email</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">import_callback</span><span class="p">)</span>
   <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="nf">.find_by_email</span><span class="p">(</span><span class="n">user_email</span><span class="p">)</span>
@@ -100,6 +104,8 @@ review confident ruby(delivering results)
 <span class="c1"># ...</span>
 
 </pre>
+<p><a name="represent_failure_with_benign_value"></a></p>
+
 <h3>Represent failure with benign value</h3>
 <pre class="highlight ruby"><span class="k">def </span><span class="nf">render_sidebar</span>
   <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -117,9 +123,13 @@ review confident ruby(delivering results)
 
 
 </pre>
+<p><a name="represent_failure_with_a_special_case_object"></a></p>
+
 <h3>Represent failure with a special case object</h3>
 
 <p>同上一章里的 Represent special cases as objects</p>
+
+<p><a name="return_a_status_object"></a></p>
 
 <h3>Return a status object</h3>
 
@@ -167,6 +177,8 @@ object</p>
   <span class="n">logger</span><span class="nf">.error</span> <span class="s2">&quot;Error importing </span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2"> for </span><span class="si">#{</span><span class="n">user_email</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">result</span><span class="nf">.error</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="k">end</span>
 </pre>
+<p><a name="yield_a_status_object"></a></p>
+
 <h3>Yield a status object</h3>
 
 <p>当一个command
@@ -234,6 +246,8 @@ object到数组里，再迭代。</li>
   <span class="k">end</span>
 <span class="k">end</span>
 </pre>
+<p><a name="signal_early_termination_with_throw"></a></p>
+
 <h3>Signal early termination with throw</h3>
 
 </article>

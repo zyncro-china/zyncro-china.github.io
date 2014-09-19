@@ -5,10 +5,416 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-09-17T02:09:00Z</updated>
+  <updated>2014-09-19T01:17:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>notes for programming elixir conventional programming</title>
+    <link rel="alternate" href="http://blog.url.com/2014/09/19/notes-for-programming-elixir-conventional-programming/"/>
+    <id>http://blog.url.com/2014/09/19/notes-for-programming-elixir-conventional-programming/</id>
+    <published>2014-09-19T01:17:00Z</published>
+    <updated>2014-09-19T20:54:50+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;part I conventional programming的内容&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="#pattern_matching"&gt;pattern matching&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#immutability"&gt;Immutability&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#elixir_basic"&gt;Elixir Basic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#anonymous_functions"&gt;Anonymous Functions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#modules_and_named_functions"&gt;Modules and Named Functions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#lists_and_recursion"&gt;Lists and Recursion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#maps_hashdicts_keyword_and_sets"&gt;Maps, HashDicts, Keyword, and Sets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[What are types]&lt;/li&gt;
+&lt;li&gt;[Processing Collections&amp;ndash;Enums and Stream]&lt;/li&gt;
+&lt;li&gt;[String and Binaries]&lt;/li&gt;
+&lt;li&gt;[Control Flow]&lt;/li&gt;
+&lt;li&gt;[Organizing a Project]&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a name="pattern_matching"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;pattern matching&lt;/h2&gt;
+
+&lt;p&gt;与Erlang里的pattern
+match差不多，不过elixir里的变量可以重复绑定不同的值，如果要和erlang一致，需要在变量前面加^&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
+&lt;span class="m"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;MatchError&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;no&lt;/span&gt; &lt;span class="n"&gt;match&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;right&lt;/span&gt; &lt;span class="n"&gt;hand&lt;/span&gt; &lt;span class="n"&gt;side&lt;/span&gt; &lt;span class="ss"&gt;value:&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;a name="immutability"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Immutability&lt;/h2&gt;
+
+&lt;p&gt;关于mutable语言的问题：&lt;/p&gt;
+
+&lt;p&gt;GOTO was evil because we asked, &amp;ldquo;how did I get to this point of execution?&amp;rdquo;
+Mutability leaves us with, &amp;ldquo;how did I get to this state&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;在Elixir里，值是immutable,只有变量可以重新绑定。&lt;/p&gt;
+
+&lt;p&gt;为提高性能，Elixir对数据的操作应该在列表头部插入&lt;/p&gt;
+
+&lt;p&gt;大部分语言采用GC,但有性能问题。Elixir使用大量的process，每个process有自己的heap，GC较容易，而且当process结束时，可以直接删掉所有数据，不需要GC&lt;/p&gt;
+
+&lt;p&gt;&lt;a name="elixir_basic"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Elixir Basics&lt;/h2&gt;
+
+&lt;p&gt;Elixir有下面built-in types&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Value types
+
+&lt;ol&gt;
+&lt;li&gt;Arbitary-sized integers&lt;/li&gt;
+&lt;li&gt;Floating point numbers&lt;/li&gt;
+&lt;li&gt;Atoms&lt;/li&gt;
+&lt;li&gt;Regular expressions&lt;/li&gt;
+&lt;li&gt;Ranges&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;System types
+
+&lt;ol&gt;
+&lt;li&gt;PIDs and Ports&lt;/li&gt;
+&lt;li&gt;References&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;Collection types
+
+&lt;ol&gt;
+&lt;li&gt;Tuples&lt;/li&gt;
+&lt;li&gt;Lists&lt;/li&gt;
+&lt;li&gt;Maps&lt;/li&gt;
+&lt;li&gt;Binaries&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Functions, Strings, Lists/Maps/Dictionary在单独的章节里讲到。&lt;/p&gt;
+
+&lt;h3&gt;Value types&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Integers: 1234, 0xcafe, 0765, 0b1010, 1_000_000&lt;/li&gt;
+&lt;li&gt;Floating point numbers: 1.0 0.2345, 0.3123e1, 313451.0e-5&lt;/li&gt;
+&lt;li&gt;Atoms: 类似ruby的symbol，:fred, :is_binary?, :&amp;lt;&amp;gt;, :&amp;ldquo;func/3&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Ranges: start..end, 3..7&lt;/li&gt;
+&lt;li&gt;Regular expressions: ~r{regexp}, ~r{regexp}opts&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;可以用Regex module&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Regex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt; &lt;span class="err"&gt;~&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;{[&lt;/span&gt;&lt;span class="n"&gt;aeiou&lt;/span&gt;&lt;span class="p"&gt;]},&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;caterpillar&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Regex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;scan&lt;/span&gt; &lt;span class="err"&gt;~&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;{[&lt;/span&gt;&lt;span class="n"&gt;aeiou&lt;/span&gt;&lt;span class="p"&gt;]},&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;caterpillar&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;e&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;i&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Regex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt; &lt;span class="err"&gt;~&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;{[&lt;/span&gt;&lt;span class="n"&gt;aeiou&lt;/span&gt;&lt;span class="p"&gt;]},&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;caterpillar&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;c&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;t&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;rp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;ll&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;r&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Regex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt; &lt;span class="err"&gt;~&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;{[&lt;/span&gt;&lt;span class="n"&gt;aeiou&lt;/span&gt;&lt;span class="p"&gt;]},&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;caterpillar&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;*&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;c*t*rp*ll*r&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;System Types&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Pids and Ports. 获取当前的pid用self, spawn新process时会得到他的pid&lt;/li&gt;
+&lt;li&gt;References: make_ref会返回一个global的reference&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Collection Types&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Tuples, 同erlang里的tuples一样&lt;/li&gt;
+&lt;li&gt;Records, 基于tuples, 是用来命名tuples里的fields&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;defrecord&lt;/span&gt; &lt;span class="no"&gt;Phone&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;country:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;area:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;555&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;local:&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;number1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Phone&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;
+&lt;span class="no"&gt;Phone&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;country:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;area:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;555&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;local:&lt;/span&gt; &lt;span class="no"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;number2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Phone&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="ss"&gt;local:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;1212&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;country:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;44&amp;quot;&lt;/span&gt;
+&lt;span class="no"&gt;Phone&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;country:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;44&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;area:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;555&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;local:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;1212&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;defrecord创建了一个elixir module,具有new function，这个new
+function从参数创建一个tuple，tuple的第一个元素是module name，其他是tuple values
+在iex里会被自动识别为一个record&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Lists and Keyword Lists&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;wombat&amp;quot;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="no"&gt;false&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Keyword list 是一个用于key/value pair的shortcut&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;city:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;likes:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Programming&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:city&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Dallas&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:likes&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Programming&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:use_transaction&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:logging&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;HIGH&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="no"&gt;DB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt; &lt;span class="n"&gt;record&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;use_transaction:&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;logging:&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;HIGH&amp;quot;&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;Maps: a collection of key/value pairs, like %{key =&amp;gt; value, key =&amp;gt; value}&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;states&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;AL&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Alabama&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;WI&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Wisconsin&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;AL&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Alabama&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;WI&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Wisconsin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;response_types&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:error&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:enoent&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:fatal&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="o"&gt;...&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:error&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:busy&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:retry&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="ss"&gt;:error&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:busy&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:retry&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:error&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:enoent&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:fatal&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;colors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:red&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;0xff0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:green&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;0x00ff00&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:blue&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="m"&gt;0x0000ff&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;blue:&lt;/span&gt; &lt;span class="m"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;green:&lt;/span&gt; &lt;span class="m"&gt;65280&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;red:&lt;/span&gt; &lt;span class="m"&gt;16711680&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;如果map的key是atom类型，那么也可以用keyword list的shortcut&lt;/p&gt;
+
+&lt;p&gt;为什么要有keyword list和map？&lt;/p&gt;
+
+&lt;p&gt;map不允许重复的key，keyword可以，map效率高，而且可以用pattern matching&lt;/p&gt;
+
+&lt;p&gt;通常keyword list可以用于命令行参数，map和HashDict可以用于关联数组&lt;/p&gt;
+
+&lt;p&gt;访问map&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;states&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;AL&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Alamaba&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;WI&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Wisconsin&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;AL&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Alamaba&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;WI&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Wisconsin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;states&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;AL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Alamaba&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;states&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;TX&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="no"&gt;nil&lt;/span&gt;
+
+&lt;span class="c1"&gt;#如果key是atom，可以使用dot形式&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;colors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;red:&lt;/span&gt; &lt;span class="m"&gt;0xff0000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;green:&lt;/span&gt; &lt;span class="m"&gt;0x00ff00&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;blue:&lt;/span&gt; &lt;span class="m"&gt;0x0000ff&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;blue:&lt;/span&gt; &lt;span class="m"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;green:&lt;/span&gt; &lt;span class="m"&gt;65280&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;red:&lt;/span&gt; &lt;span class="m"&gt;16711680&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;27&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:red&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="m"&gt;16711680&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;28&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;green&lt;/span&gt;
+&lt;span class="m"&gt;65280&lt;/span&gt;
+&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;Binaries, 形式如&amp;lt;&amp;lt; 1,2 &amp;gt;&amp;gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="p"&gt;::&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="p"&gt;::&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;::&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;213&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:io&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;~-8.2b~n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:binary&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bin_to_list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="m"&gt;11010101&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt;
+&lt;span class="m"&gt;1&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;Names, Source Files, Conventions, Operators&lt;/h3&gt;
+
+&lt;p&gt;Module, record, protocol, and behavior names start with an uppercase letter
+and are BumpyCase. All other identifiers start with a lower case letter or
+underscore&lt;/p&gt;
+
+&lt;p&gt;&lt;a name="anonymous_functions"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Anonymous Functions&lt;/h2&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="k"&gt;fn&lt;/span&gt;
+  &lt;span class="n"&gt;parameter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt;
+  &lt;span class="n"&gt;parameter&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;body&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;函数可以在参数做pattern matching&lt;/li&gt;
+&lt;li&gt;函数可以有多个函数体&lt;/li&gt;
+&lt;li&gt;函数可以返回函数&lt;/li&gt;
+&lt;li&gt;函数可以作为参数传入&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="c1"&gt;#&amp;amp; shortcut&lt;/span&gt;
+
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add_one&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;amp;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;# same as add_one = fn (n) -&amp;gt; n + 1 end&lt;/span&gt;
+&lt;span class="c1"&gt;#Function&amp;lt;6.17052888 in :erl_eval.expr/5&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add_one&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;44&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;45&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;square&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;amp;1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nv"&gt;&amp;amp;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#Function&amp;lt;6.17052888 in :erl_eval.expr/5&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;64&lt;/span&gt;
+&lt;span class="c1"&gt;#elixir会优化下面的代码，直接调用IO.puts&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;speak&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;&amp;amp;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="err"&gt;&amp;amp;&lt;/span&gt;&lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;speak&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="no"&gt;Hello&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+
+&lt;span class="c1"&gt;#第二种形式：&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="err"&gt;&amp;amp;&lt;/span&gt;&lt;span class="ss"&gt;:erlang&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="m"&gt;4&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;a name="modules_and_named_functions"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Modules and Named Functions&lt;/h2&gt;
+
+&lt;p&gt;这章讲如何使用命名函数，和在module里放置这些函数&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Times&lt;/span&gt; &lt;span class="k"&gt;do
+  def&lt;/span&gt; &lt;span class="n"&gt;double&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;do &amp;hellip; end 是语法糖，编译时都会转化为后do: 这种形式&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;double&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;greet&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;greeting&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+  &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;How&amp;#39;re you doing, &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;default parameters&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Example&lt;/span&gt; &lt;span class="k"&gt;do
+  def&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt; &lt;span class="p"&gt;\\&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p3&lt;/span&gt; &lt;span class="p"&gt;\\&lt;/span&gt; &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inspect&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;p1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;p4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;|&amp;gt; pipe operator会把左边的expression作为右边函数的地一个参数&lt;/h3&gt;
+
+&lt;h3&gt;Modules&lt;/h3&gt;
+
+&lt;p&gt;modules在elixir里作为namespaces,可以wrap named functions, macros, structs,
+protocols, 和其他modules&lt;/p&gt;
+
+&lt;p&gt;实际上，所有module都定义在top level，Elixir只是自动通过.来连接外部module&lt;/p&gt;
+
+&lt;h3&gt;Directives for Modules&lt;/h3&gt;
+
+&lt;h4&gt;import 把module里的function/macro放到正在运行的scope&lt;/h4&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Example&lt;/span&gt; &lt;span class="k"&gt;do
+  def&lt;/span&gt; &lt;span class="n"&gt;func1&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flatten&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;func2&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;only:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;flatten:&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;flatten&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="c1"&gt;#syntax 是 import Module [, only: [except: ]&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="no"&gt;List&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;only:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="ss"&gt;flatten:&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;duplicate:&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h4&gt;alias&lt;/h4&gt;
+
+&lt;p&gt;定义module的别名&lt;/p&gt;
+
+&lt;h4&gt;require&lt;/h4&gt;
+
+&lt;p&gt;如果需要使用定义在macro，就要使用require&lt;/p&gt;
+
+&lt;h3&gt;Module Attributes&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;
+&lt;span class="nv"&gt;@name&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;只可以在module顶部定义值，但是可在其他地方读取值,这不是变量，通常用于设置&lt;/p&gt;
+
+&lt;h3&gt;Module Names: Elixir, Erlang, and Atoms&lt;/h3&gt;
+
+&lt;p&gt;module name实际上是atom&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;ex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;is_atom&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;to_string&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Elixir.IO&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:&amp;quot;Elixir.IO&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="m"&gt;123&lt;/span&gt;
+&lt;span class="m"&gt;123&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:&amp;quot;Elixir.IO&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="m"&gt;123&lt;/span&gt;
+&lt;span class="m"&gt;123&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;在Erlang里，变量才是大写开头，atom是小写的，Erlang里的timer module在Elixir就是:timer,所以需要用下面的方式调用ERlang module&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:io&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;The number is ~3.1f~n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;5.678&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="no"&gt;The&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="m"&gt;5.7&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;h3&gt;寻找Library&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href="http://expm.co"&gt;expm.co&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a name="lists_and_recursion"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Lists and Recursion&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;使用Head, Tail处理List&lt;/li&gt;
+&lt;li&gt;使用Head, Tail创建List&lt;/li&gt;
+&lt;li&gt;Map function&lt;/li&gt;
+&lt;li&gt;在recursion时保持值&lt;/li&gt;
+&lt;li&gt;sum函数&lt;/li&gt;
+&lt;li&gt;复杂的List Patterns&lt;/li&gt;
+&lt;li&gt;List Module&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a name="maps_hashdicts_keyword_and_sets"&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Maps, HashDicts, Keyword, and Sets&lt;/h2&gt;
+
+&lt;h3&gt;Dictionaries&lt;/h3&gt;
+</content>
+  </entry>
+  <entry>
+    <title>rubymotion for android</title>
+    <link rel="alternate" href="http://blog.url.com/2014/09/18/rubymotion-for-android/"/>
+    <id>http://blog.url.com/2014/09/18/rubymotion-for-android/</id>
+    <published>2014-09-18T10:48:00Z</published>
+    <updated>2014-09-18T20:13:25+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;rubymotion for android&lt;/h2&gt;
+
+&lt;p&gt;等了很久的rubymotion for android终于可以用了。按照官方网站升级:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;update rubymotion&lt;/li&gt;
+&lt;li&gt;install android sdk&lt;/li&gt;
+&lt;li&gt;install android ndk&lt;/li&gt;
+&lt;li&gt;uncompress sdk and ndk&lt;/li&gt;
+&lt;li&gt;set environment variable&lt;/li&gt;
+&lt;li&gt;motion create &amp;ndash;template=android AndroidHello&lt;/li&gt;
+&lt;li&gt;rake device
+最后一步出现错误：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight shell"&gt;
+ERROR! It looks like your version of the NDK does not support API level L.
+&lt;/pre&gt;
+&lt;p&gt;寻找原因:&lt;/p&gt;
+
+&lt;p&gt;先运行android升级到最新的sdk,
+最后在&lt;a href="https://gist.github.com/alxjrvs/4b73771294ea25feb2f7"&gt;这里&lt;/a&gt;看到如何设置 api version&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;
+&lt;span class="no"&gt;Motion&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Project&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;App&lt;/span&gt;&lt;span class="nf"&gt;.setup&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="nf"&gt;.name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;MyAndroidMotionApp&amp;quot;&lt;/span&gt;
+  &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="nf"&gt;.api_version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;19&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>edit require gem in vim</title>
     <link rel="alternate" href="http://blog.url.com/2014/09/17/edit-require-gem-in-vim/"/>
@@ -486,97 +892,5 @@ digit      =  %x30-39                 ; 0-9
 &lt;span class="c1"&gt;#=&amp;gt; [&amp;quot;#practicing-ruby-testing&amp;quot;, &amp;quot;Seasons greetings to you all!&amp;quot;]&lt;/span&gt;
 
 &lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>meet elixir</title>
-    <link rel="alternate" href="http://blog.url.com/2014/09/09/meet-elixir/"/>
-    <id>http://blog.url.com/2014/09/09/meet-elixir/</id>
-    <published>2014-09-09T04:21:00Z</published>
-    <updated>2014-09-10T09:06:18+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Meet Elixir ScreenCast&lt;/h2&gt;
-
-&lt;p&gt;Elixir马上就要发布1.0版，估计以后的语法不会有大的改动了。&lt;/p&gt;
-
-&lt;p&gt;看Elixir的书和screencast的其中一个问题是等到你看的时候，Elixir的语法已经和制作书和screencast时的语法不一样了。&lt;/p&gt;
-
-&lt;p&gt;最近看了Meet Elixir，并把screencast里的例子更新到使用最新的Elixir版本(0.15.1)。放在
-&lt;a href="https://github.com/ruanwz/mystreamers"&gt;https://github.com/ruanwz/mystreamers&lt;/a&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>review confident ruby(handling failure)</title>
-    <link rel="alternate" href="http://blog.url.com/2014/09/06/review-confident-ruby-handling-failure/"/>
-    <id>http://blog.url.com/2014/09/06/review-confident-ruby-handling-failure/</id>
-    <published>2014-09-06T06:19:00Z</published>
-    <updated>2014-09-05T14:41:08+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;介绍 Handling Failure&lt;/h2&gt;
-
-&lt;p&gt;自信地处理错误情况。这本书只讨论BRE(begin/rescue/end) block,因为BRE在代码里是如此醒目,
-会把注意力引离method要做的事，所以需要想办法不要让它出现在程序的主要逻辑里。&lt;/p&gt;
-
-&lt;h2&gt;Handling Failure的模式&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Prefer top-level rescue clause&lt;/li&gt;
-&lt;li&gt;Use checked methods for risky operations&lt;/li&gt;
-&lt;li&gt;Use bouncer methods&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;Prefer top-level rescue clause&lt;/h3&gt;
-
-&lt;p&gt;当代码里有begin/rescue/end block时，应尽量使用top level的形式,
-这样可以清晰地划分出happy path和错误处理部分。&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;bar&lt;/span&gt;
-  &lt;span class="c1"&gt;# happy path goes up here&lt;/span&gt;
-&lt;span class="k"&gt;rescue&lt;/span&gt; &lt;span class="c1"&gt;#---------------------------&lt;/span&gt;
-  &lt;span class="c1"&gt;# failure scenarios go down here&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h3&gt;Use checked methods for risky operations&lt;/h3&gt;
-
-&lt;p&gt;如果一个method里包含需要处理从lib或system
-call的调用出现的错误，那么应该单独写一个函数把它包住,并处理可能出现的异常，这样可以避免重复处理底层的异常&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;filter_through_pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kp"&gt;nil&lt;/span&gt;
-  &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="nf"&gt;.popen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;w+&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-    &lt;span class="n"&gt;results&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-      &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="nf"&gt;.write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="nf"&gt;.close_write&lt;/span&gt;
-      &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="nf"&gt;.read&lt;/span&gt;
-    &lt;span class="k"&gt;rescue&lt;/span&gt; &lt;span class="no"&gt;Errno&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;EPIPE&lt;/span&gt;
-      &lt;span class="n"&gt;message&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="n"&gt;results&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;可以用&amp;quot;Receive policies instead of data&amp;quot;模式重构为&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;checked_popen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;error_policy&lt;/span&gt;&lt;span class="o"&gt;=-&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="k"&gt;raise&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="nf"&gt;.popen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;rescue&lt;/span&gt; &lt;span class="no"&gt;Errno&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;EPIPE&lt;/span&gt;
-  &lt;span class="n"&gt;error_policy&lt;/span&gt;&lt;span class="nf"&gt;.call&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;filter_through_pipe&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="n"&gt;checked_popen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;w+&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-    &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="nf"&gt;.write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="nf"&gt;.close_write&lt;/span&gt;
-    &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="nf"&gt;.read&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h3&gt;Use bouncer methods&lt;/h3&gt;
-</content>
   </entry>
 </feed>

@@ -69,6 +69,62 @@ Page 2 of 4
 </ul>
 <li class='article'>
 <h2>
+<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
+<span>Sep  3</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>再读confident ruby(performing work部分)</h2>
+
+<p>再读confident ruby，记下以下要点。</p>
+
+<h2>每个函数应包含4部分</h2>
+
+<ol>
+<li>collecting input</li>
+<li>performing work</li>
+<li>delivering result</li>
+<li>handling failures</li>
+</ol><h2>performing work的模式</h2>
+
+<p>这个部分只有一个pattern</p>
+
+<h3>sending a strong message</h3>
+
+<p>要发消息给trused object,需要3个条件</p>
+
+<ol><li>识别要完成工作所需要发送的...</li></ol>
+<a href="/2014/09/03/review-confident-ruby/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
+<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
+<span>Aug 23</span>
+</h2>
+<!--
+use article.summary(250) if you have Nokogiri available to show just
+the first 250 characters
+-->
+<h2>基于虚拟机或容器创建开发环境的优点</h2>
+
+<ol>
+<li>可以方便地切换不同的项目</li>
+<li>在团队内共享项目的开发环境，避免所有人都浪费时间来设置环境</li>
+<li>避免不同项目的设置冲突</li>
+<li>可以使开发环境更加接近部署的环境</li>
+</ol><h2>Docker vs VirtualBox</h2>
+
+<p>以前试过使用VirtualBox虚拟机来做开发环境，因为团队里同时使用Linux和Windows。
+但发现有2个问题，一是速度太慢，二是在windows下，编辑器保存文件后并不能触发
+VirtualBox里的自动化编译或刷新。</p>
+
+<p>因此尝试使用Docker,因为现在不需...</p>
+<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Read More...</a>
+</li>
+<li class='article'>
+<h2>
 <a href="/2014/07/24/decision-tree/">Decision Tree</a>
 <span>Jul 24</span>
 </h2>
@@ -245,50 +301,6 @@ need to be able to use windows some times. But I don’t want to pay for the
 windows. And I don’t want to use some cracked windows...</p>
 <a href="/2014/03/16/run-microsoft-window-virtual-machine-for-free/">Read More...</a>
 </li>
-<li class='article'>
-<h2>
-<a href="/2014/03/14/record-terminal-session-using-asciinema/">Record terminal session using asciinema</a>
-<span>Mar 14</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>My IDE is based on the Terminal</h2>
-
-<h2>Install asciinema</h2>
-<pre class="highlight shell">
-sudo pip install --upgrade asciinema
-</pre>
-<h2>Usage</h2>
-
-<h3>Authenticate yourself</h3>
-
-<p>In order to be able to delete or edit your terminal screencast, it require to
-login first. Use the below command and follow the...</p>
-<a href="/2014/03/14/record-terminal-session-using-asciinema/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/13/update-time-for-raspberry-pi/">Update time for raspberry pi</a>
-<span>Mar 13</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>The date problem</h2>
-
-<p>The raspberry pi doesn’t has a real time clock, so every time start the
-raspberry pi, we have to resest the time.</p>
-
-<h2>manually set the time from ntp server</h2>
-<pre class="highlight shell">sudo /etc/init.d/ntp stop
-sudo ntpdate 1.cn.pool.ntp.org
-</pre>
-<h2>Solution 2: set the...</h2>
-<a href="/2014/03/13/update-time-for-raspberry-pi/">Read More...</a>
-</li>
 <ul class='pager'>
 <li><a href="/">Previous page</a></li>
 <li><a href="/page/3/">Next page</a></li>
@@ -302,6 +314,14 @@ sudo ntpdate 1.cn.pool.ntp.org
 </dt>
 <dd>
 <ol>
+<li>
+<a href="/2014/09/19/notes-for-programming-elixir-conventional-programming/">notes for programming elixir conventional programming</a>
+<span>Sep 19</span>
+</li>
+<li>
+<a href="/2014/09/18/rubymotion-for-android/">rubymotion for android</a>
+<span>Sep 18</span>
+</li>
 <li>
 <a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
 <span>Sep 17</span>
@@ -334,14 +354,6 @@ sudo ntpdate 1.cn.pool.ntp.org
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
 </li>
-<li>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</li>
-<li>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -355,7 +367,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/android/">android</a>
-(3)
+(4)
 </li>
 <li>
 <a href="/tags/rubuto/">rubuto</a>
@@ -387,7 +399,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(11)
+(12)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -403,7 +415,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/elixir/">elixir</a>
-(1)
+(2)
 </li>
 <li>
 <a href="/tags/example/">example</a>
@@ -467,7 +479,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/rubymotion/">rubymotion</a>
-(2)
+(3)
 </li>
 <li>
 <a href="/tags/ios/">iOS</a>
@@ -561,6 +573,10 @@ sudo ntpdate 1.cn.pool.ntp.org
 <a href="/tags/ruboto/">ruboto</a>
 (1)
 </li>
+<li>
+<a href="/tags/mobild/">mobild</a>
+(1)
+</li>
 </ol>
 </dd>
 <dt>
@@ -570,7 +586,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(34)
+(36)
 </li>
 <li>
 <a href="/2013/">2013</a>
@@ -594,6 +610,14 @@ sudo ntpdate 1.cn.pool.ntp.org
 <dd>
 <ol>
 <li>
+<a href="/2014/09/19/notes-for-programming-elixir-conventional-programming/">notes for programming elixir conventional programming</a>
+<span>Sep 19</span>
+</li>
+<li>
+<a href="/2014/09/18/rubymotion-for-android/">rubymotion for android</a>
+<span>Sep 18</span>
+</li>
+<li>
 <a href="/2014/09/17/edit-require-gem-in-vim/">edit require gem in vim</a>
 <span>Sep 17</span>
 </li>
@@ -625,14 +649,6 @@ sudo ntpdate 1.cn.pool.ntp.org
 <a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
 <span>Sep  4</span>
 </li>
-<li>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</li>
-<li>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</li>
 </ol>
 </dd>
 <dt>
@@ -646,7 +662,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/android/">android</a>
-(3)
+(4)
 </li>
 <li>
 <a href="/tags/rubuto/">rubuto</a>
@@ -678,7 +694,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/ruby/">ruby</a>
-(11)
+(12)
 </li>
 <li>
 <a href="/tags/delegate/">delegate</a>
@@ -694,7 +710,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/elixir/">elixir</a>
-(1)
+(2)
 </li>
 <li>
 <a href="/tags/example/">example</a>
@@ -758,7 +774,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 </li>
 <li>
 <a href="/tags/rubymotion/">rubymotion</a>
-(2)
+(3)
 </li>
 <li>
 <a href="/tags/ios/">iOS</a>
@@ -852,6 +868,10 @@ sudo ntpdate 1.cn.pool.ntp.org
 <a href="/tags/ruboto/">ruboto</a>
 (1)
 </li>
+<li>
+<a href="/tags/mobild/">mobild</a>
+(1)
+</li>
 </ol>
 </dd>
 <dt>
@@ -861,7 +881,7 @@ sudo ntpdate 1.cn.pool.ntp.org
 <ol>
 <li>
 <a href="/2014/">2014</a>
-(34)
+(36)
 </li>
 <li>
 <a href="/2013/">2013</a>
