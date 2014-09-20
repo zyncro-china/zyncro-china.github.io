@@ -708,8 +708,8 @@ iex(55)&gt; Keyword.get_values(kw_list, :likes)
 <p>Elixir中提供2个关于iteration的module</p>
 
 <ol>
-<li>Enum: Processing collections</li>
-<li>Stream: Lazy enumerables</li>
+<li><a href="http://elixir-lang.org/docs/stable/elixir/Enum.html">Enum</a>: Processing collections</li>
+<li><a href="http://elixir-lang.org/docs/stable/elixir/Stream.html">Stream</a>: Lazy enumerables</li>
 </ol>
 
 <h3>Enum</h3>
@@ -729,16 +729,196 @@ iex(55)&gt; Keyword.get_values(kw_list, :likes)
 <p>Collectable protocol和Enumermable相反，通过插入元素来创建collection</p>
 
 <p>Collectable的API是底层使用的较多，用户通常通过Enum.into和comprehension来使用。</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">into</span> <span class="m">1</span><span class="o">..</span><span class="m">5</span><span class="p">,</span> <span class="p">[]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">]</span>
 
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">into</span> <span class="m">1</span><span class="o">..</span><span class="m">5</span><span class="p">,</span> <span class="p">[</span><span class="m">100</span><span class="p">,</span> <span class="m">101</span> <span class="p">]</span>
+<span class="p">[</span><span class="m">100</span><span class="p">,</span> <span class="m">101</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">]</span>
+</pre>
 <h3>Comprehension</h3>
 
+<p>形式如下：</p>
+<pre class="highlight elixir"><span class="n">result</span> <span class="o">=</span> <span class="n">for</span> <span class="n">generator</span> <span class="ow">or</span> <span class="n">filter</span><span class="o">...</span> <span class="p">[</span> <span class="p">,</span> <span class="ss">into:</span> <span class="n">value</span> <span class="p">]</span> <span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="n">expression</span>
+</pre>
+<p>generator是指定如何从一个collection里抽取值,而且可以有多个generator clause</p>
+<pre class="highlight elixir"><span class="n">pattern</span> <span class="o">&lt;-</span> <span class="n">list</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">mix_maxes</span> <span class="o">=</span> <span class="p">[{</span><span class="m">1</span><span class="p">,</span><span class="m">4</span><span class="p">},</span> <span class="p">{</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">},</span> <span class="p">{</span><span class="m">10</span><span class="p">,</span> <span class="m">15</span><span class="p">}]</span>
+<span class="p">[{</span><span class="m">1</span><span class="p">,</span> <span class="m">4</span><span class="p">},</span> <span class="p">{</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">},</span> <span class="p">{</span><span class="m">10</span><span class="p">,</span> <span class="m">15</span><span class="p">}]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="p">{</span><span class="n">min</span><span class="p">,</span><span class="n">max</span><span class="p">}</span> <span class="o">&lt;-</span> <span class="n">mix_maxes</span><span class="p">,</span> <span class="n">n</span> <span class="o">&lt;-</span> <span class="n">min</span><span class="o">..</span><span class="n">max</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="n">n</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> <span class="m">11</span><span class="p">,</span> <span class="m">12</span><span class="p">,</span> <span class="m">13</span><span class="p">,</span> <span class="m">14</span><span class="p">,</span> <span class="m">15</span><span class="p">]</span>
+
+</pre>
+<p>filter</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">first8</span> <span class="o">=</span> <span class="p">[</span> <span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">6</span><span class="p">,</span><span class="m">7</span><span class="p">,</span><span class="m">8</span> <span class="p">]</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">7</span><span class="p">,</span> <span class="m">8</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="n">first8</span><span class="p">,</span> <span class="n">y</span> <span class="o">&lt;-</span> <span class="n">first8</span><span class="p">,</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">,</span> <span class="n">rem</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span><span class="o">==</span><span class="m">0</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">}</span>
+<span class="p">[{</span><span class="m">5</span><span class="p">,</span> <span class="m">2</span><span class="p">},</span> <span class="p">{</span><span class="m">5</span><span class="p">,</span> <span class="m">4</span><span class="p">},</span> <span class="p">{</span><span class="m">6</span><span class="p">,</span> <span class="m">5</span><span class="p">},</span> <span class="p">{</span><span class="m">8</span><span class="p">,</span> <span class="m">5</span><span class="p">}]</span>
+</pre>
+<p>交换key value的例子</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">reports</span> <span class="o">=</span> <span class="p">[</span> <span class="ss">dallas:</span> <span class="ss">:hot</span><span class="p">,</span> <span class="ss">minneapolis:</span> <span class="ss">:cold</span><span class="p">,</span> <span class="ss">dc:</span> <span class="ss">:muggy</span><span class="p">,</span> <span class="ss">la:</span> <span class="ss">:smoggy</span> <span class="p">]</span>
+<span class="p">[</span><span class="ss">dallas:</span> <span class="ss">:hot</span><span class="p">,</span> <span class="ss">minneapolis:</span> <span class="ss">:cold</span><span class="p">,</span> <span class="ss">dc:</span> <span class="ss">:muggy</span><span class="p">,</span> <span class="ss">la:</span> <span class="ss">:smoggy</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="p">{</span> <span class="n">city</span><span class="p">,</span> <span class="n">weather</span> <span class="p">}</span> <span class="o">&lt;-</span> <span class="n">reports</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span> <span class="n">weather</span><span class="p">,</span> <span class="n">city</span> <span class="p">}</span>
+<span class="p">[</span><span class="ss">hot:</span> <span class="ss">:dallas</span><span class="p">,</span> <span class="ss">cold:</span> <span class="ss">:minneapolis</span><span class="p">,</span> <span class="ss">muggy:</span> <span class="ss">:dc</span><span class="p">,</span> <span class="ss">smoggy:</span> <span class="ss">:la</span><span class="p">]</span>
+</pre>
+<h4>Comprehension Work on Bits</h4>
+<pre class="highlight elixir">
+<span class="n">ex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="o">&lt;&lt;</span> <span class="n">ch</span> <span class="o">&lt;-</span> <span class="sd">&quot;</span><span class="s2">hello&quot;</span> <span class="o">&gt;&gt;</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="n">ch</span>
+<span class="s1">&#39;hello&#39;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="o">&lt;&lt;</span> <span class="n">ch</span> <span class="o">&lt;-</span> <span class="sd">&quot;</span><span class="s2">hello&quot;</span> <span class="o">&gt;&gt;</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="o">&lt;&lt;</span><span class="n">ch</span><span class="o">&gt;&gt;</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">h&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">e&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">l&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">l&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">o&quot;</span><span class="p">]</span>
+
+<span class="c1">#注意&lt;-左边的是pattern</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="o">&lt;&lt;</span> <span class="o">&lt;&lt;</span> <span class="n">b1</span><span class="p">::</span><span class="n">size</span><span class="p">(</span><span class="m">2</span><span class="p">),</span> <span class="n">b2</span><span class="p">::</span><span class="n">size</span><span class="p">(</span><span class="m">3</span><span class="p">),</span> <span class="n">b3</span><span class="p">::</span><span class="n">size</span><span class="p">(</span><span class="m">3</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="o">&lt;-</span> <span class="sd">&quot;</span><span class="s2">hello&quot;</span> <span class="o">&gt;&gt;</span><span class="p">,</span> <span class="k">do</span><span class="p">:</span> <span class="sd">&quot;</span><span class="s2">0</span><span class="si">#{</span><span class="n">b1</span><span class="si">}#{</span><span class="n">b2</span><span class="si">}#{</span><span class="n">b3</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">0150&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">0145&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">0154&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">0154&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">0157&quot;</span><span class="p">]</span>
+
+
+</pre>
+<h4>scope</h4>
+
+<p>在comprehension里的变量都是本地的，不会影响其他变量</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">name</span> <span class="o">=</span> <span class="sd">&quot;</span><span class="s2">Dave&quot;</span>
+<span class="sd">&quot;</span><span class="s2">Dave&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="n">name</span> <span class="o">&lt;-</span> <span class="err">~</span><span class="n">w</span><span class="p">{</span> <span class="n">cat</span><span class="p">,</span> <span class="n">dog</span> <span class="p">},</span> <span class="k">do</span><span class="p">:</span> <span class="no">String</span><span class="o">.</span><span class="n">upcase</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">CAT,&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">DOG&quot;</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">name</span>
+<span class="sd">&quot;</span><span class="s2">Dave&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span>
+</pre>
+<h4>Comprehension的返回值</h4>
+
+<p>into指定collection来接收comprehension的结果</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="n">for</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="err">~</span><span class="n">w</span><span class="p">{</span> <span class="n">cat</span> <span class="n">dog</span> <span class="p">},</span> <span class="ss">into:</span> <span class="err">%</span><span class="p">{},</span> <span class="k">do</span><span class="p">:</span> <span class="p">{</span> <span class="n">x</span><span class="p">,</span> <span class="no">String</span><span class="o">.</span><span class="n">upcase</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">}</span>
+<span class="err">%</span><span class="p">{</span><span class="sd">&quot;</span><span class="s2">cat&quot;</span> <span class="o">=&gt;</span> <span class="sd">&quot;</span><span class="s2">CAT&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">dog&quot;</span> <span class="o">=&gt;</span> <span class="sd">&quot;</span><span class="s2">DOG&quot;</span><span class="p">}</span>
+<span class="c1"># into: 可以是实现了collectable protocol的值： lists, binaries, functions,</span>
+<span class="c1"># maps, files, hash dicts, hashsets, IO streams</span>
+<span class="n">for</span> <span class="n">x</span> <span class="o">&lt;-</span> <span class="err">~</span><span class="n">w</span><span class="p">{</span> <span class="n">cat</span> <span class="n">dog</span> <span class="p">},</span> <span class="ss">into:</span> <span class="no">IO</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="ss">:stdio</span><span class="p">,</span><span class="ss">:line</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="sd">&quot;</span><span class="s2">&lt;&lt;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&gt;&gt;\n&quot;</span>
+<span class="o">&lt;&lt;</span><span class="n">cat</span><span class="o">&gt;&gt;</span>
+<span class="o">&lt;&lt;</span><span class="n">dog</span><span class="o">&gt;&gt;</span>
+<span class="err">%</span><span class="no">IO</span><span class="o">.</span><span class="no">Stream</span><span class="p">{</span><span class="ss">device:</span> <span class="ss">:standard_io</span><span class="p">,</span> <span class="ss">line_or_bytes:</span> <span class="ss">:line</span><span class="p">,</span> <span class="ss">raw:</span> <span class="no">false</span><span class="p">}</span>
+
+</pre>
 <p><a name="string_and_binaries"></a></p>
 
 <h2>String and Binaries</h2>
 
+<p>IO.write用于多行的string</p>
+
+<h3>Heredocs &ldquo;&rdquo;&ldquo; 用于去掉多余的indent</h3>
+<pre class="highlight elixir">
+<span class="no">IO</span><span class="o">.</span><span class="n">write</span> <span class="sd">&quot;&quot;&quot;
+   my
+   string
+&quot;&quot;&quot;</span>
+</pre>
+<h3>Sigils</h3>
+
+<p>和ruby一样，elixir有一些其他的语法可以用来创建String</p>
+
+<ol>
+<li>~C a character list with no escaping or interpolation</li>
+<li>~c a character list, escaped and interpolated just like a single quoted string</li>
+<li>~R a regular expression with no escaping or interpolation</li>
+<li>~r a regular expression, escaped and interpolated</li>
+<li>~S string with no escaping or interpolation</li>
+<li>~s string, escaped and interpolated just like a double quoted string</li>
+<li>~W a list of whitespace-delimited words, with no escaping or interpolation</li>
+<li>~w a list of whitespace-delimited words, with escaping and interpolation</li>
+</ol>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="no">C</span><span class="p">[</span><span class="m">1</span><span class="p">\</span><span class="n">n2</span><span class="c1">#{1+2}]</span>
+<span class="s1">&#39;1\\n2\#{1+2}&#39;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="n">c</span><span class="sd">&quot;</span><span class="s2">1\n2</span><span class="si">#{</span><span class="m">1</span><span class="o">+</span><span class="m">2</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s1">&#39;1\n23&#39;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="no">S</span><span class="p">[</span><span class="m">1</span><span class="p">\</span><span class="n">n2</span><span class="c1">#{1+2}]</span>
+<span class="sd">&quot;</span><span class="s2">1\\n2\</span><span class="si">#{</span><span class="m">1</span><span class="o">+</span><span class="m">2</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="n">s</span><span class="o">/</span><span class="m">1</span><span class="p">\</span><span class="n">n2</span><span class="c1">#{1+2}/</span>
+<span class="sd">&quot;</span><span class="s2">1\n23&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="no">W</span><span class="p">[</span><span class="n">the</span> <span class="n">c</span><span class="c1">#{&#39;a&#39;}t sat on the mat]</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">the&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">c\</span><span class="si">#{</span><span class="s1">&#39;a&#39;</span><span class="si">}</span><span class="s2">t&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">sat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">on&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">the&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">mat&quot;</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="n">w</span><span class="p">[</span><span class="n">the</span> <span class="n">c</span><span class="c1">#{&#39;a&#39;}t sat on the mat]</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">the&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">cat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">sat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">on&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">the&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">mat&quot;</span><span class="p">]</span>
+</pre>
+<p>~W ~w 可以有一个选项(a,c,s)指定返回的类型是atom，list还是strings of characters</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="n">w</span><span class="p">[</span><span class="n">the</span> <span class="n">c</span><span class="c1">#{&#39;a&#39;}t sat on the mat]a</span>
+<span class="p">[</span><span class="ss">:the</span><span class="p">,</span> <span class="ss">:cat</span><span class="p">,</span> <span class="ss">:sat</span><span class="p">,</span> <span class="ss">:on</span><span class="p">,</span> <span class="ss">:the</span><span class="p">,</span> <span class="ss">:mat</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="n">w</span><span class="p">[</span><span class="n">the</span> <span class="n">c</span><span class="c1">#{&#39;a&#39;}t sat on the mat]c</span>
+<span class="p">[</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;sat&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;mat&#39;</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="err">~</span><span class="n">w</span><span class="p">[</span><span class="n">the</span> <span class="n">c</span><span class="c1">#{&#39;a&#39;}t sat on the mat]s</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">the&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">cat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">sat&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">on&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">the&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">mat&quot;</span><span class="p">]</span>
+</pre>
+<h3>Single Quoted Strings</h3>
+
+<p>单引号只是字符代码的列表</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="p">[</span> <span class="m">67</span><span class="p">,</span> <span class="m">65</span><span class="p">,</span> <span class="m">84</span> <span class="p">]</span>
+<span class="s1">&#39;CAT&#39;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">str</span> <span class="o">=</span> <span class="s1">&#39;olé&#39;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">str</span> <span class="o">=</span> <span class="s1">&#39;olé&#39;</span>
+<span class="s1">&#39;olé&#39;</span>
+<span class="c1"># The ~w in the format string forces str to be written as </span>
+<span class="c1"># an Erlang term—the underlying list of integers. The ~n is a newline.</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="ss">:io</span><span class="o">.</span><span class="n">format</span> <span class="sd">&quot;</span><span class="s2">~w~n&quot;</span><span class="p">,</span> <span class="p">[</span> <span class="n">str</span> <span class="p">]</span>
+<span class="p">[</span><span class="m">111</span><span class="p">,</span><span class="m">108</span><span class="p">,</span><span class="m">233</span><span class="p">]</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">list_to_tuple</span> <span class="n">str</span>
+<span class="p">{</span><span class="m">111</span><span class="p">,</span> <span class="m">108</span><span class="p">,</span> <span class="m">233</span><span class="p">}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">str</span> <span class="o">++</span> <span class="p">[</span><span class="m">0</span><span class="p">]</span>
+<span class="p">[</span><span class="m">111</span><span class="p">,</span> <span class="m">108</span><span class="p">,</span> <span class="m">233</span><span class="p">,</span> <span class="m">0</span><span class="p">]</span>
+
+</pre>
+<p>?c 返回某个字符的代码</p>
+
+<p>parse数字的例子</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Parse</span> <span class="k">do
+  def</span> <span class="n">number</span><span class="p">([</span> <span class="sx">?-</span> <span class="o">|</span> <span class="n">tail</span> <span class="p">]),</span> <span class="k">do</span><span class="p">:</span> <span class="n">_number_digits</span><span class="p">(</span><span class="n">tail</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="m">1</span>
+  <span class="k">def</span> <span class="n">number</span><span class="p">([</span> <span class="sx">?+</span> <span class="o">|</span> <span class="n">tail</span> <span class="p">]),</span> <span class="k">do</span><span class="p">:</span> <span class="n">_number_digits</span><span class="p">(</span><span class="n">tail</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+  <span class="k">def</span> <span class="n">number</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">_number_digits</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+  <span class="k">defp</span> <span class="n">_number_digits</span><span class="p">([],</span> <span class="n">value</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">value</span>
+  <span class="k">defp</span> <span class="n">_number_digits</span><span class="p">([</span> <span class="n">digit</span> <span class="o">|</span> <span class="n">tail</span> <span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+  <span class="ow">when</span> <span class="n">digit</span> <span class="ow">in</span> <span class="s1">&#39;0123456789&#39;</span> <span class="k">do
+    </span><span class="n">_number_digits</span><span class="p">(</span><span class="n">tail</span><span class="p">,</span> <span class="n">value</span><span class="o">*</span><span class="m">10</span> <span class="o">+</span> <span class="n">digit</span> <span class="o">-</span> <span class="sx">?0</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">defp</span> <span class="n">_number_digits</span><span class="p">([</span> <span class="n">non_digit</span> <span class="o">|</span> <span class="n">_</span> <span class="p">],</span> <span class="n">_</span><span class="p">)</span> <span class="k">do
+    raise</span> <span class="sd">&quot;</span><span class="s2">Invalid digit &#39;</span><span class="si">#{</span><span class="p">[</span><span class="n">non_digit</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Parse</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="p">)</span>
+<span class="m">123</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Parse</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="s1">&#39;-123&#39;</span><span class="p">)</span>
+<span class="o">-</span><span class="m">123</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Parse</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="s1">&#39;+123&#39;</span><span class="p">)</span>
+<span class="m">123</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Parse</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="s1">&#39;+9&#39;</span><span class="p">)</span>
+<span class="m">9</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Parse</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="s1">&#39;+a&#39;</span><span class="p">)</span>
+<span class="o">**</span> <span class="p">(</span><span class="no">RuntimeError</span><span class="p">)</span> <span class="no">Invalid</span> <span class="n">digit</span> <span class="s1">&#39;a&#39;</span>
+</pre>
+<h3>Double Quoted Strings</h3>
+
+<p>双引号string保存在UTF-8 encoding的序列里,这暗示了2点</p>
+
+<ol>
+<li>binary的长度可能比实际长</li>
+<li>因为不是list，所以要同时用binary syntax和list syntax</li>
+</ol>
+
+<p><a href="http://elixir-lang.org/docs/stable/elixir/String.html">String module API</a></p>
+
+<h3>Binaries and Pattern Matching</h3>
+
 <p><a name="control_flow"></a></p>
 
 <h2>Control Flow</h2>
+
+<ol>
+<li>if and unless</li>
+<li>cond</li>
+<li>case</li>
+<li>Raising Exceptions</li>
+<li>Designing With Exceptions</li>
+</ol>
+
+<p>Elixr程序不需要太多分支语句也可以很有表现力。</p>
 
 <p><a name="organizing_a_project"></a></p>
 

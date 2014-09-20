@@ -1,0 +1,297 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>notes for programming elixir concurrent programming</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+notes for programming elixir concurrent programming
+</h1>
+</div>
+<br>
+<h2>part II concurrent programming的内容</h2>
+
+<ol>
+<li><a href="#working_with_multiple_processes">Working With Multiple Processes</a></li>
+<li><a href="#nodes_the_key_to_distrbuting_services">Nodes The Key To Distrbuting Services</a></li>
+<li><a href="#otp_servers">OTP Servers</a></li>
+<li><a href="#otp_supervisors">OTP Supervisors</a></li>
+<li><a href="#otp_applications">OTP Applications</a></li>
+<li><a href="#tasks_and_agents">Tasks and Agents</a></li>
+</ol>
+
+<h2>part III More Advanced Elixir的内容</h2>
+
+<ol>
+<li><a href="#macros_and_code_evaluation">Macros And Code Evaluation</a></li>
+<li><a href="#protocols_polymorphic_functions">Protocols Polymorphic Functions</a></li>
+<li><a href="#linking_modules_behaviours_and_use">Linking Modules Behaviours and Use</a></li>
+<li><a href="#more_cool_stuff">More Cool Stuff</a></li>
+</ol>
+
+<p><a name="working_with_multiple_processes"></a></p>
+
+<h2>Working With Multiple Processes</h2>
+
+<p>Elixir使用Actor模型，一个actor就是一个独立的进程，你可以spawn一个进程，可以发消息给进程，也可以接收消息。</p>
+
+<p>注意，下面的代码无法做尾递归优化，有可能会堆栈溢出</p>
+<pre class="highlight elixir"><span class="k">def</span> <span class="n">factorial</span><span class="p">(</span><span class="m">0</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">1</span>
+<span class="k">def</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="m">1</span><span class="p">)</span>
+</pre>
+<p>用进程做计数器的例子</p>
+<pre class="highlight elixir">
+<span class="k">defmodule</span> <span class="no">Chain</span> <span class="k">do
+  def</span> <span class="n">count</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span> <span class="k">do
+    receive</span> <span class="k">do
+      </span><span class="n">n</span> <span class="o">-&gt;</span>
+        <span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="m">1</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">create_processes</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">last</span> <span class="o">=</span> <span class="no">Enum</span><span class="o">.</span><span class="n">reduce</span> <span class="m">1</span><span class="o">..</span><span class="n">n</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="k">fn</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">last_pid</span><span class="p">)</span><span class="o">-&gt;</span>
+      <span class="n">spawn</span><span class="p">(</span><span class="no">Chain</span><span class="p">,</span> <span class="ss">:count</span><span class="p">,</span> <span class="p">[</span><span class="n">last_pid</span><span class="p">])</span>
+    <span class="k">end</span>
+
+    <span class="n">send</span> <span class="n">last</span><span class="p">,</span> <span class="m">0</span>
+
+    <span class="k">receive</span> <span class="k">do
+      </span><span class="n">n</span> <span class="o">-&gt;</span> <span class="sd">&quot;</span><span class="s2">Result is </span><span class="si">#{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="n">run</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">do
+    </span><span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="n">inspect</span> <span class="ss">:timer</span><span class="o">.</span><span class="n">tc</span><span class="p">(</span><span class="no">Chain</span><span class="p">,</span> <span class="ss">:create_processes</span><span class="p">,</span> <span class="p">[</span><span class="n">n</span><span class="p">])</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">Chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="m">100_000</span><span class="p">)</span>
+
+</pre>
+<p>{633040, &ldquo;Result is 100000&rdquo;}</p>
+
+<p>100,000个进程需要633ms</p>
+
+<h3>连接2个进程</h3>
+
+<p>用spawn_link</p>
+
+<h3>监视进程</h3>
+
+<p>用Process.spawn_monitor</p>
+
+<h3>Parallel Map</h3>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Parallel</span> <span class="k">do
+  def</span> <span class="n">pmap</span><span class="p">(</span><span class="n">collection</span><span class="p">,</span> <span class="n">fun</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">me</span> <span class="o">=</span> <span class="n">self</span>
+    <span class="n">collection</span>
+    <span class="o">|&gt;</span>
+    <span class="no">Enum</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">fn</span> <span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">-&gt;</span>
+      <span class="n">spawn_link</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">send</span> <span class="n">me</span><span class="p">,</span> <span class="p">{</span> <span class="n">self</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="p">})</span> <span class="k">end</span>
+    <span class="k">end</span><span class="p">)</span>
+    <span class="o">|&gt;</span>
+    <span class="no">Enum</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">fn</span> <span class="p">(</span><span class="n">pid</span><span class="p">)</span> <span class="o">-&gt;</span>
+      <span class="k">receive</span> <span class="k">do </span><span class="p">{</span> <span class="o">^</span><span class="n">pid</span><span class="p">,</span> <span class="n">result</span> <span class="p">}</span> <span class="o">-&gt;</span> <span class="n">result</span> <span class="k">end</span>
+    <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">c</span><span class="p">(</span><span class="sd">&quot;</span><span class="s2">pmap.exs&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="no">Parallel</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Parallel</span><span class="o">.</span><span class="n">pmap</span> <span class="m">1</span><span class="o">..</span><span class="m">10</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span> <span class="o">*</span> <span class="nv">&amp;1</span><span class="p">)</span>
+<span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">9</span><span class="p">,</span><span class="m">16</span><span class="p">,</span><span class="m">25</span><span class="p">,</span><span class="m">36</span><span class="p">,</span><span class="m">49</span><span class="p">,</span><span class="m">64</span><span class="p">,</span><span class="m">81</span><span class="p">,</span><span class="m">100</span><span class="p">]</span>
+</pre>
+<h3>Fibonacci Server</h3>
+<pre class="highlight elixir"><span class="c1"># fib.exs</span>
+<span class="k">defmodule</span> <span class="no">FibSolver</span> <span class="k">do
+  def</span> <span class="n">fib</span><span class="p">(</span><span class="n">scheduler</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">send</span> <span class="n">scheduler</span><span class="p">,</span> <span class="p">{</span> <span class="ss">:ready</span><span class="p">,</span> <span class="n">self</span> <span class="p">}</span>
+    <span class="k">receive</span> <span class="k">do
+      </span><span class="p">{</span> <span class="ss">:fib</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">client</span> <span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="n">send</span> <span class="n">client</span><span class="p">,</span> <span class="p">{</span> <span class="ss">:answer</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">fib_calc</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">self</span> <span class="p">}</span> <span class="n">fib</span><span class="p">(</span><span class="n">scheduler</span><span class="p">)</span>
+      <span class="p">{</span> <span class="ss">:shutdown</span> <span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="k">exit</span><span class="p">(</span><span class="m">0</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="c1"># very inefficient, deliberately</span>
+  <span class="k">defp</span> <span class="n">fib_calc</span><span class="p">(</span><span class="m">0</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">1</span>
+  <span class="k">defp</span> <span class="n">fib_calc</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">1</span>
+  <span class="k">defp</span> <span class="n">fib_calc</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="n">fib_calc</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib_calc</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="m">2</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">defmodule</span> <span class="no">Scheduler</span> <span class="k">do
+  def</span> <span class="n">run</span><span class="p">(</span><span class="n">num_processes</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">to_calculate</span><span class="p">)</span> <span class="k">do
+    </span><span class="p">(</span><span class="m">1</span><span class="o">..</span><span class="n">num_processes</span><span class="p">)</span>
+    <span class="o">|&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">fn</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spawn</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="p">[</span><span class="n">self</span><span class="p">])</span> <span class="k">end</span><span class="p">)</span>
+    <span class="o">|&gt;</span> <span class="n">schedule_processes</span><span class="p">(</span><span class="n">to_calculate</span><span class="p">,</span> <span class="p">[])</span>
+  <span class="k">end</span>
+  <span class="k">defp</span> <span class="n">schedule_processes</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span> <span class="k">do
+    receive</span> <span class="k">do
+      </span><span class="p">{</span><span class="ss">:ready</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="ow">when</span> <span class="n">length</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span> <span class="o">-&gt;</span>
+        <span class="p">[</span> <span class="n">next</span> <span class="o">|</span> <span class="n">tail</span> <span class="p">]</span> <span class="o">=</span> <span class="n">queue</span>
+        <span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="ss">:fib</span><span class="p">,</span> <span class="n">next</span><span class="p">,</span> <span class="n">self</span><span class="p">}</span>
+        <span class="n">schedule_processes</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="n">tail</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+      <span class="p">{</span><span class="ss">:ready</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="ss">:shutdown</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">length</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">1</span> <span class="k">do
+          </span><span class="n">schedule_processes</span><span class="p">(</span><span class="no">List</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="n">pid</span><span class="p">),</span> <span class="n">queue</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="k">else</span>
+          <span class="no">Enum</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="k">fn</span> <span class="p">{</span><span class="n">n1</span><span class="p">,</span><span class="n">_</span><span class="p">},</span> <span class="p">{</span><span class="n">n2</span><span class="p">,</span><span class="n">_</span><span class="p">}</span> <span class="o">-&gt;</span> <span class="n">n1</span> <span class="o">&lt;=</span> <span class="n">n2</span> <span class="k">end</span><span class="p">)</span>
+        <span class="k">end</span>
+      <span class="p">{</span><span class="ss">:answer</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">_pid</span><span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="n">schedule_processes</span><span class="p">(</span><span class="n">processes</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="p">[</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="o">|</span> <span class="n">results</span> <span class="p">])</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">to_process</span> <span class="o">=</span> <span class="p">[</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span><span class="p">,</span> <span class="m">37</span> <span class="p">]</span>
+<span class="no">Enum</span><span class="o">.</span><span class="n">each</span> <span class="m">1</span><span class="o">..</span><span class="m">10</span><span class="p">,</span> <span class="k">fn</span> <span class="n">num_processes</span> <span class="o">-&gt;</span>
+  <span class="p">{</span><span class="n">time</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:timer</span><span class="o">.</span><span class="n">tc</span><span class="p">(</span><span class="no">Scheduler</span><span class="p">,</span> <span class="ss">:run</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">num_processes</span><span class="p">,</span> <span class="no">FibSolver</span><span class="p">,</span> <span class="ss">:fib</span><span class="p">,</span> <span class="n">to_process</span><span class="p">])</span>
+  <span class="k">if</span> <span class="n">num_processes</span> <span class="o">==</span> <span class="m">1</span> <span class="k">do
+    </span><span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="n">inspect</span> <span class="n">result</span>
+    <span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">\n </span><span class="err">#</span><span class="s2">
+    time (s)&quot;</span>
+  <span class="k">end</span>
+  <span class="ss">:io</span><span class="o">.</span><span class="n">format</span> <span class="sd">&quot;</span><span class="s2">~2B     ~.2f~n&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">num_processes</span><span class="p">,</span> <span class="n">time</span><span class="o">/</span><span class="m">1000000.0</span><span class="p">]</span>
+<span class="k">end</span>
+</pre><pre class="highlight elixir"><span class="err">$</span> <span class="n">elixir</span> <span class="n">fib</span><span class="o">.</span><span class="n">exs</span>
+<span class="p">[{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span>
+<span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span>
+<span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">},</span> <span class="p">{</span><span class="m">37</span><span class="p">,</span> <span class="m">39088169</span><span class="p">}]</span>
+<span class="c1">#    time (s)</span>
+<span class="m">1</span>    <span class="m">10.64</span>
+<span class="m">2</span>    <span class="m">6.05</span>
+<span class="m">3</span>    <span class="m">5.67</span>
+<span class="m">4</span>    <span class="m">4.97</span>
+<span class="m">5</span>    <span class="m">4.79</span>
+<span class="m">6</span>    <span class="m">5.28</span>
+<span class="m">7</span>    <span class="m">5.47</span>
+<span class="m">8</span>    <span class="m">5.24</span>
+<span class="m">9</span>    <span class="m">5.29</span>
+<span class="m">10</span>   <span class="m">5.20</span>
+</pre>
+<h3>Agents</h3>
+
+<p>module只是function的容器，为了能存储state，使用agent module</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">FibAgent</span> <span class="k">do
+  def</span> <span class="n">start_link</span> <span class="k">do
+    </span><span class="n">cache</span> <span class="o">=</span> <span class="no">Enum</span><span class="o">.</span><span class="n">into</span><span class="p">([{</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">},</span> <span class="p">{</span><span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">}],</span> <span class="no">HashDict</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+    <span class="no">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="n">cache</span> <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">fib</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">when</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="m">0</span> <span class="k">do
+    </span><span class="no">Agent</span><span class="o">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="err">&amp;</span><span class="n">do_fib</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+  <span class="k">end</span>
+  <span class="k">defp</span> <span class="n">do_fib</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">do
+    if</span> <span class="n">cached</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">do
+      </span><span class="p">{</span><span class="n">cached</span><span class="p">,</span> <span class="n">cache</span><span class="p">}</span>
+    <span class="k">else</span>
+      <span class="p">{</span><span class="n">val</span><span class="p">,</span> <span class="n">cache</span><span class="p">}</span> <span class="o">=</span> <span class="n">do_fib</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="m">1</span><span class="p">)</span>
+      <span class="n">result</span> <span class="o">=</span> <span class="n">val</span> <span class="o">+</span> <span class="n">cache</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="m">2</span><span class="p">]</span>
+      <span class="p">{</span><span class="n">result</span><span class="p">,</span> <span class="no">Dict</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">result</span><span class="p">)}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">agent</span><span class="p">}</span> <span class="o">=</span> <span class="no">FibAgent</span><span class="o">.</span><span class="n">start_link</span><span class="p">()</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="no">FibAgent</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="m">2000</span><span class="p">)</span>
+</pre>
+<p><a name="nodes_the_key_to_distrbuting_services"></a></p>
+
+<h2>Nodes</h2>
+
+<p><a href="http://elixir-lang.org/docs/stable/elixir/Node.html">Node Module API</a></p>
+
+<p><a name="otp_servers"></a></p>
+
+<h2>OTP Servers</h2>
+
+<p><a name="otp_supervisors"></a></p>
+
+<h2>OTP Supervisors</h2>
+
+<p><a name="otp_applications"></a></p>
+
+<h2>OTP Applications</h2>
+
+<p><a name="tasks_and_agents"></a></p>
+
+<h2>Tasks and Agents</h2>
+
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+
