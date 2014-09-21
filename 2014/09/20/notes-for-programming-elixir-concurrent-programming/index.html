@@ -485,14 +485,144 @@ iex&gt; GenServer.call(pid, :next_number)
 <p><a name="otp_supervisors"></a></p>
 
 <h2>OTP Supervisors</h2>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Sequence</span><span class="o">.</span><span class="no">Supervisor</span> <span class="k">do
+  </span><span class="kn">use</span> <span class="no">Supervisor</span>
+  <span class="k">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">initial_number</span><span class="p">)</span> <span class="k">do
+    </span><span class="no">Supervisor</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="n">initial_number</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">init</span><span class="p">(</span><span class="n">initial_number</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span> <span class="n">worker</span><span class="p">(</span><span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span><span class="p">,</span> <span class="p">[</span><span class="n">initial_number</span><span class="p">])</span> <span class="p">]</span>
+    <span class="n">supervise</span> <span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<p>The supervisor’s start_link method delegates its work to Elixir’s Supervisor
+library.
+It passes in its own module name and the parameter to be passed to the
+supervised process. But the sequence process is not started yet. Instead, the
+supervisor is started in a separate process, and its init function is called.
+This
+init function is responsible for starting the supervised process.</p>
+
+<p>Init uses two functions defined by the Elixir Supervisor behavior. 1 The worker
+function creates a specification of a child worker. It takes the name of the
+GenServer module containing the worker ( Sequence.Server in our case) and the
+parameter to pass in. It returns a tuple in a form that can be used by the
+OTP libraries.</p>
+
+<p>The supervise function takes a list of these worker specifications and starts
+them. The strategy parameter tells the supervisor how to restart children. In
+this case, :one<em>for</em>one means to restart a child if it dies.</p>
 
 <p><a name="otp_applications"></a></p>
 
 <h2>OTP Applications</h2>
 
+<p>在OTP里application是一堆带有discriptor的代码，
+discriptor告诉runtime这些代码有什么依赖，注册什么global names。实际上，OTP
+application更像DLL而不是传统的application</p>
+
+<p>application更像是component或service</p>
+
+<h3>Application Specification File</h3>
+
+<p>name.app是mix根据mix.exs和其他信息生成的文件，用来定义application的运行时环境</p>
+
+<h3>Hot code swapping</h3>
+
 <p><a name="tasks_and_agents"></a></p>
 
 <h2>Tasks and Agents</h2>
+
+<h3>Tasks</h3>
+
+<p>Elixir task是在background运行的function</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Fib</span> <span class="k">do
+  def</span> <span class="n">of</span><span class="p">(</span><span class="m">0</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">0</span>
+  <span class="k">def</span> <span class="n">of</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="m">1</span>
+  <span class="k">def</span> <span class="n">of</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="k">do</span><span class="p">:</span> <span class="no">Fib</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span> <span class="no">Fib</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="m">1</span><span class="p">)</span>
+<span class="k">end</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">Start the task&quot;</span>
+<span class="n">worker</span> <span class="o">=</span> <span class="no">Task</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">Fib</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="m">20</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">Do something else&quot;</span>
+<span class="c1"># ...</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">Wait for the task&quot;</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">Task</span><span class="o">.</span><span class="n">await</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">The result is </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span>
+
+</pre>
+<p>可以用匿名函数或module/function</p>
+<pre class="highlight elixir"><span class="n">worker</span> <span class="o">=</span> <span class="no">Task</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="no">Fib</span><span class="p">,</span> <span class="ss">:of</span><span class="p">,</span> <span class="p">[</span><span class="m">20</span><span class="p">])</span>
+</pre>
+<p>Tasks是用OTP server实现的，可以把他们加入到application的supervision tree</p>
+<pre class="highlight elixir"><span class="kn">import</span> <span class="no">Supervisor</span><span class="o">.</span><span class="no">Spec</span>
+<span class="n">children</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">worker</span><span class="p">(</span><span class="no">Task</span><span class="p">,</span> <span class="p">[</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="n">do_something_extraordinary</span><span class="p">()</span> <span class="k">end</span> <span class="p">])</span>
+<span class="p">]</span>
+<span class="n">supervise</span> <span class="n">children</span><span class="p">,</span> <span class="ss">strategy:</span> <span class="ss">:one_for_one</span>
+</pre>
+<h3>Agents</h3>
+
+<p>Agent是在background运行的进程，并维护着其state</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span> <span class="ss">:ok</span><span class="p">,</span> <span class="n">count</span> <span class="p">}</span> <span class="o">=</span> <span class="no">Agent</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="m">0</span> <span class="k">end</span><span class="p">)</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="c1">#PID&lt;0.69.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">))</span>
+<span class="m">0</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="o">+</span><span class="m">1</span><span class="p">))</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="o">+</span><span class="m">1</span><span class="p">))</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="o">+</span><span class="m">1</span><span class="p">))</span>
+<span class="m">2</span>
+</pre>
+<p>也可以指定名称</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="m">1</span> <span class="k">end</span><span class="p">,</span> <span class="ss">name:</span> <span class="no">Sum</span><span class="p">)</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="c1">#PID&lt;0.78.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="no">Sum</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">))</span>
+<span class="m">1</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="no">Sum</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="o">+</span><span class="m">99</span><span class="p">))</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="no">Sum</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">))</span>
+<span class="m">100</span>
+</pre>
+<p>一个更典型的例子，维护word/frequency对的HashDict</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Frequency</span> <span class="k">do
+  def</span> <span class="n">start_link</span> <span class="k">do
+    </span><span class="no">Agent</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">HashDict</span><span class="o">.</span><span class="n">new</span> <span class="k">end</span><span class="p">,</span> <span class="ss">name:</span> <span class="bp">__MODULE__</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">add_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">do
+    </span><span class="no">Agent</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span>
+      <span class="k">fn</span> <span class="n">dict</span> <span class="o">-&gt;</span>
+        <span class="no">Dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span><span class="o">+</span><span class="m">1</span><span class="p">))</span>
+    <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">count_for</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">do
+    </span><span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="k">fn</span> <span class="n">dict</span> <span class="o">-&gt;</span> <span class="no">Dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">words</span> <span class="k">do
+    </span><span class="no">Agent</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="k">fn</span> <span class="n">dict</span> <span class="o">-&gt;</span> <span class="no">Dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">dict</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">c</span> <span class="sd">&quot;</span><span class="s2">agent_dict.exs&quot;</span>
+<span class="p">[</span><span class="no">Frequency</span><span class="p">]</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">start_link</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="c1">#PID&lt;0.101.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">add_word</span> <span class="sd">&quot;</span><span class="s2">dave&quot;</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">words</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">dave&quot;</span><span class="p">]</span>
+<span class="n">iex</span><span class="p">(</span><span class="m">41</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">add_word</span> <span class="sd">&quot;</span><span class="s2">was&quot;</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">add_word</span> <span class="sd">&quot;</span><span class="s2">here&quot;</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">add_word</span> <span class="sd">&quot;</span><span class="s2">he&quot;</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">add_word</span> <span class="sd">&quot;</span><span class="s2">was&quot;</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">Frequency</span><span class="o">.</span><span class="n">words</span>
+<span class="p">[</span><span class="sd">&quot;</span><span class="s2">he&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">dave&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">was&quot;</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">here&quot;</span><span class="p">]</span>
+</pre>
+<h3>更大的例子</h3>
 
 </article>
 <div id="disqus_thread"></div>
