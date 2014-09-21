@@ -245,9 +245,242 @@ notes for programming elixir concurrent programming
 
 <p><a href="http://elixir-lang.org/docs/stable/elixir/Node.html">Node Module API</a></p>
 
+<h3>Naming Nodes</h3>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">self</span>
+<span class="ss">:nonode</span><span class="nv">@nohost</span>
+
+<span class="err">$</span> <span class="n">iex</span> <span class="o">--</span><span class="n">name</span> <span class="n">wibble</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="o">.</span><span class="n">local</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">wibble</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="o">.</span><span class="n">local</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">self</span>
+<span class="ss">:&quot;wibble@light-boy.local&quot;</span>
+
+<span class="err">$</span> <span class="n">iex</span> <span class="o">--</span><span class="n">sname</span> <span class="n">wobble</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">wobble</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">self</span>
+<span class="ss">:&quot;wobble@light-boy&quot;</span>
+
+</pre>
+<p>Connect nodes:</p>
+<pre class="highlight elixir"><span class="c1">#Window #1</span>
+<span class="err">$</span> <span class="n">iex</span> <span class="o">--</span><span class="n">sname</span> <span class="n">node_one</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">node_one</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span>
+
+<span class="c1">#Window #2</span>
+<span class="err">$</span> <span class="n">iex</span> <span class="o">--</span><span class="n">sname</span> <span class="n">node_two</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">node_two</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">list</span>
+<span class="p">[]</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">node_two</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">connect</span> <span class="ss">:&quot;node_one@light-boy&quot;</span>
+<span class="no">true</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">node_two</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">list</span>
+<span class="p">[</span><span class="ss">:&quot;node_one@light-boy&quot;</span><span class="p">]</span>
+</pre>
+<p>spawn可以在其他node上运行</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="p">(</span><span class="n">node_one</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">func</span> <span class="o">=</span> <span class="k">fn</span> <span class="o">-&gt;</span> <span class="no">IO</span><span class="o">.</span><span class="n">inspect</span> <span class="no">Node</span><span class="o">.</span><span class="n">self</span> <span class="k">end</span>
+<span class="c1">#Function&lt;erl_eval.20.82930912&gt;</span>
+
+<span class="n">iex</span><span class="p">(</span><span class="n">node_one</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="ss">:&quot;node_two@light-boy&quot;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+<span class="c1">#PID&lt;7393.48.0&gt;</span>
+<span class="n">node_two</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span>
+</pre>
+<p>由于spawn继承了进程的结构，包括group leader,这决定了IO.puts往哪里输出，所以还是在node_one上看到输出</p>
+
+<h3>Cookies</h3>
+
+<p>使用cookie来允许node的连接</p>
+<pre class="highlight elixir"><span class="err">$</span> <span class="n">iex</span> <span class="o">--</span><span class="n">sname</span> <span class="n">one</span> <span class="o">--</span><span class="n">cookie</span> <span class="n">chocolate</span><span class="o">-</span><span class="n">chip</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">one</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">get_cookie</span>
+<span class="ss">:&quot;chocolate-chip&quot;</span>
+</pre>
+<h3>Naming Your Processes</h3>
+
+<p>使用:global.register_name,和:global.whereis_name</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Tick</span> <span class="k">do
+  </span><span class="c1"># 2 seconds</span>
+  <span class="nv">@interval</span> <span class="m">2000</span>
+  <span class="nv">@name</span> <span class="ss">:ticker</span>
+  <span class="k">def</span> <span class="n">start</span> <span class="k">do
+    </span><span class="n">pid</span> <span class="o">=</span> <span class="n">spawn</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="ss">:generator</span><span class="p">,</span> <span class="p">[[]])</span>
+    <span class="ss">:global</span><span class="o">.</span><span class="n">register_name</span><span class="p">(</span><span class="nv">@name</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">register</span><span class="p">(</span><span class="n">client_pid</span><span class="p">)</span> <span class="k">do
+    </span><span class="n">send</span> <span class="ss">:global</span><span class="o">.</span><span class="n">whereis_name</span><span class="p">(</span><span class="nv">@name</span><span class="p">),</span> <span class="p">{</span> <span class="ss">:register</span><span class="p">,</span> <span class="n">client_pid</span> <span class="p">}</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">generator</span><span class="p">(</span><span class="n">clients</span><span class="p">)</span> <span class="k">do
+    receive</span> <span class="k">do
+      </span><span class="p">{</span> <span class="ss">:register</span><span class="p">,</span> <span class="n">pid</span> <span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">registering </span><span class="si">#{</span><span class="n">inspect</span> <span class="n">pid</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">generator</span><span class="p">([</span><span class="n">pid</span><span class="o">|</span><span class="n">clients</span><span class="p">])</span>
+    <span class="k">after</span>
+      <span class="nv">@interval</span> <span class="o">-&gt;</span>
+        <span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">tick&quot;</span>
+        <span class="no">Enum</span><span class="o">.</span><span class="n">each</span> <span class="n">clients</span><span class="p">,</span> <span class="k">fn</span> <span class="n">client</span> <span class="o">-&gt;</span>
+          <span class="n">send</span> <span class="n">client</span><span class="p">,</span> <span class="p">{</span> <span class="ss">:tick</span> <span class="p">}</span>
+        <span class="k">end</span>
+        <span class="n">generator</span><span class="p">(</span><span class="n">clients</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">defmodule</span> <span class="no">Client</span> <span class="k">do
+  def</span> <span class="n">start</span> <span class="k">do
+    </span><span class="n">pid</span> <span class="o">=</span> <span class="n">spawn</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="ss">:receiver</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="no">Tick</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="n">receiver</span> <span class="k">do
+    receive</span> <span class="k">do
+      </span><span class="p">{</span> <span class="ss">:tick</span> <span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="no">IO</span><span class="o">.</span><span class="n">puts</span> <span class="sd">&quot;</span><span class="s2">tock in client&quot;</span>
+        <span class="n">receiver</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+<h3>I/O, PIDS, and Nodes</h3>
+<pre class="highlight elixir"><span class="c1"># window #2</span>
+<span class="err">$</span> <span class="n">iex</span> <span class="o">--</span><span class="n">sname</span> <span class="n">two</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">two</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="no">Node</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">:&quot;one@light-boy&quot;</span><span class="p">)</span>
+<span class="no">true</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">two</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="ss">:global</span><span class="o">.</span><span class="n">register_name</span><span class="p">(</span><span class="ss">:two</span><span class="p">,</span> <span class="ss">:erlang</span><span class="o">.</span><span class="n">group_leader</span><span class="p">)</span>
+<span class="ss">:yes</span>
+
+<span class="c1"># window #1</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">one</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">two</span> <span class="o">=</span> <span class="ss">:global</span><span class="o">.</span><span class="n">whereis_name</span> <span class="ss">:two</span>
+<span class="c1">#PID&lt;7419.30.0&gt;</span>
+<span class="n">iex</span><span class="p">(</span><span class="n">one</span><span class="nv">@light</span><span class="o">-</span><span class="n">boy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="no">IO</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="n">two</span><span class="p">,</span> <span class="sd">&quot;</span><span class="s2">Hello&quot;</span><span class="p">)</span>
+<span class="c1">#将会在window #2看到输出</span>
+</pre>
 <p><a name="otp_servers"></a></p>
 
 <h2>OTP Servers</h2>
+
+<p>OTP用application的结构定义系统。
+一个application由一个或多个进程组成。这些进程跟随一小部分OTP惯例(behavior)。</p>
+
+<ol>
+<li>general purpose servers</li>
+<li>event handler</li>
+<li>FSM</li>
+</ol>
+
+<p>这些behavior的实现都在自己的进程里运行。</p>
+
+<p>还有一个特别的behavior: supervisor。</p>
+
+<p>实现OTP server时，只需写一个包含其callback的module，OTP会根据需要调用适当的callback</p>
+<pre class="highlight elixir"><span class="k">defmodule</span> <span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span> <span class="k">do
+  </span><span class="kn">use</span> <span class="no">GenServer</span>
+  <span class="c1"># handle_call的3个参数是client传来的参数，client的pid，server的状态</span>
+  <span class="k">def</span> <span class="n">handle_call</span><span class="p">(</span><span class="ss">:next_number</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="n">current_number</span><span class="p">)</span> <span class="k">do
+    </span><span class="c1"># 函数最后返回的是3元组 :reply表示返回给client， 返回值，server的最新状态</span>
+    <span class="p">{</span> <span class="ss">:reply</span><span class="p">,</span> <span class="n">current_number</span><span class="p">,</span> <span class="n">current_number</span><span class="o">+</span><span class="m">1</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<p>Client只需要知道server的pid，就可以用GenServer.call发消息给server</p>
+
+<p>GenServer.start_link接受2个参数: server module和初始状态</p>
+<pre class="highlight elixir"><span class="err">$</span> <span class="n">iex</span> <span class="o">-</span><span class="no">S</span> <span class="n">mix</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span> <span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span> <span class="p">}</span> <span class="o">=</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span><span class="p">,</span> <span class="m">100</span><span class="p">)</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span><span class="c1">#PID&lt;0.71.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">100</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">101</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">102</span>
+</pre>
+<p>如果不需返回值，就用handle_cast</p>
+<pre class="highlight text">
+def handle_cast({:increment_number, delta}, current_number) do
+  {:noreply, current_number + delta}
+end
+
+iex&gt; GenServer.call(pid, :next_number)
+101
+iex&gt; GenServer.cast(pid, {:increment_number, 200})
+:ok
+iex&gt; GenServer.call(pid, :next_number)
+302
+</pre>
+<h3>Tracing</h3>
+
+<p>start_link第3个参数是options</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span><span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="p">[</span><span class="ss">debug:</span> <span class="p">[</span><span class="ss">:trace</span><span class="p">]])</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span><span class="c1">#PID&lt;0.68.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="o">*</span><span class="no">DBG</span><span class="o">*</span> <span class="o">&lt;</span><span class="m">0.68</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span> <span class="n">got</span> <span class="n">call</span> <span class="n">next_number</span> <span class="n">from</span> <span class="o">&lt;</span><span class="m">0.25</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span>
+<span class="o">*</span><span class="no">DBG</span><span class="o">*</span> <span class="o">&lt;</span><span class="m">0.68</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span> <span class="n">sent</span> <span class="m">100</span> <span class="n">to</span> <span class="o">&lt;</span><span class="m">0.25</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">new</span> <span class="n">state</span> <span class="m">101</span>
+<span class="m">100</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="o">*</span><span class="no">DBG</span><span class="o">*</span> <span class="o">&lt;</span><span class="m">0.68</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span> <span class="n">got</span> <span class="n">call</span> <span class="n">next_number</span> <span class="n">from</span> <span class="o">&lt;</span><span class="m">0.25</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span>
+<span class="o">*</span><span class="no">DBG</span><span class="o">*</span> <span class="o">&lt;</span><span class="m">0.68</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span> <span class="n">sent</span> <span class="m">101</span> <span class="n">to</span> <span class="o">&lt;</span><span class="m">0.25</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">new</span> <span class="n">state</span> <span class="m">102</span>
+<span class="m">101</span>
+
+<span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span><span class="n">pid</span><span class="p">}</span> <span class="o">=</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="p">[</span><span class="ss">debug:</span> <span class="p">[</span><span class="ss">:statistics</span><span class="p">]])</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span><span class="c1">#PID&lt;0.69.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">100</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">101</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="ss">:sys</span><span class="o">.</span><span class="n">statistics</span> <span class="n">pid</span><span class="p">,</span> <span class="ss">:get</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,[</span><span class="ss">start_time:</span> <span class="p">{{</span><span class="m">2013</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">26</span><span class="p">},{</span><span class="m">18</span><span class="p">,</span><span class="m">17</span><span class="p">,</span><span class="m">16</span><span class="p">}},</span> <span class="ss">current_time:</span> <span class="p">{{</span><span class="m">2013</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">26</span><span class="p">},{</span><span class="m">18</span><span class="p">,</span><span class="m">17</span><span class="p">,</span><span class="m">28</span><span class="p">}},</span>
+<span class="ss">reductions:</span> <span class="m">50</span><span class="p">,</span> <span class="ss">messages_in:</span> <span class="m">2</span><span class="p">,</span> <span class="ss">messages_out:</span> <span class="m">0</span><span class="p">]}</span>
+</pre>
+<p>:debug 参数的值是列表，里面的值是Erlang sys module的函数名字。
+<a href="http://www.erlang.org/doc/man/sys.html">http://www.erlang.org/doc/man/sys.html</a></p>
+
+<p>可以在启动server后打开关闭tracing</p>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="ss">:sys</span><span class="o">.</span><span class="n">trace</span> <span class="n">pid</span><span class="p">,</span> <span class="no">true</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="o">*</span><span class="no">DBG</span><span class="o">*</span> <span class="o">&lt;</span><span class="m">0.69</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span> <span class="n">got</span> <span class="n">call</span> <span class="n">next_number</span> <span class="n">from</span> <span class="o">&lt;</span><span class="m">0.25</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span>
+<span class="o">*</span><span class="no">DBG</span><span class="o">*</span> <span class="o">&lt;</span><span class="m">0.69</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span> <span class="n">sent</span> <span class="m">105</span> <span class="n">to</span> <span class="o">&lt;</span><span class="m">0.25</span><span class="o">.</span><span class="m">0</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">new</span> <span class="n">state</span> <span class="m">106</span> <span class="m">105</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="ss">:sys</span><span class="o">.</span><span class="n">trace</span> <span class="n">pid</span><span class="p">,</span> <span class="no">false</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">106</span>
+<span class="c1">#Another useful sys function is get_status</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="ss">:sys</span><span class="o">.</span><span class="n">get_status</span> <span class="n">pid</span>
+<span class="p">{</span><span class="ss">:status</span><span class="p">,</span><span class="c1">#PID&lt;0.57.0&gt;,{:module,:gen_server},[[&quot;$ancestors&quot;: [#PID&lt;0.25.0&gt;],</span>
+<span class="sd">&quot;</span><span class="s2">$initial_call&quot;</span><span class="p">:</span>
+<span class="p">{</span><span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span><span class="p">,</span><span class="ss">:init</span><span class="p">,</span><span class="m">1</span><span class="p">}],</span><span class="ss">:running</span><span class="p">,</span><span class="c1">#PID&lt;0.25.0&gt;,[],</span>
+<span class="p">[</span><span class="ss">header:</span> <span class="s1">&#39;Status for generic server &lt;0.57.0&gt;&#39;</span><span class="p">,</span>
+<span class="ss">data:</span> <span class="p">[{</span><span class="s1">&#39;Status&#39;</span><span class="p">,</span><span class="ss">:running</span><span class="p">},{</span><span class="s1">&#39;Parent&#39;</span><span class="p">,</span><span class="c1">#PID&lt;0.25.0&gt;},{&#39;Logged events&#39;,[]}],</span>
+<span class="ss">data:</span> <span class="p">[{</span><span class="s1">&#39;State&#39;</span><span class="p">,</span><span class="m">102</span><span class="p">}]]]}</span>
+</pre>
+<h3>GenServer Callbacks</h3>
+
+<ol>
+<li>init(start_arguments)</li>
+<li>handle_call(request, from, state)</li>
+<li>handle_cast(request, state)</li>
+<li>handle_info(info, state)</li>
+<li>terminate(reason, state)</li>
+<li>code_change(from_version, state, extra)</li>
+<li>format_status(reason, [pdict, state])</li>
+</ol>
+
+<h3>Naming</h3>
+<pre class="highlight elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span> <span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span> <span class="p">}</span> <span class="o">=</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(,</span> <span class="no">Sequence</span><span class="o">.</span><span class="no">Server</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="ss">name:</span> <span class="ss">:seq</span><span class="p">)</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span><span class="c1">#PID&lt;0.66.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="ss">:seq</span><span class="p">,</span> <span class="ss">:next_number</span><span class="p">)</span>
+<span class="m">100</span>
+</pre>
+<h3>Tidying up the interface</h3>
+
+<p>client必须知道GenServer，还要知道pid，应该把这些信息都封装好</p>
+<pre class="highlight elixir"><span class="k">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">current_number</span><span class="p">)</span> <span class="k">do
+  </span><span class="no">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="n">current_number</span><span class="p">,</span> <span class="ss">name:</span> <span class="bp">__MODULE__</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="n">next_number</span> <span class="k">do
+  </span><span class="no">GenServer</span><span class="o">.</span><span class="n">call</span> <span class="bp">__MODULE__</span><span class="p">,</span> <span class="ss">:next_number</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="n">increment_number</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="k">do
+  </span><span class="no">GenServer</span><span class="o">.</span><span class="n">cast</span> <span class="bp">__MODULE__</span><span class="p">,</span> <span class="p">{</span><span class="ss">:increment_number</span><span class="p">,</span> <span class="n">delta</span><span class="p">}</span>
+<span class="k">end</span>
+</pre>
+<p>Genserver behavior定义了一个内部的message loop,maintain了一个state变量，然后message loop 调用module里定义的几个函数，如handle_call, handle_cast</p>
 
 <p><a name="otp_supervisors"></a></p>
 

@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/09/20/notes-for-programming-elixir-concurrent-programming/"/>
     <id>http://blog.url.com/2014/09/20/notes-for-programming-elixir-concurrent-programming/</id>
     <published>2014-09-20T09:13:00Z</published>
-    <updated>2014-09-21T02:20:30+08:00</updated>
+    <updated>2014-09-21T12:05:41+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -211,9 +211,242 @@
 
 &lt;p&gt;&lt;a href="http://elixir-lang.org/docs/stable/elixir/Node.html"&gt;Node Module API&lt;/a&gt;&lt;/p&gt;
 
+&lt;h3&gt;Naming Nodes&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;
+&lt;span class="ss"&gt;:nonode&lt;/span&gt;&lt;span class="nv"&gt;@nohost&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;wibble&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wibble&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;
+&lt;span class="ss"&gt;:&amp;quot;wibble@light-boy.local&amp;quot;&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;sname&lt;/span&gt; &lt;span class="n"&gt;wobble&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wobble&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;
+&lt;span class="ss"&gt;:&amp;quot;wobble@light-boy&amp;quot;&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;Connect nodes:&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="c1"&gt;#Window #1&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;sname&lt;/span&gt; &lt;span class="n"&gt;node_one&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node_one&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="c1"&gt;#Window #2&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;sname&lt;/span&gt; &lt;span class="n"&gt;node_two&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node_two&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node_two&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt; &lt;span class="ss"&gt;:&amp;quot;node_one@light-boy&amp;quot;&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node_two&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:&amp;quot;node_one@light-boy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;spawn可以在其他node上运行&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node_one&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inspect&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt; &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="c1"&gt;#Function&amp;lt;erl_eval.20.82930912&amp;gt;&lt;/span&gt;
+
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;node_one&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:&amp;quot;node_two@light-boy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#PID&amp;lt;7393.48.0&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;node_two&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;由于spawn继承了进程的结构，包括group leader,这决定了IO.puts往哪里输出，所以还是在node_one上看到输出&lt;/p&gt;
+
+&lt;h3&gt;Cookies&lt;/h3&gt;
+
+&lt;p&gt;使用cookie来允许node的连接&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;sname&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;cookie&lt;/span&gt; &lt;span class="n"&gt;chocolate&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;chip&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_cookie&lt;/span&gt;
+&lt;span class="ss"&gt;:&amp;quot;chocolate-chip&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;Naming Your Processes&lt;/h3&gt;
+
+&lt;p&gt;使用:global.register_name,和:global.whereis_name&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Tick&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="c1"&gt;# 2 seconds&lt;/span&gt;
+  &lt;span class="nv"&gt;@interval&lt;/span&gt; &lt;span class="m"&gt;2000&lt;/span&gt;
+  &lt;span class="nv"&gt;@name&lt;/span&gt; &lt;span class="ss"&gt;:ticker&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;__MODULE__&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:generator&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[[]])&lt;/span&gt;
+    &lt;span class="ss"&gt;:global&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;@name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;register&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;client_pid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;send&lt;/span&gt; &lt;span class="ss"&gt;:global&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;whereis_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;@name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:register&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;client_pid&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clients&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    receive&lt;/span&gt; &lt;span class="k"&gt;do
+      &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:register&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
+        &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;registering &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;inspect&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;generator&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;clients&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;after&lt;/span&gt;
+      &lt;span class="nv"&gt;@interval&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
+        &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;tick&amp;quot;&lt;/span&gt;
+        &lt;span class="no"&gt;Enum&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;each&lt;/span&gt; &lt;span class="n"&gt;clients&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
+          &lt;span class="n"&gt;send&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:tick&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="n"&gt;generator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clients&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Client&lt;/span&gt; &lt;span class="k"&gt;do
+  def&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;__MODULE__&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:receiver&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[])&lt;/span&gt;
+    &lt;span class="no"&gt;Tick&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;receiver&lt;/span&gt; &lt;span class="k"&gt;do
+    receive&lt;/span&gt; &lt;span class="k"&gt;do
+      &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:tick&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;
+        &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;tock in client&amp;quot;&lt;/span&gt;
+        &lt;span class="n"&gt;receiver&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;I/O, PIDS, and Nodes&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="c1"&gt;# window #2&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;sname&lt;/span&gt; &lt;span class="n"&gt;two&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;two&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;Node&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:&amp;quot;one@light-boy&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;two&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:global&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:two&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:erlang&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;group_leader&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="ss"&gt;:yes&lt;/span&gt;
+
+&lt;span class="c1"&gt;# window #1&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;two&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ss"&gt;:global&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;whereis_name&lt;/span&gt; &lt;span class="ss"&gt;:two&lt;/span&gt;
+&lt;span class="c1"&gt;#PID&amp;lt;7419.30.0&amp;gt;&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="nv"&gt;@light&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;boy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;IO&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;puts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;two&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c1"&gt;#将会在window #2看到输出&lt;/span&gt;
+&lt;/pre&gt;
 &lt;p&gt;&lt;a name="otp_servers"&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2&gt;OTP Servers&lt;/h2&gt;
+
+&lt;p&gt;OTP用application的结构定义系统。
+一个application由一个或多个进程组成。这些进程跟随一小部分OTP惯例(behavior)。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;general purpose servers&lt;/li&gt;
+&lt;li&gt;event handler&lt;/li&gt;
+&lt;li&gt;FSM&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;这些behavior的实现都在自己的进程里运行。&lt;/p&gt;
+
+&lt;p&gt;还有一个特别的behavior: supervisor。&lt;/p&gt;
+
+&lt;p&gt;实现OTP server时，只需写一个包含其callback的module，OTP会根据需要调用适当的callback&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="k"&gt;defmodule&lt;/span&gt; &lt;span class="no"&gt;Sequence&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Server&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="kn"&gt;use&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;
+  &lt;span class="c1"&gt;# handle_call的3个参数是client传来的参数，client的pid，server的状态&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;handle_call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;_from&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+    &lt;/span&gt;&lt;span class="c1"&gt;# 函数最后返回的是3元组 :reply表示返回给client， 返回值，server的最新状态&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:reply&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_number&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;p&gt;Client只需要知道server的pid，就可以用GenServer.call发消息给server&lt;/p&gt;
+
+&lt;p&gt;GenServer.start_link接受2个参数: server module和初始状态&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;iex&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="no"&gt;S&lt;/span&gt; &lt;span class="n"&gt;mix&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start_link&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;Sequence&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.71.0&amp;gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;100&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;101&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;102&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;如果不需返回值，就用handle_cast&lt;/p&gt;
+&lt;pre class="highlight text"&gt;
+def handle_cast({:increment_number, delta}, current_number) do
+  {:noreply, current_number + delta}
+end
+
+iex&amp;gt; GenServer.call(pid, :next_number)
+101
+iex&amp;gt; GenServer.cast(pid, {:increment_number, 200})
+:ok
+iex&amp;gt; GenServer.call(pid, :next_number)
+302
+&lt;/pre&gt;
+&lt;h3&gt;Tracing&lt;/h3&gt;
+
+&lt;p&gt;start_link第3个参数是options&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start_link&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;Sequence&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;debug:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:trace&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.68.0&amp;gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="no"&gt;DBG&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.68&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;got&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;next_number&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.25&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="no"&gt;DBG&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.68&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;sent&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.25&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="m"&gt;101&lt;/span&gt;
+&lt;span class="m"&gt;100&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="no"&gt;DBG&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.68&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;got&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;next_number&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.25&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="no"&gt;DBG&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.68&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;sent&lt;/span&gt; &lt;span class="m"&gt;101&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.25&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="m"&gt;102&lt;/span&gt;
+&lt;span class="m"&gt;101&lt;/span&gt;
+
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start_link&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;Sequence&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;debug:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:statistics&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.69.0&amp;gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;100&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;101&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;statistics&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:get&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="ss"&gt;start_time:&lt;/span&gt; &lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="m"&gt;2013&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="p"&gt;},{&lt;/span&gt;&lt;span class="m"&gt;18&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt; &lt;span class="ss"&gt;current_time:&lt;/span&gt; &lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="m"&gt;2013&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="p"&gt;},{&lt;/span&gt;&lt;span class="m"&gt;18&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;28&lt;/span&gt;&lt;span class="p"&gt;}},&lt;/span&gt;
+&lt;span class="ss"&gt;reductions:&lt;/span&gt; &lt;span class="m"&gt;50&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;messages_in:&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;messages_out:&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;:debug 参数的值是列表，里面的值是Erlang sys module的函数名字。
+&lt;a href="http://www.erlang.org/doc/man/sys.html"&gt;http://www.erlang.org/doc/man/sys.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;可以在启动server后打开关闭tracing&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;true&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="no"&gt;DBG&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.69&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;got&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;next_number&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.25&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="no"&gt;DBG&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.69&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;sent&lt;/span&gt; &lt;span class="m"&gt;105&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="m"&gt;0.25&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="m"&gt;106&lt;/span&gt; &lt;span class="m"&gt;105&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;trace&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;false&lt;/span&gt;
+&lt;span class="ss"&gt;:ok&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;106&lt;/span&gt;
+&lt;span class="c1"&gt;#Another useful sys function is get_status&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="ss"&gt;:sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_status&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.57.0&amp;gt;,{:module,:gen_server},[[&amp;quot;$ancestors&amp;quot;: [#PID&amp;lt;0.25.0&amp;gt;],&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;$initial_call&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="no"&gt;Sequence&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="ss"&gt;:init&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}],&lt;/span&gt;&lt;span class="ss"&gt;:running&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.25.0&amp;gt;,[],&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;header:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Status for generic server &amp;lt;0.57.0&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="ss"&gt;data:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Status&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="ss"&gt;:running&lt;/span&gt;&lt;span class="p"&gt;},{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Parent&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.25.0&amp;gt;},{&amp;#39;Logged events&amp;#39;,[]}],&lt;/span&gt;
+&lt;span class="ss"&gt;data:&lt;/span&gt; &lt;span class="p"&gt;[{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;State&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="m"&gt;102&lt;/span&gt;&lt;span class="p"&gt;}]]]}&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;GenServer Callbacks&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;init(start_arguments)&lt;/li&gt;
+&lt;li&gt;handle_call(request, from, state)&lt;/li&gt;
+&lt;li&gt;handle_cast(request, state)&lt;/li&gt;
+&lt;li&gt;handle_info(info, state)&lt;/li&gt;
+&lt;li&gt;terminate(reason, state)&lt;/li&gt;
+&lt;li&gt;code_change(from_version, state, extra)&lt;/li&gt;
+&lt;li&gt;format_status(reason, [pdict, state])&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Naming&lt;/h3&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start_link&lt;/span&gt;&lt;span class="p"&gt;(,&lt;/span&gt; &lt;span class="no"&gt;Sequence&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="no"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="ss"&gt;:seq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="c1"&gt;#PID&amp;lt;0.66.0&amp;gt;}&lt;/span&gt;
+&lt;span class="n"&gt;iex&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;100&lt;/span&gt;
+&lt;/pre&gt;
+&lt;h3&gt;Tidying up the interface&lt;/h3&gt;
+
+&lt;p&gt;client必须知道GenServer，还要知道pid，应该把这些信息都封装好&lt;/p&gt;
+&lt;pre class="highlight elixir"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;start_link&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;current_number&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start_link&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;__MODULE__&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;name:&lt;/span&gt; &lt;span class="bp"&gt;__MODULE__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;next_number&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="bp"&gt;__MODULE__&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:next_number&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;increment_number&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;delta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do
+  &lt;/span&gt;&lt;span class="no"&gt;GenServer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cast&lt;/span&gt; &lt;span class="bp"&gt;__MODULE__&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:increment_number&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;delta&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Genserver behavior定义了一个内部的message loop,maintain了一个state变量，然后message loop 调用module里定义的几个函数，如handle_call, handle_cast&lt;/p&gt;
 
 &lt;p&gt;&lt;a name="otp_supervisors"&gt;&lt;/a&gt;&lt;/p&gt;
 
