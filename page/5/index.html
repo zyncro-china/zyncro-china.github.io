@@ -61,257 +61,39 @@ Zyncro China Dev Blog
 <div class='col-lg-8 col-xs-12'>
 <ul class='well-lg content_box'>
 <p>
-Page 2 of 5
+Page 5 of 5
 </p>
 <ul class='pager'>
-<li><a href="/">Previous page</a></li>
-<li><a href="/page/3/">Next page</a></li>
 </ul>
 <li class='article'>
 <h2>
-<a href="/2014/09/05/review-confident-ruby-delivering-results/">review confident ruby(delivering results)</a>
-<span>Sep  5</span>
+<a href="/2012/01/01/example-article/">Example Article</a>
+<span>Jan  1</span>
 </h2>
 <!--
 use article.summary(250) if you have Nokogiri available to show just
 the first 250 characters
 -->
-<h2>介绍 Delivering Results</h2>
+<h1>This is a Heading Title</h1>
 
-<p>为method的caller提供output</p>
-
-<h2>Delivering Results的模式</h2>
+<h2>This is smaller title</h2>
 
 <ol>
-<li><a href="#write_total_functions">Write total functions</a></li>
-<li><a href="#call_back_instead_of_returning">Call back instead of returning</a></li>
-<li><a href="#represent_failure_with_benign_value">Represent failure with benign value</a></li>
-<li><a href="#represent_failure_with_a_special_case_object">Represent failure with a special case object</a></li>
-<li><a href="#return_a_status_object">Return a status object</a></li>
-<li><a href="#yield_a_status_object">Yield a status object</a></li>
-</ol>
-<a href="/2014/09/05/review-confident-ruby-delivering-results/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/09/04/review-confident-ruby-collecting-input/">review confident ruby(collecting input)</a>
-<span>Sep  4</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>介绍 Collecting Input</h2>
-
-<p>method需要input，当决定好method的算法所需要的input，我们需要决定如何获取input。
-有3种策略用于确保方法有可靠的collaborators来执行他们的role</p>
-
-<ol>
-<li>Coerce objects into the roles we need them to play.</li>
-<li>Reject unexpected values which cannot play the needed roles.</li>
-<li>Substitute known-good...</li>
-</ol>
-<a href="/2014/09/04/review-confident-ruby-collecting-input/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/09/03/review-confident-ruby/">review confident ruby</a>
-<span>Sep  3</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>再读confident ruby(performing work部分)</h2>
-
-<p>再读confident ruby，记下以下要点。</p>
-
-<h2>每个函数应包含4部分</h2>
-
-<ol>
-<li>collecting input</li>
-<li>performing work</li>
-<li>delivering result</li>
-<li>handling failures</li>
-</ol><h2>performing work的模式</h2>
-
-<p>这个部分只有一个pattern</p>
-
-<h3>sending a strong message</h3>
-
-<p>要发消息给trused object,需要3个条件</p>
-
-<ol><li>识别要完成工作所需要发送的...</li></ol>
-<a href="/2014/09/03/review-confident-ruby/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Developing Rails App Using Docker by fig</a>
-<span>Aug 23</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>基于虚拟机或容器创建开发环境的优点</h2>
-
-<ol>
-<li>可以方便地切换不同的项目</li>
-<li>在团队内共享项目的开发环境，避免所有人都浪费时间来设置环境</li>
-<li>避免不同项目的设置冲突</li>
-<li>可以使开发环境更加接近部署的环境</li>
-</ol><h2>Docker vs VirtualBox</h2>
-
-<p>以前试过使用VirtualBox虚拟机来做开发环境，因为团队里同时使用Linux和Windows。
-但发现有2个问题，一是速度太慢，二是在windows下，编辑器保存文件后并不能触发
-VirtualBox里的自动化编译或刷新。</p>
-
-<p>因此尝试使用Docker,因为现在不需...</p>
-<a href="/2014/08/23/developing-rails-app-using-docker-by-fig/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/07/24/decision-tree/">Decision Tree</a>
-<span>Jul 24</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>数据分析服务: BigML</h2>
-
-<p>今天我看到一个数据分析的服务，可以上传CSV的数据，分析后可以预测新的结果。</p>
-
-<p>它有几个步骤</p>
-
-<ol>
-<li>上传CSV数据,并设定每行的数据类型，如数字，字符。数据最后一列必须是结果列</li>
-<li>建立数据集，这个过程需要几秒或几小时。需要选定需要分析的属性，最终会给出一个属性列表，显示属性的一些统计数据：缺失数据，错误和直方图</li>
-<li>建立模型，通过数据集生成模型</li>
-<li>为新输入预测结果</li>
-<li>建立ensembles，可以用所有的输入行和列来生产多个model，合成一个ensemble,用户可以这样比...</li>
-</ol>
-<a href="/2014/07/24/decision-tree/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/05/19/try-facebook-testing-lib-jest/">Try facebook testing lib Jest</a>
-<span>May 19</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>The new testing framework from facebook</h2>
-
-<p>Facebook released their new testing framework:
-<a href="http://facebook.github.io/jest/">Jest</a></p>
-
-<p>It seems to be very nice that can help you to mock the dependencies
-automatically:</p>
-
-<blockquote>
-<p>In order to write an effective unit test, you want to be able to isolate...</p>
-</blockquote>
-<a href="/2014/05/19/try-facebook-testing-lib-jest/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Reading notes of a rubymotion book</a>
-<span>Mar 27</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h3>Use NSLog instead of puts</h3>
-
-<p>Because puts wouldn’t output to device logs</p>
-
-<h3>RubyMotion provide help for 3 things</h3>
-
-<ol>
-<li>flexible workflow(editor, command line, repl)</li>
-<li>use ruby language</li>
-<li>skip the large set of new API have to learn</li>
-</ol><h3>Value Object</h3>
-
-<p>There are 4 value...</p>
-<a href="/2014/03/27/reading-notes-of-a-rubymotion-book/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/24/create-ios-app-using-promotion/">create iOS app using Promotion</a>
-<span>Mar 24</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>The Goal</h2>
-
-<p>Create an iOS app as quickly as we can.</p>
-
-<h2>Project Setup</h2>
-
-<h3>Create a new app</h3>
-<pre class="highlight shell">
-promotion new membershipapp
-</pre>
-<h3>run tests automatically</h3>
-<pre class="highlight shell">
-gem install when-files-change
-when-files-change <span class="s2">"clear &amp;&amp; bundle exec rake spec"</span>
-</pre>
-<h2>write test cases</h2>
-
-<p>The Promotion...</p>
-<a href="/2014/03/24/create-ios-app-using-promotion/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/24/tips-learn-from-confident-ruby/">tips learn from confident ruby</a>
-<span>Mar 24</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>The book confident ruby</h2>
-
-<p>After reading the book confident ruby, I watch the screen cast with that book
-and learned following tips</p>
-
-<h3>use each<em>with</em>object instead of initialize an empty object before the each</h3>
-<pre class="highlight ruby">
-<span class="n">topics_list</span> <span class="o">=</span> <span class="o">[]</span>
-<span class="n">another_list</span><span class="nf">.each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
-...</pre>
-<a href="/2014/03/24/tips-learn-from-confident-ruby/">Read More...</a>
-</li>
-<li class='article'>
-<h2>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Deploy R application to shinyapps.io</a>
-<span>Mar 18</span>
-</h2>
-<!--
-use article.summary(250) if you have Nokogiri available to show just
-the first 250 characters
--->
-<h2>An R hosting Service</h2>
-
-<p>Today I got an invitation for ShinyApps.io testing. This seems to be very
-useful because other PaaS like Heroku not allowing install R.</p>
-
-<h2>Installation</h2>
-
-<p>Just follow the guide from
-<a href="https://github.com/rstudio/shinyapps/blob/master/guide/guide.mdhttps://github.com/rstudio/shinyapps/blob/master/guide/guide.md">https://github.com/rstudio/shinyapps/blob/master...</a></p>
-<a href="/2014/03/18/deploy-r-application-to-shinyapps-io/">Read More...</a>
+<li>go home</li>
+<li>cook dinner</li>
+</ol><ul>
+<li>this is a option</li>
+<li>option 2
+Thisssss is an example article. You probably want to delete it and write your own articles!</li>
+</ul><pre class="highlight ruby"><span class="k">def </span><span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="n">message</span>
+  <span class="k">return</span> <span class="kp">nil</span>
+<span class="k">end</span>
+</pre><pre class="highlight javascript"><span class="kd">var</span></pre>
+<a href="/2012/01/01/example-article/">Read More...</a>
 </li>
 <ul class='pager'>
-<li><a href="/">Previous page</a></li>
-<li><a href="/page/3/">Next page</a></li>
+<li><a href="/page/4/">Previous page</a></li>
 </ul>
 </ul>
 </div>

@@ -5,10 +5,124 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-09-20T09:13:00Z</updated>
+  <updated>2014-09-22T10:13:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>review presentation architecture the lost year</title>
+    <link rel="alternate" href="http://blog.url.com/2014/09/22/review-presentation-architecture-the-lost-year/"/>
+    <id>http://blog.url.com/2014/09/22/review-presentation-architecture-the-lost-year/</id>
+    <published>2014-09-22T10:13:00Z</published>
+    <updated>2014-09-22T20:01:00+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;回顾以前看过的一个rubyconf presentation&lt;/h2&gt;
+
+&lt;p&gt;再回顾一次2011年的一个presentation， Uncle Bob的 Architecture the lost
+years。编程业虽然经常会冒出一些新技术，但有些东西是持久不变的。再回顾一次并记下要点&lt;/p&gt;
+
+&lt;h3&gt;Rails项目的目录结构&lt;/h3&gt;
+
+&lt;p&gt;每个Rails项目下都是app/controller,
+app/models,等等，但是，项目的目录结构应该反映出application的structure，不是使用什么framework。&lt;/p&gt;
+
+&lt;p&gt;而且，&lt;em&gt;Web is a delivery mechanism&lt;/em&gt;, Web is the detail&lt;/p&gt;
+
+&lt;p&gt;建筑图纸为例，我们可以看到建筑物是什么，看到其结构，看到他的intent&lt;/p&gt;
+
+&lt;h3&gt;Architecture is about Intent&lt;/h3&gt;
+
+&lt;p&gt;为什么要在top level看到intent&lt;/p&gt;
+
+&lt;p&gt;1990时代出的一本书，那时还没有web， Object-Oriented Software Engineering,用use
+case来解决architecture的问题&lt;/p&gt;
+
+&lt;p&gt;什么是use case，形如：&lt;/p&gt;
+&lt;pre class="highlight text"&gt;Create Order
+
+Data:
+  &amp;lt;Customer-id&amp;gt;,  &amp;lt;Customer-contact-info&amp;gt;,
+  &amp;lt;Shipment-destination&amp;gt;, &amp;lt;Shipment-mechanism&amp;gt;,
+  &amp;lt;Payment-information&amp;gt;
+
+Primary Course:
+  1. Order clerk issues &amp;quot;Create Order&amp;quot; command with above data
+  2. System validates all data.
+  3. System creates order and determines order id.
+  4. System delivers order id to clerk
+
+Exception Course: Validation Error
+  1. System delivers error message to clerk
+
+&lt;/pre&gt;
+&lt;h3&gt;Interactors&lt;/h3&gt;
+
+&lt;p&gt;Interactors实现了use case的logic。&lt;/p&gt;
+
+&lt;p&gt;Interactors have: Application specific business rules&lt;/p&gt;
+
+&lt;p&gt;什么是 application specific business rules&lt;/p&gt;
+
+&lt;h3&gt;Entities&lt;/h3&gt;
+
+&lt;p&gt;什么是 application independent business rules&lt;/p&gt;
+
+&lt;p&gt;例子：Entity&lt;/p&gt;
+
+&lt;p&gt;在rails里，model混合了两者。&lt;/p&gt;
+
+&lt;h3&gt;Boundary&lt;/h3&gt;
+
+&lt;p&gt;有可能是javascript，由于interactor和boundary的连接线的箭头都是指向boundry，所以boundry不依赖于interactor和delivery mechanism, delivery mechanism可以作为一个plugin&lt;/p&gt;
+
+&lt;p&gt;这种结构的好处是在application的目录下，可以直接看到不同的interactor名字，反映了use case, 如create order&lt;/p&gt;
+
+&lt;h3&gt;What about MVC&lt;/h3&gt;
+
+&lt;p&gt;MVC is not an architecture&lt;/p&gt;
+
+&lt;h3&gt;MVC is a delivery design pattern&lt;/h3&gt;
+
+&lt;p&gt;Controller只需要生成request model&lt;/p&gt;
+
+&lt;h3&gt;Model View Presenter&lt;/h3&gt;
+
+&lt;p&gt;Presenter生成view model数据结构，view model不知道web
+view不需测试&lt;/p&gt;
+
+&lt;h3&gt;EHCHILADA&lt;/h3&gt;
+
+&lt;p&gt;分割线左边和右边都可以独立为一个gem，然后可以plugin他们&lt;/p&gt;
+
+&lt;h3&gt;testing slow的后果&lt;/h3&gt;
+
+&lt;p&gt;减少测试或不测试&lt;/p&gt;
+
+&lt;h3&gt;Database centered solution&lt;/h3&gt;
+
+&lt;p&gt;Database is a detail,architecture不应该了解如何去存储,只需要知道对象。&lt;/p&gt;
+
+&lt;p&gt;ENTITY GATEWAY是接口，如put，create&lt;/p&gt;
+
+&lt;p&gt;Architecture的工作之一是划线&lt;/p&gt;
+
+&lt;p&gt;这种架构下，run testing不需要delivery mechanism, 不需要database&lt;/p&gt;
+
+&lt;h3&gt;A Good Architecture allows major decisions to be DEFERRED!&lt;/h3&gt;
+
+&lt;h3&gt;A Good Architecture MAXIMIZES the decisions not made&lt;/h3&gt;
+
+&lt;h3&gt;TDD&lt;/h3&gt;
+
+&lt;p&gt;writing tests after the fact is wasting time&lt;/p&gt;
+
+&lt;p&gt;why TDD, because you know every line of code comes from a failed test&lt;/p&gt;
+
+&lt;p&gt;为了test first，必须test fast, 所以要decouple system&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>notes for programming elixir concurrent programming</title>
     <link rel="alternate" href="http://blog.url.com/2014/09/20/notes-for-programming-elixir-concurrent-programming/"/>
@@ -1587,224 +1701,5 @@ vmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;leader&lt;span class="p"&gt;&amp
            &lt;span class="ss"&gt;ccccc: &lt;/span&gt;&lt;span class="mi"&gt;43434&lt;/span&gt;
 
 &lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>prawnpdf</title>
-    <link rel="alternate" href="http://blog.url.com/2014/09/13/prawnpdf/"/>
-    <id>http://blog.url.com/2014/09/13/prawnpdf/</id>
-    <published>2014-09-13T03:30:00Z</published>
-    <updated>2014-09-14T18:43:08+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;Prawn&lt;/h2&gt;
-
-&lt;p&gt;Prawn是用于生成pdf的ruby库。了解它的使用方法它的最快途径是看它的manual&lt;/p&gt;
-
-&lt;h2&gt;Manual的内容&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Basic concepts&lt;/li&gt;
-&lt;li&gt;Graphics&lt;/li&gt;
-&lt;li&gt;Text&lt;/li&gt;
-&lt;li&gt;Bounding box&lt;/li&gt;
-&lt;li&gt;Layout&lt;/li&gt;
-&lt;li&gt;Table&lt;/li&gt;
-&lt;li&gt;Images&lt;/li&gt;
-&lt;li&gt;Documents and page options&lt;/li&gt;
-&lt;li&gt;Outline&lt;/li&gt;
-&lt;li&gt;Repeatable content&lt;/li&gt;
-&lt;li&gt;Security&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3&gt;Basic Concepts&lt;/h3&gt;
-
-&lt;p&gt;这部分包括&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Creation&lt;/li&gt;
-&lt;li&gt;Origin&lt;/li&gt;
-&lt;li&gt;Cursor&lt;/li&gt;
-&lt;li&gt;Other cursor helper&lt;/li&gt;
-&lt;li&gt;Adding pages&lt;/li&gt;
-&lt;li&gt;Measurement&lt;/li&gt;
-&lt;li&gt;View&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4&gt;Creation&lt;/h4&gt;
-
-&lt;p&gt;有3种方式&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;# Assignment&lt;/span&gt;
-&lt;span class="n"&gt;pdf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Prawn&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Document&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt;
-&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="nf"&gt;.text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="nf"&gt;.render_file&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;assignment.pdf&amp;quot;&lt;/span&gt;
-&lt;span class="c1"&gt;# Implicit Block&lt;/span&gt;
-&lt;span class="no"&gt;Prawn&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Document&lt;/span&gt;&lt;span class="nf"&gt;.generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;implicit.pdf&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="c1"&gt;# Explicit Block&lt;/span&gt;
-&lt;span class="no"&gt;Prawn&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Document&lt;/span&gt;&lt;span class="nf"&gt;.generate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;explicit.pdf&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-&lt;span class="n"&gt;pdf&lt;/span&gt;&lt;span class="nf"&gt;.text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h4&gt;Origin&lt;/h4&gt;
-
-&lt;ol&gt;
-&lt;li&gt;document的坐标起点[0,0]是左下角&lt;/li&gt;
-&lt;li&gt;bouncing box是用于插入内容的边框,注意它位置的坐标是位于它的左上角&lt;/li&gt;
-&lt;li&gt;每个文档都至少有一个bouncing box,就是margin box&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;下面代码画出文档坐标，bouncing box边框，以及在两个原点画圈&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;stroke_axis&lt;/span&gt;
-&lt;span class="n"&gt;stroke_circle&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
-&lt;span class="n"&gt;bounding_box&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:width&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:height&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-  &lt;span class="n"&gt;stroke_bounds&lt;/span&gt;
-  &lt;span class="n"&gt;stroke_circle&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h4&gt;Cursor&lt;/h4&gt;
-
-&lt;p&gt;Cursor指定插入内容的位置，从文档的左上角开始往下&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;stroke_axis&lt;/span&gt;
-
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;the cursor is here: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;now it is here: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-
-&lt;span class="n"&gt;move_down&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;on the first move the cursor went down to: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-
-&lt;span class="n"&gt;move_up&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;on the second move the cursor went up to: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-
-&lt;span class="n"&gt;move_cursor_to&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;on the last move the cursor went directly to: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h4&gt;其他 Cursor Helper&lt;/h4&gt;
-
-&lt;p&gt;pad和css里的padding相似
-float在显示内容后把cursor恢复之前位置&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="n"&gt;stroke_horizontal_rule&lt;/span&gt;
-&lt;span class="n"&gt;pad&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Text padded both before and after.&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="n"&gt;stroke_horizontal_rule&lt;/span&gt;
-&lt;span class="n"&gt;pad_top&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Text padded on the top.&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="n"&gt;stroke_horizontal_rule&lt;/span&gt;
-&lt;span class="n"&gt;pad_bottom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Text padded on the bottom.&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="n"&gt;stroke_horizontal_rule&lt;/span&gt;
-&lt;span class="n"&gt;move_down&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
-
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Text written before the float block.&amp;quot;&lt;/span&gt;
-
-&lt;span class="n"&gt;float&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-  &lt;span class="n"&gt;move_down&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
-  &lt;span class="n"&gt;bounding_box&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cursor&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:width&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Text written inside the float block.&amp;quot;&lt;/span&gt;
-    &lt;span class="n"&gt;stroke_bounds&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Text written after the float block.&amp;quot;&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h4&gt;Adding new page&lt;/h4&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;We are still on the initial page for this example. Now I&amp;#39;ll ask &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
-&lt;span class="s2"&gt;&amp;quot;Prawn to gently start a new page. Please follow me to the next page.&amp;quot;&lt;/span&gt;
-
-&lt;span class="n"&gt;start_new_page&lt;/span&gt;
-
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;See. We&amp;#39;ve left the previous page behind.&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;
-&lt;h4&gt;Measurement&lt;/h4&gt;
-
-&lt;p&gt;Prawn里基本单位是point，每个point是1/72英寸
-只需要 require &amp;ldquo;prawn/measurement_extensions&amp;rdquo;, Numeric类就具有那些helper方法&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;prawn/measurement_extensions&amp;quot;&lt;/span&gt;
-&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:mm&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:cm&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:dm&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:in&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:yd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:ft&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="nf"&gt;.each&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;measurement&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
-&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1 &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="n"&gt;measurement&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; in PDF Points: &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="nf"&gt;.send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;measurement&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; pt&amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;move_down&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nf"&gt;.mm&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;输出&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;1 mm &lt;span class="k"&gt;in &lt;/span&gt;PDF Points: 2.834645669291339 pt
-1 cm &lt;span class="k"&gt;in &lt;/span&gt;PDF Points: 28.34645669291339 pt
-1 dm &lt;span class="k"&gt;in &lt;/span&gt;PDF Points: 283.46456692913387 pt
-1 m &lt;span class="k"&gt;in &lt;/span&gt;PDF Points: 2834.645669291339 pt
-1 &lt;span class="k"&gt;in in &lt;/span&gt;PDF Points: 72 pt
-1 yd &lt;span class="k"&gt;in &lt;/span&gt;PDF Points: 2592 pt
-1 ft &lt;span class="k"&gt;in &lt;/span&gt;PDF Points: 864 pt
-&lt;/pre&gt;
-&lt;h4&gt;view&lt;/h4&gt;
-
-&lt;p&gt;当要使用自定义的类，应该用mixin。
-也可以定义一个document()方法，返回一个符合Prawn::Document
-protocol的对象，所有方法会代理到那个对象。&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;Greeter&lt;/span&gt;
-  &lt;span class="kp"&gt;include&lt;/span&gt; &lt;span class="no"&gt;Prawn&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;View&lt;/span&gt;
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="vi"&gt;@name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;name&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;say_hello&lt;/span&gt;
-    &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Hello, &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="vi"&gt;@name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;!&amp;quot;&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nf"&gt;say_goodbye&lt;/span&gt;
-    &lt;span class="n"&gt;font&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Courier&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
-      &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Goodbye, &lt;/span&gt;&lt;span class="si"&gt;#{&lt;/span&gt;&lt;span class="vi"&gt;@name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;!&amp;quot;&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="n"&gt;greeter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;Greeter&lt;/span&gt;&lt;span class="nf"&gt;.new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Gregory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;greeter&lt;/span&gt;&lt;span class="nf"&gt;.say_hello&lt;/span&gt;
-&lt;span class="n"&gt;greeter&lt;/span&gt;&lt;span class="nf"&gt;.say_goodbye&lt;/span&gt;
-&lt;span class="n"&gt;greeter&lt;/span&gt;&lt;span class="nf"&gt;.save_as&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;greetings.pdf&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h3&gt;Graphics&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Basics&lt;/li&gt;
-&lt;li&gt;Shapes&lt;/li&gt;
-&lt;li&gt;Fill and Stroke settings&lt;/li&gt;
-&lt;li&gt;Transformations&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4&gt;Basics&lt;/h4&gt;
-
-&lt;ol&gt;
-&lt;li&gt;helpers: stroke_axis&lt;/li&gt;
-&lt;li&gt;fill and stroke&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;fill 和 stroke是最终画出图形的方法，其他的方法只是定义了drawing path，例如 rectangle, circle or line_to&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;
-&lt;span class="n"&gt;stroke_axis&lt;/span&gt;
-
-&lt;span class="c1"&gt;# No block&lt;/span&gt;
-&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;150&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;stroke&lt;/span&gt;
-
-&lt;span class="n"&gt;rectangle&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
-&lt;span class="n"&gt;fill&lt;/span&gt;
-
-&lt;span class="c1"&gt;# With block&lt;/span&gt;
-&lt;span class="n"&gt;stroke&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;150&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="n"&gt;fill&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;rectangle&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="c1"&gt;# Method hook&lt;/span&gt;
-&lt;span class="n"&gt;stroke_line&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;150&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;fill_rectangle&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h4&gt;Shapes&lt;/h4&gt;
-
-&lt;h4&gt;Filling and Stroke Setting&lt;/h4&gt;
-
-&lt;p&gt;注意，由于Ruby认为=左边的是局部变量，而不是函数调用，当设置line_width时，需要加上self&lt;/p&gt;
-</content>
   </entry>
 </feed>
