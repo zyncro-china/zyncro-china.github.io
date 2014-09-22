@@ -1,3 +1,7 @@
 /* line 1, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/article.css.scss */
 table, th, td {
   border: 1px solid black; }
+
+/* line 4, /home/david/test/middleman/dev.blog.zyncro-china/source/stylesheets/article.css.scss */
+img[alt=screencast] {
+  width: 600px; }

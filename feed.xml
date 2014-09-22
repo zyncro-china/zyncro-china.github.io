@@ -14,7 +14,7 @@
     <link rel="alternate" href="http://blog.url.com/2014/09/22/review-presentation-architecture-the-lost-year/"/>
     <id>http://blog.url.com/2014/09/22/review-presentation-architecture-the-lost-year/</id>
     <published>2014-09-22T10:13:00Z</published>
-    <updated>2014-09-22T20:01:00+08:00</updated>
+    <updated>2014-09-22T21:34:57+08:00</updated>
     <author>
       <name>Article Author</name>
     </author>
@@ -67,6 +67,8 @@ Exception Course: Validation Error
 
 &lt;h3&gt;Entities&lt;/h3&gt;
 
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/entities.jpg" /&gt;&lt;/p&gt;
+
 &lt;p&gt;什么是 application independent business rules&lt;/p&gt;
 
 &lt;p&gt;例子：Entity&lt;/p&gt;
@@ -74,6 +76,8 @@ Exception Course: Validation Error
 &lt;p&gt;在rails里，model混合了两者。&lt;/p&gt;
 
 &lt;h3&gt;Boundary&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/system.jpg" /&gt;&lt;/p&gt;
 
 &lt;p&gt;有可能是javascript，由于interactor和boundary的连接线的箭头都是指向boundry，所以boundry不依赖于interactor和delivery mechanism, delivery mechanism可以作为一个plugin&lt;/p&gt;
 
@@ -83,16 +87,25 @@ Exception Course: Validation Error
 
 &lt;p&gt;MVC is not an architecture&lt;/p&gt;
 
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/mvc_wrong.jpg" /&gt;&lt;/p&gt;
+
 &lt;h3&gt;MVC is a delivery design pattern&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/mvc_deliver.jpg" /&gt;&lt;/p&gt;
 
 &lt;p&gt;Controller只需要生成request model&lt;/p&gt;
 
 &lt;h3&gt;Model View Presenter&lt;/h3&gt;
 
-&lt;p&gt;Presenter生成view model数据结构，view model不知道web
-view不需测试&lt;/p&gt;
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/model_view_presenter.jpg" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Presenter生成view model数据结构，view model不知道web&lt;/p&gt;
+
+&lt;p&gt;view不需测试&lt;/p&gt;
 
 &lt;h3&gt;EHCHILADA&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/enchilada.jpg" /&gt;&lt;/p&gt;
 
 &lt;p&gt;分割线左边和右边都可以独立为一个gem，然后可以plugin他们&lt;/p&gt;
 
@@ -102,7 +115,11 @@ view不需测试&lt;/p&gt;
 
 &lt;h3&gt;Database centered solution&lt;/h3&gt;
 
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/db_centered.jpg" /&gt;&lt;/p&gt;
+
 &lt;p&gt;Database is a detail,architecture不应该了解如何去存储,只需要知道对象。&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="screencast" src="/images/lost_years/entity_gateway.jpg" /&gt;&lt;/p&gt;
 
 &lt;p&gt;ENTITY GATEWAY是接口，如put，create&lt;/p&gt;
 
