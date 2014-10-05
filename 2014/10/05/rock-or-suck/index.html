@@ -1,0 +1,222 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<meta content='IE=edge;chrome=1' http-equiv='X-UA-Compatible'>
+<title>Rock or Suck</title>
+<meta content='' name='description'>
+<meta content='width=device-width' name='viewport'>
+<link href='/css/normalize.css' rel='stylesheet'>
+<link href='/css/main.css' rel='stylesheet'>
+<link href='/css/bootstrap.min.css' rel='stylesheet'>
+<link href='/stylesheets/background.css' rel='stylesheet'>
+<link href='/stylesheets/article.css' rel='stylesheet'>
+<script src='/js/vendor/modernizr-2.6.1.min.js'></script>
+<script src='/js/vendor/jquery-1.8.0.min.js'></script>
+<script src='/js/bootstrap.min.js'></script>
+<link href="/stylesheets/rouge.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/home.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header>
+<nav class='navbar navbar-default' role='navigation'>
+<div class='navbar-header'>
+<button class='navbar-toggle' data-target='.navbar-ex1-collapse' data-toggle='collapse' type='button'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</button>
+<a class='navbar-brand'></a>
+</div>
+<div class='collapse navbar-collapse navbar-ex1-collapse'>
+<ul class='nav navbar-nav'>
+<li>
+<a href='/'>Home</a>
+</li>
+<li>
+<a href='/feed.xml'>Feed</a>
+</li>
+<li>
+<a href='/about'>About</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<section class='main'>
+<div id='main' role='main'>
+<div class='container'>
+<article>
+<div class='title'>
+<h1 class='page-header text-center'>
+Rock or Suck
+</h1>
+</div>
+<br>
+<h2>Destroy All Software ScreenCast</h2>
+
+<p>这个screencast是我看过的screencast里质量很高的一个。其中有一个系列介绍使用BDD开发Rails App</p>
+
+<h2>RockSuck</h2>
+
+<p>这个系列是要写一个web app，搜索某个名字，返回它的评分。使用Bing搜索引擎来搜索
+&ldquo;something rocks&rdquo; 和 &ldquo;something sucks&rdquo;</p>
+
+<h2>steps</h2>
+
+<ol>
+<li>rails new</li>
+<li>添加需要的gems: rspec-rails, cucumber-rails, database_cleaner, vcr, webmock</li>
+<li>initialize rspec and cucumber: rails g rspec:install, rails g cucumber:install, bundle binstubs rspec-core</li>
+<li>add test scripts: script/features, script/test</li>
+<li>写failed cucumber feature和steps 知道需要RockScore class和#for_term()</li>
+<li>进入rspec cycle, 写RockScore和它的spec
+
+<ol>
+<li>config.autoload_paths += %W(#{config.root}/app/services)</li>
+<li>先写好所有的example title (it)</li>
+<li>使用了SearchEngine.count_results,在spec里先用stub</li>
+</ol></li>
+<li><p>写SearchEngine</p>
+
+<ol>
+<li>SearchEngine是boundry，不能mock/stub，但是可以用vcr，只需要hit network 一次</li>
+<li>gem &lsquo;rbing&rsquo;</li>
+<li>spec/vcr_helper.rb, 并过滤敏感信息</li>
+</ol>
+<pre class="highlight ruby"><span class="no">VCR</span><span class="nf">.config</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="nf">.cassette_library_dir</span> <span class="o">=</span> <span class="s2">&quot;fixtures/cassettes&quot;</span>
+  <span class="n">config</span><span class="nf">.stub_with</span> <span class="ss">:webmock</span>
+  <span class="n">config</span><span class="nf">.filter_sensitive_data</span><span class="p">(</span><span class="s2">&quot;&lt;BING APP ID&gt;&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="no">ENV</span><span class="nf">.fetch</span><span class="p">(</span><span class="s2">&quot;BING_APP_ID&quot;</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+
+</pre>
+<ol>
+<li>spec/services/search_engine_spec.rb</li>
+</ol>
+<pre class="highlight ruby"><span class="n">describe</span> <span class="no">SearchEngine</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="s2">&quot;counts results&quot;</span> <span class="k">do</span>
+    <span class="no">VCR</span><span class="nf">.use_cassette</span><span class="p">(</span><span class="s2">&quot;windows-vs-beos&quot;</span><span class="p">)</span> <span class="k">do</span>
+      <span class="n">windows</span> <span class="o">=</span> <span class="no">SearchEngine</span><span class="nf">.count_results</span><span class="p">(</span><span class="s2">&quot;windows&quot;</span><span class="p">)</span>
+      <span class="n">beos</span> <span class="o">=</span> <span class="no">SearchEngine</span><span class="nf">.count_results</span><span class="p">(</span><span class="s2">&quot;beos&quot;</span><span class="p">)</span>
+      <span class="n">windows</span><span class="nf">.should</span> <span class="n">be</span> <span class="o">&gt;</span> <span class="n">beos</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></li>
+<li><p>rspec pass后在feature里也使用vcr</p>
+<pre class="highlight ruby"><span class="c1"># features/support/vcr.rb</span>
+<span class="n">require_relative</span> <span class="s2">&quot;../../spec/vcr_helper&quot;</span>
+
+<span class="no">VCR</span><span class="nf">.cucumber_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+<span class="n">t</span><span class="nf">.tag</span> <span class="s2">&quot;user-compares-two-terms&quot;</span>
+<span class="k">end</span>
+
+<span class="c1"># feature里加入tag:</span>
+<span class="vi">@user</span><span class="o">-</span><span class="n">compares</span><span class="o">-</span><span class="n">two</span><span class="o">-</span><span class="n">terms</span>
+
+<span class="c1"># steps里去掉pending</span>
+<span class="o">-</span>  <span class="n">pending</span> <span class="c1"># express the regexp above with the code you wish you had</span>
+<span class="o">+</span>  <span class="vi">@scores</span><span class="o">[</span><span class="s2">&quot;apple&quot;</span><span class="o">]</span><span class="nf">.should</span> <span class="n">be</span> <span class="o">&gt;</span> <span class="vi">@scores</span><span class="o">[</span><span class="s2">&quot;microsoft&quot;</span><span class="o">]</span>
+
+</pre></li>
+<li><p>加入ScoreCache service,并和RockScore接口相同，用model保存查询结果</p>
+
+<ol>
+<li>spec包括</li>
+<li>returns cached scores if they exist</li>
+<li>when the term is not cached
+
+<ol>
+<li>recomputes score</li>
+<li>stores new scores in the database</li>
+</ol></li>
+<li>stub RockScore和CachedScore(model)</li>
+<li>expect received msg: CachedScore.should<em>receive(:save</em>score).with(&ldquo;microsoft&rdquo;, 5.5)</li>
+</ol></li>
+<li><p>bugfix: 需要quote &ldquo;something rocks&rdquo;</p></li>
+<li><p>add CachedScore model and database table,这里第一次使用rails的spec_helper</p>
+
+<ol>
+<li>model spec and code</li>
+</ol>
+<pre class="highlight ruby"><span class="c1"># spec/models/cached_score_spec.rb</span>
+<span class="nb">require</span> <span class="s2">&quot;spec_helper&quot;</span>
+
+<span class="n">describe</span> <span class="no">CachedScore</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="s2">&quot;remembers scores&quot;</span> <span class="k">do</span>
+    <span class="no">CachedScore</span><span class="nf">.save_score</span><span class="p">(</span><span class="s2">&quot;microsoft&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+    <span class="no">CachedScore</span><span class="nf">.for_term</span><span class="p">(</span><span class="s2">&quot;microsoft&quot;</span><span class="p">)</span><span class="nf">.should</span> <span class="o">==</span> <span class="mi">7</span><span class="o">.</span><span class="mi">5</span>
+  <span class="k">end</span>
+
+  <span class="n">it</span> <span class="s2">&quot;raises an exception if the term isn&#39;t cached&quot;</span> <span class="k">do</span>
+    <span class="n">expect</span> <span class="k">do</span>
+      <span class="no">CachedScore</span><span class="nf">.for_term</span><span class="p">(</span><span class="s2">&quot;microsoft&quot;</span><span class="p">)</span>
+    <span class="k">end</span><span class="nf">.to</span> <span class="n">raise_error</span><span class="p">(</span><span class="no">CachedScore</span><span class="o">::</span><span class="no">NoScore</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># /app/models/cached_score.rb</span>
+<span class="k">class </span><span class="nc">CachedScore</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="k">class </span><span class="nc">NoScore</span> <span class="o">&lt;</span> <span class="no">RuntimeError</span>
+  <span class="k">end</span>
+
+  <span class="k">def </span><span class="nc">self</span><span class="o">.</span><span class="nf">save_score</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span>
+    <span class="n">create!</span><span class="p">(</span><span class="ss">:term</span> <span class="o">=&gt;</span> <span class="n">term</span><span class="p">,</span> <span class="ss">:score</span> <span class="o">=&gt;</span> <span class="n">score</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def </span><span class="nc">self</span><span class="o">.</span><span class="nf">for_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="n">cached_score</span> <span class="o">=</span> <span class="n">find_by_term</span><span class="p">(</span><span class="n">term</span><span class="p">)</span> <span class="n">or</span> <span class="k">raise</span> <span class="no">NoScore</span>
+    <span class="n">cached_score</span><span class="nf">.score</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</pre>
+<ol>
+<li>schema and migration</li>
+</ol></li>
+<li><p>switch cucumber features to ScoreCache</p></li>
+<li><p>convert NoScores to nil when saving</p></li>
+<li><p>add ScoresController</p>
+
+<ol>
+<li>routes.rb</li>
+<li>controller spec</li>
+<li>controller code</li>
+</ol></li>
+<li><p>add more scenarios</p></li>
+</ol>
+
+</article>
+<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//zyncrochinadevblog.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+
+</div>
+</div>
+</section>
+<footer>
+<script type="text/javascript">
+//<![CDATA[
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-44086232-1', 'zyncro-china.com');
+  ga('send', 'pageview');
+//]]>
+</script>
+</footer>
+</body>
+</html>
+

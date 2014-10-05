@@ -5,10 +5,154 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2014-09-22T10:13:00Z</updated>
+  <updated>2014-10-05T03:09:00Z</updated>
   <author>
     <name>Blog Author</name>
   </author>
+  <entry>
+    <title>Rock or Suck</title>
+    <link rel="alternate" href="http://blog.url.com/2014/10/05/rock-or-suck/"/>
+    <id>http://blog.url.com/2014/10/05/rock-or-suck/</id>
+    <published>2014-10-05T03:09:00Z</published>
+    <updated>2014-10-05T12:12:37+08:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;h2&gt;Destroy All Software ScreenCast&lt;/h2&gt;
+
+&lt;p&gt;这个screencast是我看过的screencast里质量很高的一个。其中有一个系列介绍使用BDD开发Rails App&lt;/p&gt;
+
+&lt;h2&gt;RockSuck&lt;/h2&gt;
+
+&lt;p&gt;这个系列是要写一个web app，搜索某个名字，返回它的评分。使用Bing搜索引擎来搜索
+&amp;ldquo;something rocks&amp;rdquo; 和 &amp;ldquo;something sucks&amp;rdquo;&lt;/p&gt;
+
+&lt;h2&gt;steps&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;rails new&lt;/li&gt;
+&lt;li&gt;添加需要的gems: rspec-rails, cucumber-rails, database_cleaner, vcr, webmock&lt;/li&gt;
+&lt;li&gt;initialize rspec and cucumber: rails g rspec:install, rails g cucumber:install, bundle binstubs rspec-core&lt;/li&gt;
+&lt;li&gt;add test scripts: script/features, script/test&lt;/li&gt;
+&lt;li&gt;写failed cucumber feature和steps 知道需要RockScore class和#for_term()&lt;/li&gt;
+&lt;li&gt;进入rspec cycle, 写RockScore和它的spec
+
+&lt;ol&gt;
+&lt;li&gt;config.autoload_paths += %W(#{config.root}/app/services)&lt;/li&gt;
+&lt;li&gt;先写好所有的example title (it)&lt;/li&gt;
+&lt;li&gt;使用了SearchEngine.count_results,在spec里先用stub&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;写SearchEngine&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;SearchEngine是boundry，不能mock/stub，但是可以用vcr，只需要hit network 一次&lt;/li&gt;
+&lt;li&gt;gem &amp;lsquo;rbing&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;spec/vcr_helper.rb, 并过滤敏感信息&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="no"&gt;VCR&lt;/span&gt;&lt;span class="nf"&gt;.config&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+  &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="nf"&gt;.cassette_library_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fixtures/cassettes&amp;quot;&lt;/span&gt;
+  &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="nf"&gt;.stub_with&lt;/span&gt; &lt;span class="ss"&gt;:webmock&lt;/span&gt;
+  &lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="nf"&gt;.filter_sensitive_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;BING APP ID&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="no"&gt;ENV&lt;/span&gt;&lt;span class="nf"&gt;.fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;BING_APP_ID&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;spec/services/search_engine_spec.rb&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="n"&gt;describe&lt;/span&gt; &lt;span class="no"&gt;SearchEngine&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;counts results&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="no"&gt;VCR&lt;/span&gt;&lt;span class="nf"&gt;.use_cassette&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;windows-vs-beos&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+      &lt;span class="n"&gt;windows&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;SearchEngine&lt;/span&gt;&lt;span class="nf"&gt;.count_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;windows&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;beos&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;SearchEngine&lt;/span&gt;&lt;span class="nf"&gt;.count_results&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;beos&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="n"&gt;windows&lt;/span&gt;&lt;span class="nf"&gt;.should&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;beos&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;rspec pass后在feature里也使用vcr&lt;/p&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;# features/support/vcr.rb&lt;/span&gt;
+&lt;span class="n"&gt;require_relative&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;../../spec/vcr_helper&amp;quot;&lt;/span&gt;
+
+&lt;span class="no"&gt;VCR&lt;/span&gt;&lt;span class="nf"&gt;.cucumber_tags&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="nf"&gt;.tag&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;user-compares-two-terms&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="c1"&gt;# feature里加入tag:&lt;/span&gt;
+&lt;span class="vi"&gt;@user&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;compares&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;two&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;terms&lt;/span&gt;
+
+&lt;span class="c1"&gt;# steps里去掉pending&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;  &lt;span class="n"&gt;pending&lt;/span&gt; &lt;span class="c1"&gt;# express the regexp above with the code you wish you had&lt;/span&gt;
+&lt;span class="o"&gt;+&lt;/span&gt;  &lt;span class="vi"&gt;@scores&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;apple&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="nf"&gt;.should&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="vi"&gt;@scores&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;microsoft&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;加入ScoreCache service,并和RockScore接口相同，用model保存查询结果&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;spec包括&lt;/li&gt;
+&lt;li&gt;returns cached scores if they exist&lt;/li&gt;
+&lt;li&gt;when the term is not cached
+
+&lt;ol&gt;
+&lt;li&gt;recomputes score&lt;/li&gt;
+&lt;li&gt;stores new scores in the database&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;stub RockScore和CachedScore(model)&lt;/li&gt;
+&lt;li&gt;expect received msg: CachedScore.should&lt;em&gt;receive(:save&lt;/em&gt;score).with(&amp;ldquo;microsoft&amp;rdquo;, 5.5)&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;bugfix: 需要quote &amp;ldquo;something rocks&amp;rdquo;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;add CachedScore model and database table,这里第一次使用rails的spec_helper&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;model spec and code&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="highlight ruby"&gt;&lt;span class="c1"&gt;# spec/models/cached_score_spec.rb&lt;/span&gt;
+&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;spec_helper&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;describe&lt;/span&gt; &lt;span class="no"&gt;CachedScore&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;remembers scores&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="no"&gt;CachedScore&lt;/span&gt;&lt;span class="nf"&gt;.save_score&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;microsoft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="no"&gt;CachedScore&lt;/span&gt;&lt;span class="nf"&gt;.for_term&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;microsoft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;.should&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;raises an exception if the term isn&amp;#39;t cached&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+    &lt;span class="n"&gt;expect&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+      &lt;span class="no"&gt;CachedScore&lt;/span&gt;&lt;span class="nf"&gt;.for_term&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;microsoft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;&lt;span class="nf"&gt;.to&lt;/span&gt; &lt;span class="n"&gt;raise_error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;CachedScore&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;NoScore&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="c1"&gt;# /app/models/cached_score.rb&lt;/span&gt;
+&lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;CachedScore&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;ActiveRecord&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="no"&gt;Base&lt;/span&gt;
+  &lt;span class="k"&gt;class &lt;/span&gt;&lt;span class="nc"&gt;NoScore&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;RuntimeError&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;save_score&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;create!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:term&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:score&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;score&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;for_term&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;cached_score&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;find_by_term&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="no"&gt;NoScore&lt;/span&gt;
+    &lt;span class="n"&gt;cached_score&lt;/span&gt;&lt;span class="nf"&gt;.score&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;schema and migration&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;switch cucumber features to ScoreCache&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;convert NoScores to nil when saving&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;add ScoresController&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;routes.rb&lt;/li&gt;
+&lt;li&gt;controller spec&lt;/li&gt;
+&lt;li&gt;controller code&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;add more scenarios&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
   <entry>
     <title>review presentation architecture the lost year</title>
     <link rel="alternate" href="http://blog.url.com/2014/09/22/review-presentation-architecture-the-lost-year/"/>
@@ -1665,57 +1809,6 @@ nnoremap &lt;span class="k"&gt;gr&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&
 &lt;p&gt;如果需要和Gemfile里的版本相同，需要改用bundle show命令。&lt;/p&gt;
 &lt;pre class="highlight viml"&gt;
 nnoremap &lt;span class="k"&gt;gr&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;execute &lt;span class="s2"&gt;&amp;quot;:tabedit &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; system&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;bundle show &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; expand&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; 
-
-&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>alignment for ruby symbol in vim</title>
-    <link rel="alternate" href="http://blog.url.com/2014/09/16/alignment-for-ruby-symbol-in-vim/"/>
-    <id>http://blog.url.com/2014/09/16/alignment-for-ruby-symbol-in-vim/</id>
-    <published>2014-09-16T12:25:00Z</published>
-    <updated>2014-09-16T21:17:14+08:00</updated>
-    <author>
-      <name>Article Author</name>
-    </author>
-    <content type="html">&lt;h2&gt;在编辑器里做代码对齐&lt;/h2&gt;
-
-&lt;p&gt;为了提高阅读性，
-应尽量使其美观，对齐是其中一种方式。ruby中的symbol使用广泛，为了对其他们，需要使用一个vim插件Tabular&lt;/p&gt;
-
-&lt;h2&gt;symbol in ruby1.8&lt;/h2&gt;
-
-&lt;p&gt;使用下面key mapping，可以对齐ruby1.8的symbol&lt;/p&gt;
-&lt;pre class="highlight viml"&gt;
-vmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;Tabularize &lt;span class="sr"&gt;/:/&lt;/span&gt;r1c0l0&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;:&lt;/span&gt;Tabularize &lt;span class="sr"&gt;/=&amp;gt;/&lt;/span&gt;l1c1l0&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;pre class="highlight ruby"&gt;
-&lt;span class="c1"&gt;#before alignment&lt;/span&gt;
-&lt;span class="n"&gt;mymethod&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:a&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="ss"&gt;:c&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="ss"&gt;:sdfds&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="ss"&gt;:fsd&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-
-&lt;span class="c1"&gt;#after alignment&lt;/span&gt;
-&lt;span class="n"&gt;mymethod&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:a&lt;/span&gt;     &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="ss"&gt;:c&lt;/span&gt;     &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="ss"&gt;:sdfds&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-               &lt;span class="ss"&gt;:fsd&lt;/span&gt;   &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
-
-&lt;/pre&gt;
-&lt;h2&gt;symbol in ruby1.9&lt;/h2&gt;
-
-&lt;p&gt;使用下面key mapping，可以对齐ruby1.9以后的symbol&lt;/p&gt;
-&lt;pre class="highlight viml"&gt;
-vmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;Tabularize &lt;span class="sr"&gt;/:/&lt;/span&gt;r0c1l0&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;pre class="highlight ruby"&gt;
-&lt;span class="c1"&gt;#before alignment&lt;/span&gt;
-&lt;span class="n"&gt;mymethod&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;a: &lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="ss"&gt;bd: &lt;/span&gt;&lt;span class="mi"&gt;234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-  &lt;span class="ss"&gt;ccccc: &lt;/span&gt;&lt;span class="mi"&gt;43434&lt;/span&gt;
-
-&lt;span class="c1"&gt;#after alignment&lt;/span&gt;
-&lt;span class="n"&gt;mymethod&lt;/span&gt; &lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;a: &lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-              &lt;span class="ss"&gt;bd: &lt;/span&gt;&lt;span class="mi"&gt;234&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-           &lt;span class="ss"&gt;ccccc: &lt;/span&gt;&lt;span class="mi"&gt;43434&lt;/span&gt;
 
 &lt;/pre&gt;</content>
   </entry>
